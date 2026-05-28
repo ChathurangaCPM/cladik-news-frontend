@@ -78,7 +78,7 @@ export default async function RootLayout({
         <TooltipProvider>
           <Providers>
             <UserLangProvider
-              initialLang="en"
+              initialLang="si"
               initialDictionary={initialDictionary}
             >
               <div className="leading-snug min-h-screen">{children}</div>
