@@ -128,8 +128,13 @@ export function NewsOnboarding() {
   const [open, setOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const isMobile = useIsMobile();
+  const [mounted, setMounted] = useState(false);
 
   const STEPS = getOnboardingSteps(lang || "si"); // Default fallback to Sinhala "si"
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     // Add forced onboarding bypass flag (?onboarding=true) for instant testing
@@ -386,6 +391,8 @@ export function NewsOnboarding() {
       </div>
     </div>
   );
+
+  if (!mounted) return null;
 
   return (
     <>
