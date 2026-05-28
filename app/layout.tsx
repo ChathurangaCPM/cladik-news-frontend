@@ -74,12 +74,7 @@ export default async function RootLayout({
         className={`${inter.variable} ${customSinhalaFont.variable} ${customFont.variable} ${playfair.variable} ${geistMono.variable} subpixel-antialiased bg-background text-foreground`}
         suppressHydrationWarning
       >
-        <NextTopLoader
-          color="#02a70b"
-          height={3}
-          crawl={true}
-          crawlSpeed={200}
-        />
+        <NextTopLoader color="#000" height={3} crawl={true} crawlSpeed={200} />
         <TooltipProvider>
           <Providers>
             <UserLangProvider
