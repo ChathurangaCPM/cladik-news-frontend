@@ -318,6 +318,16 @@ export default function ProcessDashboard() {
           {/* SSE Connection Health Status & ThemeToggle */}
           <div className="flex items-center gap-3">
             <ThemeToggle />
+            <button
+              onClick={async () => {
+                const { logoutAction } = await import("./login/actions");
+                await logoutAction();
+                window.location.href = "/news";
+              }}
+              className="flex items-center gap-1.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400 bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 px-3 py-1.5 rounded-full cursor-pointer transition-all"
+            >
+              Logout
+            </button>
             <div className="w-[1px] h-6 bg-neutral-200 dark:bg-white/10" />
             {connectionStatus === "connected" && (
               <span className="flex items-center gap-2 text-xs font-normal text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full backdrop-blur-md">

@@ -195,6 +195,16 @@ export default function NewsManagerDashboard() {
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
+            <button
+              onClick={async () => {
+                const { logoutAction } = await import("../login/actions");
+                await logoutAction();
+                window.location.href = "/news";
+              }}
+              className="flex items-center gap-1.5 text-[10px] font-semibold text-rose-600 dark:text-rose-400 bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 px-3 py-1.5 rounded-full cursor-pointer transition-all"
+            >
+              Logout
+            </button>
           </div>
         </div>
 
