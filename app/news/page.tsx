@@ -43,7 +43,7 @@ export default async function NewsMainPage(props: {
             by="word"
             className={`text-5xl font-heading sm:text-7xl lg:text-7xl tracking-tighter leading-[0.95] text-center`}
           >
-            News Discovery
+            AI News Aggregator
           </TextAnimate>
           <TextAnimate
             animation="blurInUp"
