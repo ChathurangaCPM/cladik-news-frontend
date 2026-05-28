@@ -181,55 +181,56 @@ export function SourcesPanel({
 
   const SourceAvatars = () => (
     <div className="flex items-center space-x-3">
-      <div className="flex -space-x-2">
-        {uniqueTopSources.length > 0 && (
-          <InlineCitation>
-            <InlineCitationCard>
-              <InlineCitationCardTrigger
-                sources={uniqueTopSources.map((source) => source.url)}
-                className="mr-2 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
-                onClick={(e) => e.stopPropagation()}
-              />
-              <InlineCitationCardBody onClick={(e) => e.stopPropagation()}>
-                <InlineCitationCarousel>
-                  <InlineCitationCarouselHeader className="bg-slate-100 dark:bg-zinc-900 border-b border-slate-200 dark:border-zinc-800">
-                    <InlineCitationCarouselPrev className="hover:bg-slate-200 dark:hover:bg-zinc-800 p-1 rounded-md transition-colors" />
-                    <InlineCitationCarouselNext className="hover:bg-slate-200 dark:hover:bg-zinc-800 p-1 rounded-md transition-colors" />
-                    <InlineCitationCarouselIndex className="font-geist-mono text-xs" />
-                  </InlineCitationCarouselHeader>
-                  <InlineCitationCarouselContent>
-                    {uniqueTopSources.map((source) => (
-                      <InlineCitationCarouselItem
-                        key={source.url}
-                        className="space-y-2 p-4"
+      {/* {uniqueTopSources.length > 0 && (
+        <InlineCitation>
+          <InlineCitationCard>
+            <InlineCitationCardTrigger
+              sources={uniqueTopSources.map((source) => source.url)}
+              className="mr-2 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+              onClick={(e) => e.stopPropagation()}
+            />
+            <InlineCitationCardBody onClick={(e) => e.stopPropagation()}>
+              <InlineCitationCarousel>
+                <InlineCitationCarouselHeader className="bg-slate-100 dark:bg-zinc-900 border-b border-slate-200 dark:border-zinc-800">
+                  <InlineCitationCarouselPrev className="hover:bg-slate-200 dark:hover:bg-zinc-800 p-1 rounded-md transition-colors" />
+                  <InlineCitationCarouselNext className="hover:bg-slate-200 dark:hover:bg-zinc-800 p-1 rounded-md transition-colors" />
+                  <InlineCitationCarouselIndex className="font-geist-mono text-xs" />
+                </InlineCitationCarouselHeader>
+                <InlineCitationCarouselContent>
+                  {uniqueTopSources.map((source) => (
+                    <InlineCitationCarouselItem
+                      key={source.url}
+                      className="space-y-2 p-4"
+                    >
+                      <InlineCitationSource
+                        description={source.content || ""}
+                        title={source.title || "Reference article"}
+                        url={source.url}
+                        className="space-y-1.5"
+                      />
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="w-full text-xs h-7 justify-start gap-1 px-2 font-inter font-normal text-muted-foreground hover:text-foreground cursor-pointer"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          window.open(source.url, "_blank");
+                        }}
                       >
-                        <InlineCitationSource
-                          description={source.content || ""}
-                          title={source.title || "Reference article"}
-                          url={source.url}
-                          className="space-y-1.5"
-                        />
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="w-full text-xs h-7 justify-start gap-1 px-2 font-inter font-normal text-muted-foreground hover:text-foreground cursor-pointer"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            window.open(source.url, "_blank");
-                          }}
-                        >
-                          <ExternalLink className="w-3 h-3" />
-                          View original article
-                        </Button>
-                      </InlineCitationCarouselItem>
-                    ))}
-                  </InlineCitationCarouselContent>
-                </InlineCitationCarousel>
-              </InlineCitationCardBody>
-            </InlineCitationCard>
-          </InlineCitation>
-        )}
+                        <ExternalLink className="w-3 h-3" />
+                        View original article
+                      </Button>
+                    </InlineCitationCarouselItem>
+                  ))}
+                </InlineCitationCarouselContent>
+              </InlineCitationCarousel>
+            </InlineCitationCardBody>
+          </InlineCitationCard>
+        </InlineCitation>
+      )} */}
+
+      <div className="flex -space-x-2">
         {activeFavicons && activeFavicons.length > 0
           ? activeFavicons.map((favicon, i) => (
               <div
@@ -351,7 +352,7 @@ export function SourcesPanel({
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h5 className="text-slate-900 dark:text-zinc-100 text-sm leading-snug font-medium transition-colors mb-1 line-clamp-2 group-hover:text-primary dark:group-hover:text-primary-400">
+                      <h5 className="text-slate-900 dark:text-zinc-100 text-xs leading-snug font-medium transition-colors mb-1 line-clamp-2 group-hover:text-primary dark:group-hover:text-primary-400">
                         {source.title || "Reference article"}
                       </h5>
                       <p className="text-xs text-muted-foreground truncate line-clamp-2 mb-1">

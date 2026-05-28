@@ -16,6 +16,7 @@ import {
   ChevronLeft,
   Eye,
   Link2,
+  ArrowLeft,
 } from "lucide-react";
 import { incrementViewCountAction } from "@/app/news/actions";
 import { ReportButton } from "./ReportButton";
@@ -379,7 +380,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
 
   return (
     <>
-      <div className="max-w-5xl mx-auto px-4 flex justify-between">
+      <div className="max-w-5xl mx-auto flex justify-between">
         <Link href={"/news"} className="flex items-center gap-2 cursor-pointer">
           <ChevronLeft />
           <Image
@@ -405,15 +406,19 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full bg-white dark:bg-zinc-950 fixed top-0 left-0 lg:pl-[320px] z-50 shadow-sm border-b border-slate-100 dark:border-zinc-800/80"
+            className="w-full bg-white dark:bg-zinc-950 fixed top-0 left-0 z-50 shadow-sm border-b border-slate-100 dark:border-zinc-800/80"
           >
-            <div className="max-w-5xl mx-auto py-4 ">
+            <div className="max-w-5xl mx-auto py-4 px-4 lg:px-0">
               <div className="flex items-center gap-5">
                 <Link
                   href={"/news"}
-                  className="flex items-center gap-1 hover:text-primary transition-colors duration-300"
+                  className="flex items-center gap-1 hover:text-primary transition-colors duration-300 xs:bg-gray-300"
                 >
-                  <ChevronLeft className="w-5 h-5" />
+                  {isMobile ? (
+                    <ArrowLeft className="w-5 h-5" />
+                  ) : (
+                    <ChevronLeft className="w-5 h-5" />
+                  )}
                   <span className="font-inter font-light hidden sm:block">
                     Back
                   </span>
@@ -438,7 +443,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
         )}
       </AnimatePresence>
 
-      <article className="max-w-5xl mx-auto px-4 py-8 bg-transparent">
+      <article className="max-w-5xl mx-auto lg;px-4 py-8 bg-transparent">
         <header className="mb-8">
           <motion.h1
             ref={titleRef}

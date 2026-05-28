@@ -76,7 +76,7 @@ export function NewsCard({
   if (dynamicSourceUrl) {
     try {
       dynamicDomain = new URL(dynamicSourceUrl).hostname.replace(/^www\./i, "");
-    } catch (e) { }
+    } catch (e) {}
   }
 
   const [imageError, setImageError] = useState(false);
@@ -102,7 +102,10 @@ export function NewsCard({
       .then((data) => {
         if (data && Array.isArray(data.blacklistedOgDomains)) {
           setBlacklist(data.blacklistedOgDomains);
-          localStorage.setItem("news_blacklisted_domains", JSON.stringify(data.blacklistedOgDomains));
+          localStorage.setItem(
+            "news_blacklisted_domains",
+            JSON.stringify(data.blacklistedOgDomains),
+          );
         }
       })
       .catch(() => {});
@@ -122,7 +125,8 @@ export function NewsCard({
   };
 
   const isBlacklisted = isImageBlacklisted(currentImageUrl);
-  const activeImageUrl = (!imageError && currentImageUrl && !isBlacklisted) ? currentImageUrl : null;
+  const activeImageUrl =
+    !imageError && currentImageUrl && !isBlacklisted ? currentImageUrl : null;
 
   const handleCardClick = () => {
     if (slug) {
@@ -146,7 +150,7 @@ export function NewsCard({
 
   if (variant === "featured") {
     return (
-      <div className="group flex flex-col lg:flex-row gap-8 lg:gap-14 items-center w-full cursor-pointer">
+      <div className="group flex flex-col lg:flex-row lg:gap-14 items-center w-full ">
         <div
           className={cn(
             "flex-1 space-y-4 pr-0 lg:pr-4 order-2 lg:order-1 pt-6 lg:pt-0",
@@ -154,20 +158,29 @@ export function NewsCard({
           )}
         >
           <CategoryBadge />
-          <Link href={slug ? `/news/${slug}` : url || "#"}>
+          <Link
+            href={slug ? `/news/${slug}` : url || "#"}
+            className="cursor-pointer"
+          >
             <h2
-              className={`text-3xl md:text-[42px] leading-[1.15] tracking-tight ${lang === "si" ? "font-sinhala" : "font-heading"} text-slate-900 dark:text-zinc-50 group-hover:text-slate-700 dark:group-hover:text-zinc-300 transition-colors`}
+              className={`text-2xl md:text-[42px] leading-[1.15] tracking-tight ${lang === "si" ? "font-sinhala" : "font-heading"} text-slate-900 dark:text-zinc-50 group-hover:text-slate-700 dark:group-hover:text-zinc-300 transition-colors`}
             >
               {lang === "si" ? sinhalaTitle : title}.
             </h2>
           </Link>
-          <Link href={slug ? `/news/${slug}` : url || "#"}>
+          <Link
+            href={slug ? `/news/${slug}` : url || "#"}
+            className="cursor-pointer"
+          >
             <div className="flex items-center text-slate-400 text-sm py-2 space-x-2">
               <Clock className="w-4 h-4" />
               <span className="text-xs">{publishedAt}</span>
             </div>
           </Link>
-          <Link href={slug ? `/news/${slug}` : url || "#"}>
+          <Link
+            href={slug ? `/news/${slug}` : url || "#"}
+            className="cursor-pointer"
+          >
             {(lang === "si" ? sinhalaSummary : snippet) && (
               <p
                 className={cn(
@@ -180,7 +193,7 @@ export function NewsCard({
               </p>
             )}
           </Link>
- 
+
           <div className="flex items-center justify-between pt-6 max-w-sm border-t border-slate-100 dark:border-zinc-800/80 !pb-2">
             <SourcesPanel
               title={title}
@@ -194,12 +207,12 @@ export function NewsCard({
             <Actions />
           </div>
         </div>
- 
+
         {activeImageUrl && (
           <div className="w-full lg:w-[55%] aspect-[4/3] relative rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] order-1 lg:order-2 transform transition-transform duration-500 hover:shadow-[0_20px_40px_rgb(0,0,0,0.1)] dark:hover:shadow-[0_20px_40px_rgb(0,0,0,0.4)] group/img">
             <Link
               href={slug ? `/news/${slug}` : url || "#"}
-              className="block relative aspect-[4/3] z-10"
+              className="block relative aspect-[4/3] z-10 cursor-pointer"
             >
               <img
                 src={activeImageUrl}
@@ -211,7 +224,7 @@ export function NewsCard({
               />
             </Link>
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-500 z-60" />
- 
+
             {dynamicSourceUrl && !imageUrl && (
               <div
                 onClick={(e) => {
@@ -229,7 +242,7 @@ export function NewsCard({
       </div>
     );
   }
- 
+
   if (variant === "grid") {
     return (
       <div className="group flex flex-col h-full overflow-hidden border border-slate-100 dark:border-zinc-800/80 shadow-[0_2px_15px_rgb(0,0,0,0.03)] dark:shadow-[0_2px_15px_rgb(0,0,0,0.2)] rounded-[24px] cursor-pointer transition-all duration-300 hover:shadow-[0_15px_35px_rgb(0,0,0,0.08)] dark:hover:shadow-[0_15px_35px_rgb(0,0,0,0.3)] bg-white dark:bg-zinc-900/40">
@@ -240,7 +253,10 @@ export function NewsCard({
                 {category}
               </span>
             </div>
-            <Link href={slug ? `/news/${slug}` : url || "#"}>
+            <Link
+              href={slug ? `/news/${slug}` : url || "#"}
+              className="cursor-pointer"
+            >
               <img
                 src={activeImageUrl}
                 alt={title}
@@ -248,7 +264,7 @@ export function NewsCard({
                 onError={() => setImageError(true)}
               />
             </Link>
- 
+
             {dynamicSourceUrl && !imageUrl && (
               <div
                 onClick={(e) => {
@@ -266,7 +282,7 @@ export function NewsCard({
         <div
           className={cn(
             "flex flex-col flex-1 pb-5",
-            activeImageUrl ? "p-6" : "p-8",
+            activeImageUrl ? "p-6" : "p-4 lg:p-8",
           )}
         >
           {!activeImageUrl && (
@@ -274,12 +290,17 @@ export function NewsCard({
               <CategoryBadge />
             </div>
           )}
-          <Link href={slug ? `/news/${slug}` : url || "#"}>
+          <Link
+            href={slug ? `/news/${slug}` : url || "#"}
+            className="cursor-pointer"
+          >
             <h3
               className={cn(
                 "tracking-tight text-slate-900 dark:text-zinc-50 leading-[1.3] mb-6 flex-1 pr-2 group-hover:text-slate-800 dark:group-hover:text-zinc-300 transition-colors",
                 lang === "si" ? "font-sinhala tracking-normal" : "font-heading",
-                activeImageUrl ? "text-[22px]" : "text-[28px]",
+                activeImageUrl
+                  ? "text-[20px] lg:text-[22px]"
+                  : "text-[20px] lg:text-[28px]",
               )}
             >
               {lang === "si" ? sinhalaTitle : title}.
@@ -301,7 +322,7 @@ export function NewsCard({
               <span className="text-xs">{publishedAt}</span>
             </div>
           </Link>
- 
+
           <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-100 dark:border-zinc-800/80">
             <SourcesPanel
               title={title}
@@ -318,13 +339,16 @@ export function NewsCard({
       </div>
     );
   }
- 
+
   if (variant === "horizontal") {
     return (
-      <div className="group flex flex-col lg:flex-row gap-6 lg:gap-10 items-center w-full cursor-pointer p-2 rounded-[28px] transition-colors hover:bg-slate-50/50 dark:hover:bg-zinc-900/20">
+      <div className="group flex flex-col lg:flex-row gap-6 lg:gap-10 items-center w-full p-2 rounded-[28px] transition-colors hover:bg-slate-50/50 dark:hover:bg-zinc-900/20">
         {activeImageUrl && (
           <div className="w-full lg:w-[35%] aspect-[16/10] relative rounded-[24px] overflow-hidden shadow-[0_4px_20px_rgb(0,0,0,0.04)] bg-slate-50 dark:bg-zinc-950/40 group/img">
-            <Link href={slug ? `/news/${slug}` : url || "#"}>
+            <Link
+              href={slug ? `/news/${slug}` : url || "#"}
+              className="cursor-pointer"
+            >
               <img
                 src={activeImageUrl}
                 alt={title}
@@ -348,9 +372,14 @@ export function NewsCard({
         )}
         <div className="flex-1 space-y-3 lg:pr-8 py-2">
           <div className="flex items-center gap-3 mb-2">
-            <span className="text-[11px] text-slate-500 dark:text-zinc-400">{category}</span>
+            <span className="text-[11px] text-slate-500 dark:text-zinc-400">
+              {category}
+            </span>
             <span className="text-slate-300 dark:text-zinc-700">•</span>
-            <Link href={slug ? `/news/${slug}` : url || "#"}>
+            <Link
+              href={slug ? `/news/${slug}` : url || "#"}
+              className="cursor-pointer"
+            >
               <div className="flex items-center text-slate-400 text-xs">
                 <Clock className="w-3.5 h-3.5 mr-1.5" />
                 <span>{publishedAt}</span>
@@ -359,7 +388,7 @@ export function NewsCard({
           </div>
           <Link
             href={slug ? `/news/${slug}` : url || "#"}
-            className="space-y-3"
+            className="space-y-3 cursor-pointer"
           >
             <h2
               className={cn(
@@ -369,7 +398,7 @@ export function NewsCard({
             >
               {lang === "si" ? sinhalaTitle : title}.
             </h2>
- 
+
             {(lang === "si" ? sinhalaSummary : snippet) && (
               <p
                 className={cn(
@@ -382,7 +411,7 @@ export function NewsCard({
               </p>
             )}
           </Link>
- 
+
           <div className="flex items-center justify-between pt-5 mt-2 border-t border-slate-100 dark:border-zinc-800/80">
             <SourcesPanel
               title={title}

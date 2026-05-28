@@ -1,5 +1,5 @@
 "use client";
- 
+
 import React, { useMemo } from "react";
 import {
   Area,
@@ -23,13 +23,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
- 
+
 export interface ChartSeries {
   dataKey: string;
   label: string;
   color: string;
 }
- 
+
 export interface NewsChartData {
   type: "bar" | "line" | "pie" | "area" | "radar" | "radial";
   title: string;
@@ -38,7 +38,7 @@ export interface NewsChartData {
   series: ChartSeries[];
   data: any[];
 }
- 
+
 export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
   const styleVariables = useMemo(() => {
     const vars: Record<string, string> = {};
@@ -49,26 +49,33 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
     }
     return vars;
   }, [chartObj]);
- 
+
   if (!chartObj || !chartObj.data || chartObj.data.length === 0) {
     return null;
   }
- 
+
   // Beautiful Custom Tooltip Component (Responsive, Dark-Mode aware, premium design)
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border border-slate-200/60 dark:border-slate-800 p-3 rounded-2xl shadow-xl text-xs font-inter text-left">
-          <p className="font-semibold text-slate-800 dark:text-slate-200 mb-1.5">{label}</p>
+          <p className="font-semibold text-slate-800 dark:text-slate-200 mb-1.5">
+            {label}
+          </p>
           <div className="space-y-1">
             {payload.map((item: any) => (
-              <div key={item.name || item.dataKey} className="flex items-center gap-2 text-slate-650 dark:text-zinc-400">
-                <span 
-                  className="w-2.5 h-2.5 rounded-full shrink-0" 
-                  style={{ backgroundColor: item.color || item.fill }} 
+              <div
+                key={item.name || item.dataKey}
+                className="flex items-center gap-2 text-slate-650 dark:text-zinc-400"
+              >
+                <span
+                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  style={{ backgroundColor: item.color || item.fill }}
                 />
                 <span className="font-light">{item.name || item.dataKey}:</span>
-                <span className="font-semibold text-slate-950 dark:text-slate-50">{item.value}</span>
+                <span className="font-semibold text-slate-950 dark:text-slate-50">
+                  {item.value}
+                </span>
               </div>
             ))}
           </div>
@@ -77,14 +84,22 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
     }
     return null;
   };
- 
+
   const renderChart = () => {
     let chartInstance = null;
     switch (chartObj.type) {
       case "area":
         chartInstance = (
-          <AreaChart data={chartObj.data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="stroke-slate-200/40 dark:stroke-zinc-800/40" />
+          <AreaChart
+            data={chartObj.data}
+            margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+          >
+            <CartesianGrid
+              strokeDasharray="3 3"
+              vertical={false}
+              stroke="currentColor"
+              className="stroke-slate-200/40 dark:stroke-zinc-800/40"
+            />
             <XAxis
               dataKey={chartObj.xAxisKey}
               tickLine={false}
@@ -94,7 +109,7 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
               fill="currentColor"
               className="text-[11px] fill-slate-400 dark:fill-zinc-500 font-inter"
             />
-            <YAxis 
+            <YAxis
               tickLine={false}
               axisLine={false}
               stroke="none"
@@ -102,7 +117,11 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
               className="text-[11px] fill-slate-400 dark:fill-zinc-500 font-inter"
             />
             <Tooltip content={<CustomTooltip />} />
-            <Legend verticalAlign="top" height={36} className="text-xs font-inter" />
+            <Legend
+              verticalAlign="top"
+              height={36}
+              className="text-xs font-inter"
+            />
             {chartObj.series.map((s) => (
               <Area
                 key={s.dataKey}
@@ -120,8 +139,16 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
         break;
       case "bar":
         chartInstance = (
-          <BarChart data={chartObj.data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="stroke-slate-200/40 dark:stroke-zinc-800/40" />
+          <BarChart
+            data={chartObj.data}
+            margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+          >
+            <CartesianGrid
+              strokeDasharray="3 3"
+              vertical={false}
+              stroke="currentColor"
+              className="stroke-slate-200/40 dark:stroke-zinc-800/40"
+            />
             <XAxis
               dataKey={chartObj.xAxisKey}
               tickLine={false}
@@ -131,7 +158,7 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
               fill="currentColor"
               className="text-[11px] fill-slate-400 dark:fill-zinc-500 font-inter"
             />
-            <YAxis 
+            <YAxis
               tickLine={false}
               axisLine={false}
               stroke="none"
@@ -139,7 +166,11 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
               className="text-[11px] fill-slate-400 dark:fill-zinc-500 font-inter"
             />
             <Tooltip content={<CustomTooltip />} />
-            <Legend verticalAlign="top" height={36} className="text-xs font-inter" />
+            <Legend
+              verticalAlign="top"
+              height={36}
+              className="text-xs font-inter"
+            />
             {chartObj.series.map((s) => (
               <Bar
                 key={s.dataKey}
@@ -154,8 +185,16 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
         break;
       case "line":
         chartInstance = (
-          <LineChart data={chartObj.data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="stroke-slate-200/40 dark:stroke-zinc-800/40" />
+          <LineChart
+            data={chartObj.data}
+            margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+          >
+            <CartesianGrid
+              strokeDasharray="3 3"
+              vertical={false}
+              stroke="currentColor"
+              className="stroke-slate-200/40 dark:stroke-zinc-800/40"
+            />
             <XAxis
               dataKey={chartObj.xAxisKey}
               tickLine={false}
@@ -165,7 +204,7 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
               fill="currentColor"
               className="text-[11px] fill-slate-400 dark:fill-zinc-500 font-inter"
             />
-            <YAxis 
+            <YAxis
               tickLine={false}
               axisLine={false}
               stroke="none"
@@ -173,7 +212,11 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
               className="text-[11px] fill-slate-400 dark:fill-zinc-500 font-inter"
             />
             <Tooltip content={<CustomTooltip />} />
-            <Legend verticalAlign="top" height={36} className="text-xs font-inter" />
+            <Legend
+              verticalAlign="top"
+              height={36}
+              className="text-xs font-inter"
+            />
             {chartObj.series.map((s) => (
               <Line
                 key={s.dataKey}
@@ -204,10 +247,16 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
                 outerRadius={80}
                 fill="hsl(var(--primary))"
                 labelLine={false}
-                label={({ name, percent }) => `${name}: ${((percent || 0) * 100).toFixed(0)}%`}
+                label={({ name, percent }) =>
+                  `${name}: ${((percent || 0) * 100).toFixed(0)}%`
+                }
                 className="text-[10px] font-medium font-inter fill-slate-800 dark:fill-zinc-200"
               />
-              <Legend verticalAlign="bottom" height={36} className="text-xs font-inter" />
+              <Legend
+                verticalAlign="bottom"
+                height={36}
+                className="text-xs font-inter"
+              />
             </PieChart>
           );
         }
@@ -215,10 +264,22 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
       case "radar":
         chartInstance = (
           <RadarChart data={chartObj.data} cx="50%" cy="50%" outerRadius="75%">
-            <PolarGrid stroke="currentColor" className="stroke-slate-200/40 dark:stroke-zinc-800/30" />
-            <PolarAngleAxis dataKey={chartObj.xAxisKey} stroke="none" fill="currentColor" className="text-[10px] fill-slate-400 dark:fill-zinc-500 font-inter" />
+            <PolarGrid
+              stroke="currentColor"
+              className="stroke-slate-200/40 dark:stroke-zinc-800/30"
+            />
+            <PolarAngleAxis
+              dataKey={chartObj.xAxisKey}
+              stroke="none"
+              fill="currentColor"
+              className="text-[10px] fill-slate-400 dark:fill-zinc-500 font-inter"
+            />
             <Tooltip content={<CustomTooltip />} />
-            <Legend verticalAlign="bottom" height={36} className="text-xs font-inter" />
+            <Legend
+              verticalAlign="bottom"
+              height={36}
+              className="text-xs font-inter"
+            />
             {chartObj.series.map((s) => (
               <Radar
                 key={s.dataKey}
@@ -235,22 +296,31 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
         break;
       case "radial":
         chartInstance = (
-          <RadialBarChart 
-            innerRadius="20%" 
-            outerRadius="100%" 
-            data={chartObj.data} 
+          <RadialBarChart
+            innerRadius="20%"
+            outerRadius="100%"
+            data={chartObj.data}
             cx="50%"
             cy="50%"
-            startAngle={180} 
+            startAngle={180}
             endAngle={0}
           >
             <Tooltip content={<CustomTooltip />} />
-            <Legend verticalAlign="bottom" height={36} className="text-xs font-inter" />
+            <Legend
+              verticalAlign="bottom"
+              height={36}
+              className="text-xs font-inter"
+            />
             {chartObj.series.map((s) => (
               <RadialBar
                 key={s.dataKey}
                 name={s.label}
-                label={{ position: 'insideStart', fill: '#fff', fontSize: 10, fontFamily: 'font-inter' }}
+                label={{
+                  position: "insideStart",
+                  fill: "#fff",
+                  fontSize: 10,
+                  fontFamily: "font-inter",
+                }}
                 background={{ fill: "rgba(120, 120, 120, 0.05)" }}
                 dataKey={s.dataKey}
                 fill={`var(--color-${s.dataKey})`}
@@ -262,11 +332,11 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
       default:
         return null;
     }
- 
+
     if (!chartInstance) return null;
- 
+
     return (
-      <div className="my-8 w-full bg-slate-50/50 dark:bg-zinc-900/30 border border-slate-100 dark:border-zinc-800/80 rounded-3xl p-6 shadow-[0_2px_15px_rgb(0,0,0,0.02)]">
+      <div className="my-8 w-full bg-slate-50/50 dark:bg-zinc-900/30 border border-slate-100 dark:border-zinc-800/80 rounded-3xl p-4 lg:p-6 shadow-[0_2px_15px_rgb(0,0,0,0.02)]">
         <div className="mb-6">
           <h4 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-zinc-50 font-inter mb-1">
             {chartObj.title}
@@ -277,7 +347,7 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
             </p>
           )}
         </div>
-        <div 
+        <div
           style={styleVariables as React.CSSProperties}
           className="w-full h-[320px] font-inter text-slate-800 dark:text-zinc-200"
         >
@@ -288,6 +358,6 @@ export function DynamicNewsChart({ chartObj }: { chartObj: NewsChartData }) {
       </div>
     );
   };
- 
+
   return renderChart();
 }

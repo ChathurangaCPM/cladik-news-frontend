@@ -39,7 +39,7 @@ export async function RelatedNews({
     if (relatedItems.length === 0) return null;
 
     return (
-      <div className="max-w-5xl mx-auto px-4  pb-24 mt-8">
+      <div className="max-w-5xl mx-auto lg:px-4  pb-24 mt-8">
         <div className="pt-12 border-t border-slate-200/60 dark:border-slate-800">
           <h3 className="text-2xl font-heading mb-8 text-slate-900 tracking-tight">
             Related News

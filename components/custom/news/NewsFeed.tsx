@@ -61,32 +61,32 @@ const NewsCardSkeleton = ({
     return (
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-14 w-full animate-pulse">
         <div className="flex-1 space-y-4 pt-6 lg:pt-0 order-2 lg:order-1">
-          <div className="h-6 w-24 bg-slate-200 rounded-full mb-4"></div>
-          <div className="h-12 w-3/4 bg-slate-200 rounded-lg"></div>
-          <div className="h-12 w-1/2 bg-slate-200 rounded-lg"></div>
-          <div className="h-4 w-32 bg-slate-200 rounded mt-4"></div>
+          <div className="h-6 w-24 bg-slate-200 dark:bg-zinc-800 rounded-full mb-4"></div>
+          <div className="h-12 w-3/4 bg-slate-200 dark:bg-zinc-800 rounded-lg"></div>
+          <div className="h-12 w-1/2 bg-slate-200 dark:bg-zinc-800 rounded-lg"></div>
+          <div className="h-4 w-32 bg-slate-200 dark:bg-zinc-800 rounded mt-4"></div>
           <div className="space-y-2 mt-6">
-            <div className="h-4 w-full bg-slate-200 rounded"></div>
-            <div className="h-4 w-5/6 bg-slate-200 rounded"></div>
-            <div className="h-4 w-4/6 bg-slate-200 rounded"></div>
+            <div className="h-4 w-full bg-slate-200 dark:bg-zinc-800 rounded"></div>
+            <div className="h-4 w-5/6 bg-slate-200 dark:bg-zinc-800 rounded"></div>
+            <div className="h-4 w-4/6 bg-slate-200 dark:bg-zinc-800 rounded"></div>
           </div>
         </div>
-        <div className="w-full lg:w-[55%] aspect-[4/3] bg-slate-200 rounded-[2rem] order-1 lg:order-2"></div>
+        <div className="w-full lg:w-[55%] aspect-[4/3] bg-slate-200 dark:bg-zinc-800 rounded-[2rem] order-1 lg:order-2"></div>
       </div>
     );
   }
 
   if (variant === "grid") {
     return (
-      <div className="flex flex-col h-full border border-slate-100 rounded-[24px] bg-white animate-pulse">
-        <div className="aspect-[3/2] w-full bg-slate-200 rounded-t-[24px]"></div>
+      <div className="flex flex-col h-full border border-slate-100 dark:border-zinc-800/80 rounded-[24px] bg-white dark:bg-zinc-900/40 animate-pulse">
+        <div className="aspect-[3/2] w-full bg-slate-200 dark:bg-zinc-800 rounded-t-[24px]"></div>
         <div className="p-6 flex flex-col flex-1 space-y-4">
-          <div className="h-4 w-20 bg-slate-200 rounded-full"></div>
-          <div className="h-8 w-full bg-slate-200 rounded-lg"></div>
-          <div className="h-8 w-3/4 bg-slate-200 rounded-lg"></div>
+          <div className="h-4 w-20 bg-slate-200 dark:bg-zinc-800 rounded-full"></div>
+          <div className="h-8 w-full bg-slate-200 dark:bg-zinc-800 rounded-lg"></div>
+          <div className="h-8 w-3/4 bg-slate-200 dark:bg-zinc-800 rounded-lg"></div>
           <div className="space-y-2 mt-auto">
-            <div className="h-3 w-full bg-slate-200 rounded"></div>
-            <div className="h-3 w-4/5 bg-slate-200 rounded"></div>
+            <div className="h-3 w-full bg-slate-200 dark:bg-zinc-800 rounded"></div>
+            <div className="h-3 w-4/5 bg-slate-200 dark:bg-zinc-800 rounded"></div>
           </div>
         </div>
       </div>
@@ -95,14 +95,14 @@ const NewsCardSkeleton = ({
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 w-full p-2 animate-pulse">
-      <div className="w-full lg:w-[35%] aspect-[16/10] bg-slate-200 rounded-[24px]"></div>
+      <div className="w-full lg:w-[35%] aspect-[16/10] bg-slate-200 dark:bg-zinc-800 rounded-[24px]"></div>
       <div className="flex-1 space-y-3 lg:pr-8 py-2">
-        <div className="h-4 w-24 bg-slate-200 rounded"></div>
-        <div className="h-8 w-full bg-slate-200 rounded-lg"></div>
-        <div className="h-8 w-2/3 bg-slate-200 rounded-lg"></div>
+        <div className="h-4 w-24 bg-slate-200 dark:bg-zinc-800 rounded"></div>
+        <div className="h-8 w-full bg-slate-200 dark:bg-zinc-800 rounded-lg"></div>
+        <div className="h-8 w-2/3 bg-slate-200 dark:bg-zinc-800 rounded-lg"></div>
         <div className="space-y-2 pt-4">
-          <div className="h-3 w-full bg-slate-200 rounded"></div>
-          <div className="h-3 w-5/6 bg-slate-200 rounded"></div>
+          <div className="h-3 w-full bg-slate-200 dark:bg-zinc-800 rounded"></div>
+          <div className="h-3 w-5/6 bg-slate-200 dark:bg-zinc-800 rounded"></div>
         </div>
       </div>
     </div>
@@ -176,18 +176,22 @@ export function NewsFeed({
   let items = data?.pages.flat() || [];
 
   // Deduplicate items by slug and _id, and filter out same-site articles
-  items = items.filter(
-    (item, index, self) =>
-      index ===
-      self.findIndex(
-        (n) => n._id === item._id || (n.slug && item.slug && n.slug === item.slug)
-      )
-  ).filter((item) => !isSameSiteNews(item));
+  items = items
+    .filter(
+      (item, index, self) =>
+        index ===
+        self.findIndex(
+          (n) =>
+            n._id === item._id || (n.slug && item.slug && n.slug === item.slug),
+        ),
+    )
+    .filter((item) => !isSameSiteNews(item));
 
   // Setup Server-Sent Events for Real-Time UI Updates mapped into TanStack cache
   useEffect(() => {
     const NEWS_API_URL =
-      process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL || "http://localhost:5005/api";
+      process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL ||
+      "http://localhost:5005/api";
     const eventSource = new EventSource(`/api/news/stream?t=${Date.now()}`);
 
     eventSource.onmessage = (event) => {
@@ -360,7 +364,7 @@ export function NewsFeed({
   };
 
   return (
-    <div className="flex flex-col pb-24 px-4 sm:px-6 lg:px-8 max-w-[1400px] mx-auto w-full">
+    <div className="flex flex-col pb-24 sm:px-6 lg:px-8 max-w-[1400px] mx-auto w-full">
       {/* Category Filter Pills */}
       <div className="w-full sticky top-0 py-4 mb-8 border-b border-neutral-200/50 dark:border-white/[0.04] backdrop-blur-xl bg-white/70 dark:bg-[#07090e]/70 z-10 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
         <div className="relative max-w-[1400px] mx-auto group">
