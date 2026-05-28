@@ -14,8 +14,14 @@ import {
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLangContext } from "@/providers/langProvider";
-import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog";
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import {
+  AlertDialog,
+  AlertDialogContent,
+} from "@/components/ui/alert-dialog";
+import {
+  Drawer,
+  DrawerContent,
+} from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 // Prepend Language Selection Step as the very first step
@@ -23,14 +29,10 @@ const getOnboardingSteps = (lang: string) => [
   {
     id: "language",
     title: lang === "si" ? "භාෂාව තෝරන්න" : "Choose Language",
-    subtitle:
-      lang === "si"
-        ? "ඔබ කැමති භාෂාව තෝරන්න"
-        : "Select your preferred language",
-    description:
-      lang === "si"
-        ? "ඔබට මෙම පද්ධතිය සිංහලෙන් හෝ ඉංග්‍රීසියෙන් භාවිතා කළ හැක. පසුව වුවද මෙය වෙනස් කළ හැක."
-        : "You can read articles and use all search features in either Sinhala or English. You can switch this at any time.",
+    subtitle: lang === "si" ? "ඔබ කැමති භාෂාව තෝරන්න" : "Select your preferred language",
+    description: lang === "si"
+      ? "ඔබට මෙම පද්ධතිය සිංහලෙන් හෝ ඉංග්‍රීසියෙන් භාවිතා කළ හැක. පසුව වුවද මෙය වෙනස් කළ හැක."
+      : "You can read articles and use all search features in either Sinhala or English. You can switch this at any time.",
     icon: Languages,
     color: "text-indigo-500",
     bg: "bg-indigo-500/10",
@@ -118,23 +120,26 @@ const getOnboardingSteps = (lang: string) => [
 ];
 
 export function NewsOnboarding() {
-  const { lang, setLanguage, isLoadingLangData } = useLangContext();
+  const { lang, setLanguage } = useLangContext();
   const [open, setOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const isMobile = useIsMobile();
 
-  const STEPS = getOnboardingSteps(lang || "si"); // Default select value defaults to Sinhala "si"
+  const STEPS = getOnboardingSteps(lang || "si"); // Default fallback to Sinhala "si"
 
   useEffect(() => {
-    if (isLoadingLangData) return;
+    // Add forced onboarding bypass flag (?onboarding=true) for instant testing
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceOnboarding = urlParams.get("onboarding") === "true";
     const hasSeen = localStorage.getItem("neuralpress-onboarding-seen");
-    if (!hasSeen) {
-      // Set the default selected language to Sinhala ("si") as requested by the user
+
+    if (!hasSeen || forceOnboarding) {
+      // Force Sinhala as default language selection immediately as requested
       setLanguage("si");
-      const timer = setTimeout(() => setOpen(true), 1500);
+      const timer = setTimeout(() => setOpen(true), 500);
       return () => clearTimeout(timer);
     }
-  }, [isLoadingLangData]);
+  }, []);
 
   const handleComplete = () => {
     localStorage.setItem("neuralpress-onboarding-seen", "true");
@@ -157,8 +162,6 @@ export function NewsOnboarding() {
 
   const step = STEPS[currentStep];
   const Icon = step.icon;
-
-  if (!open) return null;
 
   const renderOnboardingContent = () => (
     <div className="relative w-full text-slate-900 dark:text-zinc-100 font-inter text-left">
@@ -344,7 +347,7 @@ export function NewsOnboarding() {
               {currentStep > 0 && (
                 <button
                   className={cn(
-                    "text-slate-400 hover:text-slate-650 dark:text-zinc-500 dark:hover:text-zinc-350 rounded-full text-xs font-semibold px-4 py-2 hover:bg-slate-50 dark:hover:bg-zinc-900/40 transition-colors cursor-pointer",
+                    "text-slate-400 hover:text-slate-655 dark:text-zinc-500 dark:hover:text-zinc-355 rounded-full text-xs font-semibold px-4 py-2 hover:bg-slate-50 dark:hover:bg-zinc-900/40 transition-colors cursor-pointer",
                     lang === "si" ? "font-sinhala text-sm" : "",
                   )}
                   onClick={handlePrevious}
@@ -378,24 +381,24 @@ export function NewsOnboarding() {
     </div>
   );
 
-  if (isMobile) {
-    return (
-      <Drawer open={open} onOpenChange={() => setOpen(true)} dismissible={false}>
-        <DrawerContent className="p-5 outline-none">
-          {renderOnboardingContent()}
-        </DrawerContent>
-      </Drawer>
-    );
-  }
-
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent
-        onEscapeKeyDown={(e) => e.preventDefault()}
-        className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl overflow-hidden relative text-slate-900 dark:text-zinc-100 outline-none"
-      >
-        {renderOnboardingContent()}
-      </AlertDialogContent>
-    </AlertDialog>
+    <>
+      {isMobile ? (
+        <Drawer open={open} onOpenChange={() => setOpen(true)} dismissible={false}>
+          <DrawerContent className="p-5 outline-none">
+            {open && renderOnboardingContent()}
+          </DrawerContent>
+        </Drawer>
+      ) : (
+        <AlertDialog open={open} onOpenChange={setOpen}>
+          <AlertDialogContent
+            onEscapeKeyDown={(e) => e.preventDefault()}
+            className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl overflow-hidden relative text-slate-900 dark:text-zinc-100 outline-none"
+          >
+            {open && renderOnboardingContent()}
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
+    </>
   );
 }
