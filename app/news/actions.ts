@@ -5,6 +5,55 @@ const NEWS_API_URL =
   process.env.NEWS_AGGREGATOR_URL ||
   "http://localhost:5005/api";
 
+async function getBlacklistedDomains(): Promise<string[]> {
+  try {
+    const res = await fetch(`${NEWS_API_URL}/news/settings`, {
+      method: "GET",
+      headers: {
+        "x-service-api-key": process.env.SERVICE_API_KEY || "",
+        "Content-Type": "application/json",
+      },
+      next: { revalidate: 60 }, // Cache settings for 60 seconds server-side
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data.blacklistedOgDomains) ? data.blacklistedOgDomains : [];
+  } catch (e) {
+    console.error("Error fetching blacklist server-side:", e);
+    return [];
+  }
+}
+
+function scrubBlacklistedImages(articles: any[], blacklist: string[]) {
+  if (!Array.isArray(articles) || articles.length === 0 || blacklist.length === 0) {
+    return articles;
+  }
+  return articles.map((article) => {
+    const scrubbed = { ...article };
+
+    const isImageBlacklisted = (urlStr: string | undefined): boolean => {
+      if (!urlStr) return false;
+      try {
+        const hostname = new URL(urlStr).hostname.toLowerCase();
+        return blacklist.some((domain) => {
+          const cleanDomain = domain.toLowerCase().trim();
+          return hostname === cleanDomain || hostname.endsWith("." + cleanDomain);
+        });
+      } catch (e) {
+        return false;
+      }
+    };
+
+    if (isImageBlacklisted(scrubbed.ogImage)) {
+      scrubbed.ogImage = null;
+    }
+    if (isImageBlacklisted(scrubbed.dynamicOgImage)) {
+      scrubbed.dynamicOgImage = null;
+    }
+    return scrubbed;
+  });
+}
+
 export async function fetchNews(
   skip: number,
   limit: number = 10,
@@ -26,7 +75,9 @@ export async function fetchNews(
       return [];
     }
     const data = await res.json();
-    return Array.isArray(data) ? data : [];
+    const articles = Array.isArray(data) ? data : [];
+    const blacklist = await getBlacklistedDomains();
+    return scrubBlacklistedImages(articles, blacklist);
   } catch (err) {
     console.error("Error fetching news:", err);
     return [];
@@ -47,7 +98,9 @@ export async function searchNewsAction(query: string, limit: number = 20) {
       return [];
     }
     const data = await res.json();
-    return Array.isArray(data) ? data : [];
+    const articles = Array.isArray(data) ? data : [];
+    const blacklist = await getBlacklistedDomains();
+    return scrubBlacklistedImages(articles, blacklist);
   } catch (err) {
     console.error("Error searching news:", err);
     return [];

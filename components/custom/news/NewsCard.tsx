@@ -80,53 +80,14 @@ export function NewsCard({
   }
 
   const [imageError, setImageError] = useState(false);
-  const [blacklist, setBlacklist] = useState<string[]>([]);
   const currentImageUrl = imageUrl || dynamicOgImage;
 
   useEffect(() => {
     setImageError(false);
   }, [currentImageUrl]);
 
-  useEffect(() => {
-    const cached = localStorage.getItem("news_blacklisted_domains");
-    if (cached) {
-      try {
-        setBlacklist(JSON.parse(cached));
-      } catch (e) {}
-    }
-
-    fetch("/api/news/settings")
-      .then((res) => {
-        if (res.ok) return res.json();
-      })
-      .then((data) => {
-        if (data && Array.isArray(data.blacklistedOgDomains)) {
-          setBlacklist(data.blacklistedOgDomains);
-          localStorage.setItem(
-            "news_blacklisted_domains",
-            JSON.stringify(data.blacklistedOgDomains),
-          );
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  const isImageBlacklisted = (urlStr: string | undefined): boolean => {
-    if (!urlStr) return false;
-    try {
-      const hostname = new URL(urlStr).hostname.toLowerCase();
-      return blacklist.some((domain) => {
-        const cleanDomain = domain.toLowerCase().trim();
-        return hostname === cleanDomain || hostname.endsWith("." + cleanDomain);
-      });
-    } catch (e) {
-      return false;
-    }
-  };
-
-  const isBlacklisted = isImageBlacklisted(currentImageUrl);
   const activeImageUrl =
-    !imageError && currentImageUrl && !isBlacklisted ? currentImageUrl : null;
+    !imageError && currentImageUrl ? currentImageUrl : null;
 
   const handleCardClick = () => {
     if (slug) {
