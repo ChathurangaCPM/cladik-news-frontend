@@ -7,49 +7,7 @@ import { cn, isSameSiteNews } from "@/lib/utils";
 import moment from "moment";
 import Link from "next/link";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
-import {
-  MapPin,
-  Cpu,
-  Briefcase,
-  Landmark,
-  Trophy,
-  Clapperboard,
-  HeartPulse,
-  FlaskConical,
-  Globe,
-  Palmtree,
-  Plane,
-  Utensils,
-  LayoutGrid,
-  Bot,
-  Coins,
-  Leaf,
-  ShieldAlert,
-  MessageSquare,
-  CheckCircle2,
-} from "lucide-react";
-
-const CATEGORIES = [
-  { name: "All", icon: LayoutGrid },
-  { name: "Local News", icon: MapPin },
-  { name: "Technology", icon: Cpu },
-  { name: "AI & Future", icon: Bot },
-  { name: "Crypto", icon: Coins },
-  { name: "Business", icon: Briefcase },
-  { name: "Politics", icon: Landmark },
-  { name: "Sports", icon: Trophy },
-  { name: "Entertainment", icon: Clapperboard },
-  { name: "Health", icon: HeartPulse },
-  { name: "Science", icon: FlaskConical },
-  { name: "World News", icon: Globe },
-  { name: "Climate", icon: Leaf },
-  { name: "Investigations", icon: ShieldAlert },
-  { name: "Opinion", icon: MessageSquare },
-  { name: "Fact Check", icon: CheckCircle2 },
-  { name: "Lifestyle", icon: Palmtree },
-  { name: "Travel", icon: Plane },
-  { name: "Food", icon: Utensils },
-];
+import { CategorySelector } from "./CategorySelector";
 
 // Reusable Skeleton Component for proper loading state
 const NewsCardSkeleton = ({
@@ -365,46 +323,7 @@ export function NewsFeed({
 
   return (
     <div className="flex flex-col pb-24 sm:px-6 lg:px-8 max-w-[1400px] mx-auto w-full">
-      {/* Category Filter Pills */}
-      <div className="w-full sticky top-0 py-4 mb-8 border-b border-neutral-200/50 dark:border-white/[0.04] backdrop-blur-xl bg-white/70 dark:bg-[#07090e]/70 z-10 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
-        <div className="relative max-w-[1400px] mx-auto group">
-          <div className="flex items-center justify-start md:justify-center gap-2 py-1 px-1 overflow-x-auto scrollbar-none scroll-smooth">
-            {CATEGORIES.map((cat) => {
-              const isActive = selectedCategory === cat.name;
-              const Icon = cat.icon;
-              const href =
-                cat.name === "All"
-                  ? "/news"
-                  : `/news/${encodeURIComponent(cat.name.toLowerCase().replace(/ /g, "-"))}`;
-              return (
-                <Link
-                  key={cat.name}
-                  href={href}
-                  className={cn(
-                    "group/btn flex items-center gap-2 px-4 py-2 rounded-full text-xs transition-all duration-300 ease-in-out whitespace-nowrap tracking-tight font-medium border",
-                    isActive
-                      ? "bg-slate-900 dark:bg-white text-white dark:text-slate-950 border-slate-900 dark:border-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_12px_rgba(255,255,255,0.05)] transform scale-[1.02]"
-                      : "bg-white/60 dark:bg-white/[0.02] text-neutral-500 dark:text-neutral-400 hover:bg-neutral-50 dark:hover:bg-white/[0.06] hover:text-neutral-900 dark:hover:text-white border-neutral-200 dark:border-white/[0.05] hover:border-neutral-300 dark:hover:border-white/[0.1] shadow-sm hover:shadow",
-                  )}
-                >
-                  <Icon
-                    className={cn(
-                      "w-3.5 h-3.5 transition-transform duration-300",
-                      isActive
-                        ? "text-white dark:text-slate-950 scale-110"
-                        : "text-neutral-400 dark:text-neutral-500 group-hover/btn:text-neutral-700 dark:group-hover/btn:text-neutral-300 group-hover/btn:scale-110",
-                    )}
-                  />
-                  {cat.name}
-                </Link>
-              );
-            })}
-          </div>
-          {/* Fading cues on scroll overflow */}
-          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white dark:from-[#07090e] to-transparent pointer-events-none z-10 md:hidden" />
-          <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white dark:from-[#07090e] to-transparent pointer-events-none z-10 md:hidden" />
-        </div>
-      </div>
+      <CategorySelector selectedCategory={selectedCategory} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full mt-2">
         {/* Loading Initial States with Skeleton */}
