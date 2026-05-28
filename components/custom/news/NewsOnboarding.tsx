@@ -12,21 +12,15 @@ import {
   Languages,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLangContext } from "@/providers/langProvider";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerContent,
   DrawerTitle,
   DrawerDescription,
 } from "@/components/ui/drawer";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 // Prepend Language Selection Step as the very first step
 const getOnboardingSteps = (lang: string) => [
@@ -407,20 +401,30 @@ export function NewsOnboarding() {
           </DrawerContent>
         </Drawer>
       ) : (
-        <Dialog open={open} onOpenChange={() => {}}>
-          <DialogContent
-            showCloseButton={false}
-            onPointerDownOutside={(e) => e.preventDefault()}
-            onEscapeKeyDown={(e) => e.preventDefault()}
-            className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl overflow-hidden relative text-slate-900 dark:text-zinc-100 outline-none"
-          >
-            <DialogTitle className="sr-only">NeuralPress Onboarding</DialogTitle>
-            <DialogDescription className="sr-only">
-              Choose your preferred language and explore system features.
-            </DialogDescription>
-            {open && renderOnboardingContent()}
-          </DialogContent>
-        </Dialog>
+        <AnimatePresence>
+          {open && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+              {/* Premium Backdrop Overlay with blur matching the design */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black/35 backdrop-blur-md z-40"
+              />
+
+              {/* High-Fidelity Dialog Container */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 15 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 15 }}
+                transition={{ type: "spring", duration: 0.4, bounce: 0.1 }}
+                className="relative bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-900 rounded-[2rem] max-w-lg w-full p-6 shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.7)] overflow-hidden text-slate-900 dark:text-zinc-100 outline-none z-50"
+              >
+                {renderOnboardingContent()}
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
       )}
     </>
   );
