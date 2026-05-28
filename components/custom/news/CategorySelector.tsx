@@ -46,7 +46,7 @@ export const CATEGORIES: CategoryItem[] = [
     image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&q=80",
   },
   {
-    name: "Local News",
+    name: "Sri Lanka",
     icon: MapPin,
     image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=300&q=80",
   },

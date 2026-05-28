@@ -30,11 +30,11 @@ export const CATEGORY_DETAILS: Record<string, CategoryMetaDetails> = {
       "Explore the complete global spectrum of real-time intelligence, breaking reports, and conceptual trends.",
     accentColor: "from-indigo-500 to-purple-600",
   },
-  "local news": {
+  "sri lanka": {
     image:
       "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=85",
     tagline:
-      "Stay connected with high-impact hyper-local events, community updates, and neighborhood narratives.",
+      "Stay connected with high-impact events, community updates, and neighborhood narratives in Sri Lanka.",
     accentColor: "from-emerald-500 to-teal-600",
   },
   technology: {
@@ -262,7 +262,7 @@ const NewsArticlePage = async ({
   if (!article) {
     const KNOWN_CATEGORIES = [
       "all",
-      "local news",
+      "sri lanka",
       "technology",
       "business",
       "politics",
