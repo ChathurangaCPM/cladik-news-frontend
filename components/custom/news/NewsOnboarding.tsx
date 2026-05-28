@@ -9,12 +9,36 @@ import {
   Sparkles,
   Bot,
   X,
+  Languages,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLangContext } from "@/providers/langProvider";
+import {
+  AlertDialog,
+  AlertDialogContent,
+} from "@/components/ui/alert-dialog";
+import {
+  Drawer,
+  DrawerContent,
+} from "@/components/ui/drawer";
+import { useIsMobile } from "@/hooks/use-mobile";
 
+// Prepend Language Selection Step as the very first step
 const getOnboardingSteps = (lang: string) => [
+  {
+    id: "language",
+    title: lang === "si" ? "භාෂාව තෝරන්න" : "Choose Language",
+    subtitle: lang === "si" ? "ඔබ කැමති භාෂාව තෝරන්න" : "Select your preferred language",
+    description: lang === "si"
+      ? "ඔබට මෙම පද්ධතිය සිංහලෙන් හෝ ඉංග්‍රීසියෙන් භාවිතා කළ හැක. පසුව වුවද මෙය වෙනස් කළ හැක."
+      : "You can read articles and use all search features in either Sinhala or English. You can switch this at any time.",
+    icon: Languages,
+    color: "text-indigo-500",
+    bg: "bg-indigo-500/10",
+    border: "border-indigo-500/20",
+    solidBg: "bg-indigo-500",
+  },
   {
     id: "welcome",
     title:
@@ -96,16 +120,19 @@ const getOnboardingSteps = (lang: string) => [
 ];
 
 export function NewsOnboarding() {
-  const { lang, isLoadingLangData } = useLangContext();
+  const { lang, setLanguage, isLoadingLangData } = useLangContext();
   const [open, setOpen] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const isMobile = useIsMobile();
 
-  const STEPS = getOnboardingSteps(lang || "en");
+  const STEPS = getOnboardingSteps(lang || "si"); // Default select value defaults to Sinhala "si"
 
   useEffect(() => {
     if (isLoadingLangData) return;
     const hasSeen = localStorage.getItem("neuralpress-onboarding-seen");
     if (!hasSeen) {
+      // Set the default selected language to Sinhala ("si") as requested by the user
+      setLanguage("si");
       const timer = setTimeout(() => setOpen(true), 1500);
       return () => clearTimeout(timer);
     }
@@ -135,80 +162,141 @@ export function NewsOnboarding() {
 
   if (!open) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in font-inter">
-      <div 
-        className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl animate-in fade-in-50 zoom-in-95 duration-200 overflow-hidden relative text-slate-900 dark:text-zinc-100"
-        onClick={(e) => e.stopPropagation()}
+  const renderOnboardingContent = () => (
+    <div className="relative w-full text-slate-900 dark:text-zinc-100 font-inter text-left">
+      {/* Absolute Close Button */}
+      <button
+        onClick={handleComplete}
+        className="absolute top-0 right-0 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800/60 text-slate-400 hover:text-slate-655 dark:text-zinc-500 dark:hover:text-zinc-300 outline-none transition-colors z-20 cursor-pointer"
       >
-        <button
-          onClick={handleComplete}
-          className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-850 text-slate-400 hover:text-slate-600 dark:text-zinc-500 dark:hover:text-zinc-300 outline-none transition-colors"
-        >
-          <X className="w-5 h-5" />
-        </button>
+        <X className="w-5 h-5" />
+      </button>
 
-        <div className="relative">
-          {/* Header Graphic */}
-          <div className="overflow-hidden px-5 pt-6 py-0 pb-4 text-center relative">
-            <AnimatePresence mode="popLayout">
-              <motion.div
-                key={step.id}
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.8, y: -20 }}
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      <div className="relative animate-in fade-in-50 duration-200">
+        {/* Header Graphic Section */}
+        <div className="overflow-hidden px-1 pt-6 py-0 pb-4 text-center relative">
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={step.id}
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className={cn(
+                "flex items-center mb-5 justify-center mx-auto w-20 h-20 rounded-full",
+                step.bg
+              )}
+            >
+              <Icon className={cn("w-10 h-10", step.color)} strokeWidth={1.5} />
+            </motion.div>
+          </AnimatePresence>
+
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.2 }}
+              className="text-center flex flex-col justify-center"
+            >
+              <div className="mx-auto">
+                <h2
+                  className={cn(
+                    "mb-2 leading-tight",
+                    lang === "si" ? "font-sinhala text-2xl font-semibold" : "font-heading text-3xl font-semibold"
+                  )}
+                >
+                  {step.title}
+                </h2>
+                <span
+                  className={cn(
+                    "text-sm font-medium",
+                    lang === "si" ? "font-sinhala text-base" : "",
+                    step.color,
+                  )}
+                >
+                  {step.subtitle}
+                </span>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
+          <div
+            className={cn(
+              "w-[60%] h-[80px] rounded-full mx-auto blur-2xl absolute left-1/2 -translate-x-1/2 opacity-20 top-10 pointer-events-none",
+              step.solidBg,
+            )}
+          />
+          <div
+            className={cn(
+              "w-[60%] h-[1px] blur-sm rounded-full mx-auto absolute left-1/2 -translate-x-1/2 opacity-30 bottom-0 pointer-events-none",
+              step.solidBg,
+            )}
+          />
+        </div>
+
+        {/* Content Section: Language Selector Cards or Description Text */}
+        <div className="px-1 pt-6 text-center relative min-h-[140px] flex flex-col justify-center">
+          {step.id === "language" ? (
+            <div className="grid grid-cols-2 gap-4 w-full">
+              {/* Sinhala Option Card */}
+              <button
+                type="button"
+                onClick={() => setLanguage("si")}
                 className={cn(
-                  "flex items-center mb-5 justify-center mx-auto w-20 h-20 rounded-full",
-                  step.bg
+                  "flex flex-col items-center gap-3 p-5 rounded-2xl border text-center transition-all duration-300 cursor-pointer outline-none relative overflow-hidden group/opt",
+                  lang === "si"
+                    ? "border-indigo-500 dark:border-indigo-400 bg-indigo-500/5 dark:bg-indigo-500/10 ring-2 ring-indigo-500/20"
+                    : "border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 hover:border-slate-350 dark:hover:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-900/40"
                 )}
               >
-                <Icon className={cn("w-10 h-10", step.color)} strokeWidth={1.5} />
-              </motion.div>
-            </AnimatePresence>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={step.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.2 }}
-                className="text-center flex flex-col justify-center"
-              >
-                <div className="mx-auto">
-                  <h2
-                    className={`${lang === "si" ? "font-sinhala text-2xl font-semibold" : "font-heading text-3xl font-semibold"} mb-2 leading-tight`}
-                  >
-                    {step.title}
-                  </h2>
-                  <span
-                    className={cn(
-                      "text-sm font-medium",
-                      lang === "si" ? "font-sinhala text-base" : "",
-                      step.color,
-                    )}
-                  >
-                    {step.subtitle}
-                  </span>
+                <div className={cn(
+                  "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
+                  lang === "si"
+                    ? "bg-indigo-500 text-white"
+                    : "bg-slate-100 dark:bg-zinc-900 text-slate-650 dark:text-zinc-400 group-hover/opt:bg-slate-200 dark:group-hover/opt:bg-zinc-800"
+                )}>
+                  <span className="font-bold text-sm font-sinhala">සිං</span>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+                <div className="space-y-0.5">
+                  <span className="text-sm font-semibold tracking-tight block font-sinhala">සිංහල</span>
+                  <span className="text-[10px] text-muted-foreground block font-mono">Sinhala</span>
+                </div>
+                {lang === "si" && (
+                  <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-500" />
+                )}
+              </button>
 
-            <div
-              className={cn(
-                "w-[60%] h-[80px] rounded-full mx-auto blur-2xl absolute left-1/2 -translate-x-1/2 opacity-20 top-10",
-                step.solidBg,
-              )}
-            ></div>
-            <div
-              className={cn(
-                "w-[60%] h-[1px] blur-sm rounded-full mx-auto absolute left-1/2 -translate-x-1/2 opacity-30 bottom-0",
-                step.solidBg,
-              )}
-            ></div>
-          </div>
-
-          <div className="px-5 pt-8 text-center relative">
+              {/* English Option Card */}
+              <button
+                type="button"
+                onClick={() => setLanguage("en")}
+                className={cn(
+                  "flex flex-col items-center gap-3 p-5 rounded-2xl border text-center transition-all duration-300 cursor-pointer outline-none relative overflow-hidden group/opt",
+                  lang === "en"
+                    ? "border-indigo-500 dark:border-indigo-400 bg-indigo-500/5 dark:bg-indigo-500/10 ring-2 ring-indigo-500/20"
+                    : "border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 hover:border-slate-350 dark:hover:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-900/40"
+                )}
+              >
+                <div className={cn(
+                  "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
+                  lang === "en"
+                    ? "bg-indigo-500 text-white"
+                    : "bg-slate-100 dark:bg-zinc-900 text-slate-650 dark:text-zinc-400 group-hover/opt:bg-slate-200 dark:group-hover/opt:bg-zinc-800"
+                )}>
+                  <span className="font-bold text-sm font-inter">EN</span>
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-sm font-semibold tracking-tight block font-inter">English</span>
+                  <span className="text-[10px] text-muted-foreground block font-mono font-light">English</span>
+                </div>
+                {lang === "en" && (
+                  <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-500" />
+                )}
+              </button>
+            </div>
+          ) : (
             <AnimatePresence mode="wait">
               <motion.div
                 key={step.id}
@@ -216,61 +304,89 @@ export function NewsOnboarding() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.2 }}
-                className={`text-center flex flex-col justify-center text-sm text-slate-600 dark:text-zinc-350 leading-relaxed ${lang === "si" ? "font-sinhala text-base" : "font-inter font-light"}`}
+                className={cn(
+                  "text-center flex flex-col justify-center text-sm text-slate-600 dark:text-zinc-350 leading-relaxed",
+                  lang === "si" ? "font-sinhala text-base" : "font-inter font-light"
+                )}
               >
                 {step.description}
               </motion.div>
             </AnimatePresence>
-          </div>
+          )}
+        </div>
 
-          <div className="relative mt-8 pt-6 border-t border-slate-100 dark:border-zinc-800/80">
-            <div className="flex items-center justify-between">
-              <div className="flex gap-1.5 ml-2">
-                {STEPS.map((_, i) => (
-                  <div
-                    key={i}
-                    className={cn(
-                      "h-1.5 rounded-full transition-all duration-300",
-                      i === currentStep
-                        ? cn("w-6", step.solidBg)
-                        : "w-1.5 bg-slate-200 dark:bg-zinc-800",
-                    )}
-                  />
-                ))}
-              </div>
-
-              <div className="flex items-center gap-1.5">
-                {currentStep > 0 && (
-                  <button
-                    className={`text-slate-400 hover:text-slate-600 dark:text-zinc-500 dark:hover:text-zinc-350 rounded-full text-sm font-medium px-4 py-2 hover:bg-slate-50 dark:hover:bg-zinc-800/40 transition-colors ${lang === "si" ? "font-sinhala" : ""}`}
-                    onClick={handlePrevious}
-                  >
-                    {lang === "si" ? "පෙර පියවර" : "Back"}
-                  </button>
-                )}
-                <button
-                  onClick={handleNext}
+        {/* Footer Actions Section */}
+        <div className="relative mt-8 pt-6 border-t border-slate-100 dark:border-zinc-800/60">
+          <div className="flex items-center justify-between">
+            {/* Step Indicators */}
+            <div className="flex gap-1.5 ml-2">
+              {STEPS.map((_, i) => (
+                <div
+                  key={i}
                   className={cn(
-                    `rounded-full font-medium transition-all duration-300 px-5 py-2 text-sm text-white flex items-center gap-1 shadow-sm hover:opacity-95 ${lang === "si" ? "font-sinhala" : ""}`,
-                    step.solidBg,
+                    "h-1.5 rounded-full transition-all duration-300",
+                    i === currentStep
+                      ? cn("w-6", step.solidBg)
+                      : "w-1.5 bg-slate-200 dark:bg-zinc-800",
                   )}
+                />
+              ))}
+            </div>
+
+            {/* Nav Control Actions */}
+            <div className="flex items-center gap-1.5">
+              {currentStep > 0 && (
+                <button
+                  className={cn(
+                    "text-slate-400 hover:text-slate-650 dark:text-zinc-500 dark:hover:text-zinc-350 rounded-full text-xs font-semibold px-4 py-2 hover:bg-slate-50 dark:hover:bg-zinc-900/40 transition-colors cursor-pointer",
+                    lang === "si" ? "font-sinhala text-sm" : ""
+                  )}
+                  onClick={handlePrevious}
                 >
-                  {currentStep === STEPS.length - 1
-                    ? lang === "si"
-                      ? "ආරම්භ කරන්න"
-                      : "Get Started"
-                    : lang === "si"
-                      ? "ඊළඟට"
-                      : "Next"}
-                  {currentStep < STEPS.length - 1 && (
-                    <ArrowRight className="w-4 h-4" />
-                  )}
+                  {lang === "si" ? "පෙර පියවර" : "Back"}
                 </button>
-              </div>
+              )}
+              <button
+                onClick={handleNext}
+                className={cn(
+                  "rounded-full font-semibold transition-all duration-300 px-5 py-2 text-xs text-white flex items-center gap-1 shadow-sm hover:opacity-95 cursor-pointer",
+                  lang === "si" ? "font-sinhala text-sm" : "",
+                  step.solidBg,
+                )}
+              >
+                {currentStep === STEPS.length - 1
+                  ? lang === "si"
+                    ? "ආරම්භ කරන්න"
+                    : "Get Started"
+                  : lang === "si"
+                    ? "ඊළඟට"
+                    : "Next"}
+                {currentStep < STEPS.length - 1 && (
+                  <ArrowRight className="w-4 h-4" />
+                )}
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+  );
+
+  if (isMobile) {
+    return (
+      <Drawer open={open} onOpenChange={setOpen}>
+        <DrawerContent className="bg-white dark:bg-zinc-950 border-t border-slate-250/20 dark:border-zinc-800/80 p-5 outline-none">
+          {renderOnboardingContent()}
+        </DrawerContent>
+      </Drawer>
+    );
+  }
+
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogContent className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl overflow-hidden relative text-slate-900 dark:text-zinc-100 outline-none">
+        {renderOnboardingContent()}
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
