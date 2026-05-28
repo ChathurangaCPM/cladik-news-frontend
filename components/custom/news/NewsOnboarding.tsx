@@ -17,10 +17,14 @@ import { useLangContext } from "@/providers/langProvider";
 import {
   AlertDialog,
   AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
 import {
   Drawer,
   DrawerContent,
+  DrawerTitle,
+  DrawerDescription,
 } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -388,6 +392,10 @@ export function NewsOnboarding() {
       {isMobile ? (
         <Drawer open={open} onOpenChange={() => setOpen(true)} dismissible={false}>
           <DrawerContent className="p-5 outline-none">
+            <DrawerTitle className="sr-only">NeuralPress Onboarding</DrawerTitle>
+            <DrawerDescription className="sr-only">
+              Choose your preferred language and explore system features.
+            </DrawerDescription>
             {open && renderOnboardingContent()}
           </DrawerContent>
         </Drawer>
@@ -397,6 +405,10 @@ export function NewsOnboarding() {
             onEscapeKeyDown={(e) => e.preventDefault()}
             className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl overflow-hidden relative text-slate-900 dark:text-zinc-100 outline-none"
           >
+            <AlertDialogTitle className="sr-only">NeuralPress Onboarding</AlertDialogTitle>
+            <AlertDialogDescription className="sr-only">
+              Choose your preferred language and explore system features.
+            </AlertDialogDescription>
             {open && renderOnboardingContent()}
           </AlertDialogContent>
         </AlertDialog>
