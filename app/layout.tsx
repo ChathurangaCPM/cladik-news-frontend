@@ -11,11 +11,16 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import ThirdPartyAnalytics from "@/components/custom/thirdPartyScripts";
 
+// Resolve the base URL dynamically for localhost, Vercel deployments, or custom production domains
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  ? process.env.NEXT_PUBLIC_BASE_URL
+  : process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : "http://localhost:3000";
+
 // Metadata setup
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000",
-  ),
+  metadataBase: new URL(baseUrl),
   title: {
     default: "News Discovery | NeuralPress",
     template: "%s | NeuralPress",
