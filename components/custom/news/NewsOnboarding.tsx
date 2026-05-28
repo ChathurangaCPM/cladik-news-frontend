@@ -15,11 +15,11 @@ import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLangContext } from "@/providers/langProvider";
 import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogTitle,
-  AlertDialogDescription,
-} from "@/components/ui/alert-dialog";
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerContent,
@@ -407,18 +407,20 @@ export function NewsOnboarding() {
           </DrawerContent>
         </Drawer>
       ) : (
-        <AlertDialog open={open} onOpenChange={setOpen}>
-          <AlertDialogContent
+        <Dialog open={open} onOpenChange={() => {}}>
+          <DialogContent
+            showCloseButton={false}
+            onPointerDownOutside={(e) => e.preventDefault()}
             onEscapeKeyDown={(e) => e.preventDefault()}
             className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl overflow-hidden relative text-slate-900 dark:text-zinc-100 outline-none"
           >
-            <AlertDialogTitle className="sr-only">NeuralPress Onboarding</AlertDialogTitle>
-            <AlertDialogDescription className="sr-only">
+            <DialogTitle className="sr-only">NeuralPress Onboarding</DialogTitle>
+            <DialogDescription className="sr-only">
               Choose your preferred language and explore system features.
-            </AlertDialogDescription>
+            </DialogDescription>
             {open && renderOnboardingContent()}
-          </AlertDialogContent>
-        </AlertDialog>
+          </DialogContent>
+        </Dialog>
       )}
     </>
   );
