@@ -15,8 +15,8 @@ import ThirdPartyAnalytics from "@/components/custom/thirdPartyScripts";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
   ? process.env.NEXT_PUBLIC_BASE_URL
   : process.env.NEXT_PUBLIC_VERCEL_URL
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : "http://localhost:3000";
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    : "http://localhost:3000";
 
 // Metadata setup
 export const metadata: Metadata = {
@@ -91,12 +91,12 @@ export default async function RootLayout({
             </UserLangProvider>
           </Providers>
         </TooltipProvider>
-        {/* <ThirdPartyAnalytics
+        <ThirdPartyAnalytics
           GA_MEASUREMENT_ID=""
           GA_TRACKING_ID={""}
           FB_PIXEL_ID=""
           CLARITY_ID={"wyb9qfv76w"}
-        /> */}
+        />
       </body>
     </html>
   );

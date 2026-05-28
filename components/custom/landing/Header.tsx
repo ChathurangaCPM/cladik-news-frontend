@@ -3,16 +3,19 @@
 import React from "react";
 import Link from "next/link";
 import { Sparkles } from "lucide-react";
+import Image from "next/image";
 
 export default function Header() {
   return (
     <header className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between relative z-20">
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-2xl bg-white p-[1.5px] shadow-[0_4px_15px_rgba(0,0,0,0.15)]">
-          <div className="w-full h-full rounded-[14px] bg-[#2b86ff] flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
-        </div>
+        <Image
+          src="/main-logo-white.png"
+          width={100}
+          height={100}
+          className="w-9 lg:w-[40px] transition-transform duration-700"
+          alt="Cladik"
+        />
         <span className="text-xl font-bold tracking-tight text-white">
           Neural<span className="text-white/80">Press</span>
         </span>
@@ -25,7 +28,10 @@ export default function Header() {
         <a href="#engine" className="hover:text-white transition duration-200">
           Our Technology
         </a>
-        <a href="#performance" className="hover:text-white transition duration-200">
+        <a
+          href="#performance"
+          className="hover:text-white transition duration-200"
+        >
           Operations
         </a>
       </nav>

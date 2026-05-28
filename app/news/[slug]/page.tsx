@@ -332,7 +332,7 @@ const NewsArticlePage = async ({
               >
                 ← Back to News
               </Link>
-              <Link href="/" className="transition-transform hover:scale-105">
+              {/* <Link href="/" className="transition-transform hover:scale-105">
                 <Image
                   src="/main-logo.png"
                   width={90}
@@ -340,7 +340,7 @@ const NewsArticlePage = async ({
                   className="w-8 sm:w-[90px] brightness-0 invert"
                   alt="NeuralPress"
                 />
-              </Link>
+              </Link> */}
             </div>
 
             {/* Bottom Left Hero Content Grid */}
