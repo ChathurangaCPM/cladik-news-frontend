@@ -9,6 +9,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
+import ThirdPartyAnalytics from "@/components/custom/thirdPartyScripts";
 
 // Metadata setup
 export const metadata: Metadata = {
@@ -85,6 +86,12 @@ export default async function RootLayout({
             </UserLangProvider>
           </Providers>
         </TooltipProvider>
+        <ThirdPartyAnalytics
+          GA_MEASUREMENT_ID=""
+          GA_TRACKING_ID={""}
+          FB_PIXEL_ID=""
+          CLARITY_ID={"wyb9qfv76w"}
+        />
       </body>
     </html>
   );
