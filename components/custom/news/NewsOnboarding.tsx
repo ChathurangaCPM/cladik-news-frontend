@@ -135,11 +135,13 @@ export function NewsOnboarding() {
 
     if (!hasSeen || forceOnboarding) {
       // Force Sinhala as default language selection immediately as requested
-      setLanguage("si");
+      if (lang !== "si") {
+        setLanguage("si");
+      }
       const timer = setTimeout(() => setOpen(true), 500);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [lang, setLanguage]);
 
   const handleComplete = () => {
     localStorage.setItem("neuralpress-onboarding-seen", "true");
