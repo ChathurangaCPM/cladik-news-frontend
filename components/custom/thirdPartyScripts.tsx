@@ -2,7 +2,7 @@
 
 import Script from 'next/script';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 
 interface ThirdPartyAnalyticsProps {
     GA_MEASUREMENT_ID: string;
@@ -21,7 +21,7 @@ declare global {
     }
 }
 
-export default function ThirdPartyAnalytics({ 
+function ThirdPartyAnalyticsContent({ 
     GA_MEASUREMENT_ID, 
     GA_TRACKING_ID, 
     FB_PIXEL_ID, 
@@ -150,5 +150,13 @@ export default function ThirdPartyAnalytics({
                 />}
             </noscript>
         </>
+    );
+}
+
+export default function ThirdPartyAnalytics(props: ThirdPartyAnalyticsProps) {
+    return (
+        <Suspense fallback={null}>
+            <ThirdPartyAnalyticsContent {...props} />
+        </Suspense>
     );
 }
