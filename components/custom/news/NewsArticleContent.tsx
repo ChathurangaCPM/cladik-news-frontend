@@ -23,6 +23,12 @@ import moment from "moment";
 import { DynamicNewsChart } from "@/components/news/DynamicNewsChart";
 import { SourcesPanel } from "./SourcesPanel";
 import { useRouter } from "next/navigation";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 export interface EnrichedSource {
   title?: string;
   url: string;
@@ -70,6 +76,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
 
   const { lang, dictionary } = useLangContext();
   const router = useRouter();
+  const isMobile = useIsMobile();
 
   const [viewCount, setViewCount] = React.useState(
     Math.max(article.views || 0, 1),
@@ -284,7 +291,9 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
     const b2 = new Set<string>();
     for (let i = 0; i < s2.length - 1; i++) b2.add(s2.substring(i, i + 2));
     let intersection = 0;
-    b1.forEach((b) => { if (b2.has(b)) intersection++; });
+    b1.forEach((b) => {
+      if (b2.has(b)) intersection++;
+    });
     return (2.0 * intersection) / (b1.size + b2.size || 1);
   };
 
@@ -332,10 +341,10 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
         /^www\./i,
         "",
       );
-    } catch (e) { }
+    } catch (e) {}
   }
 
-  const formatPubDate = (pubDate: string): string => {
+  const formatPubDate = (pubDate: string): React.ReactNode => {
     const now = moment();
     const date = moment(pubDate);
     const diffHours = now.diff(date, "hours");
@@ -350,7 +359,22 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
       day: "numeric",
     });
 
-    return `${localDate} at ${date.format("h:mm A")} ${moment().format("[UTC]Z")}`;
+    if (isMobile) {
+      return `${localDate} at ${date.format("h:mm A")}`;
+    } else {
+      return (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <span className="cursor-help border-b border-dotted border-muted-foreground/50">
+              {localDate} at {date.format("h:mm A")}
+            </span>
+          </TooltipTrigger>
+          <TooltipContent>
+            {`${localDate} at ${date.format("h:mm A")} ${moment().format("[UTC]Z")}`}
+          </TooltipContent>
+        </Tooltip>
+      );
+    }
   };
 
   return (
@@ -381,7 +405,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full bg-white fixed top-0 left-0 lg:pl-[320px] z-50 shadow-sm border-b border-slate-100"
+            className="w-full bg-white dark:bg-zinc-950 fixed top-0 left-0 lg:pl-[320px] z-50 shadow-sm border-b border-slate-100 dark:border-zinc-800/80"
           >
             <div className="max-w-5xl mx-auto py-4 ">
               <div className="flex items-center gap-5">
@@ -403,7 +427,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                       duration: 0.5,
                       ease: [0.22, 1, 0.36, 1],
                     }}
-                    className={`text-base md:text-lg ${lang === "si" ? "font-sinhala" : "font-heading"} text-center truncate line-clamp-1`}
+                    className={`text-base md:text-lg ${lang === "si" ? "font-sinhala" : "font-heading"} text-center truncate line-clamp-1 text-slate-900 dark:text-zinc-50`}
                   >
                     {lang === "si" ? article.sinhalaTitle : article.title}
                   </motion.h3>
@@ -424,7 +448,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
               filter: showSticky ? "blur(4px)" : "blur(0px)",
             }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className={`text-3xl md:text-5xl mb-6 ${lang === "si" ? "font-sinhala" : "font-heading"}`}
+            className={`text-3xl md:text-5xl mb-6 text-slate-900 dark:text-zinc-50 ${lang === "si" ? "font-sinhala" : "font-heading"}`}
           >
             {displayedTitle}
             {animationStage === 0 && <span className="animate-pulse"></span>}
@@ -450,21 +474,20 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
             <div className="flex items-center gap-2">
               <span>Published</span>
 
-
               <time dateTime={article.pubDate || article.createdAt}>
                 {formatPubDate(article.pubDate || article.createdAt)}
               </time>
             </div>
 
             {viewCount > 0 && (
-              <div className="flex items-center gap-1.5 border-l border-slate-100 pl-4 text-slate-500">
+              <div className="flex items-center gap-1.5 border-l border-slate-100 dark:border-zinc-800 pl-4 text-slate-500">
                 <Eye className="w-4 h-4" />
                 <span>{formatViews(viewCount)}</span>
               </div>
             )}
 
             {/* Show Source Avatars and Panel mapping right in the header row just like the card */}
-            <div className="flex items-center border-l border-slate-100 pl-4 h-5">
+            <div className="flex items-center border-l border-slate-100 dark:border-zinc-800 pl-4 h-5">
               <SourcesPanel
                 title={article.title}
                 url={article.url}
@@ -476,7 +499,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   let d = s.engine || "News";
                   try {
                     d = new URL(s.url).hostname.replace(/^www\./i, "");
-                  } catch (e) { }
+                  } catch (e) {}
                   return `https://www.google.com/s2/favicons?domain=${d}&sz=64`;
                 })}
               />
@@ -488,7 +511,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   <Link
                     href={`/news/${encodeURIComponent(cat.toLowerCase().replace(/ /g, "-"))}`}
                     key={idx}
-                    className="px-4 py-1 border bg-white border-gray-100 dark:border-gray-800 rounded-full text-xs font-normal transition-all duration-300 hover:bg-gray-50 hover:text-black"
+                    className="px-4 py-1 border bg-white dark:bg-zinc-900 border-gray-100 dark:border-gray-800 rounded-full text-xs font-normal text-slate-800 dark:text-zinc-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white"
                   >
                     {cat}
                   </Link>
@@ -560,7 +583,9 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                 <Sparkles className="w-4 h-4" strokeWidth={1} />
               </div>
               <span className="text-[12px] font-semibold tracking-wide uppercase font-inter">
-                {lang === "si" ? "NeuralPress AI සත්‍යාපනය" : "NeuralPress AI Verified Insights"}
+                {lang === "si"
+                  ? "NeuralPress AI සත්‍යාපනය"
+                  : "NeuralPress AI Verified Insights"}
               </span>
             </div>
             <p className="text-slate-600 dark:text-slate-300 text-[15px] leading-relaxed max-w-2xl font-inter font-light">
@@ -570,7 +595,9 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   <span className="font-semibold text-slate-900 dark:text-white">
                     NeuralPress's Multi-Agent Verifier
                   </span>{" "}
-                  තාක්ෂණය මඟින් පරීක්ෂාවට ලක් කර ඇත. කිසිදු අසත්‍ය හෝ නොමඟ යවන සුළු තොරතුරක් ඇතුළත් නොවීම සහතික කරමින් මෙම තොරතුරු සත්‍යාපනය කර සපයා ඇත.
+                  තාක්ෂණය මඟින් පරීක්ෂාවට ලක් කර ඇත. කිසිදු අසත්‍ය හෝ නොමඟ යවන
+                  සුළු තොරතුරක් ඇතුළත් නොවීම සහතික කරමින් මෙම තොරතුරු සත්‍යාපනය
+                  කර සපයා ඇත.
                 </>
               ) : (
                 <>
@@ -578,7 +605,9 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   <span className="font-semibold text-slate-900 dark:text-white">
                     NeuralPress's Multi-Agent Verifier
                   </span>{" "}
-                  for strict factual validity and event relevance. Our compliance engine cross-checks and filters search results to ensure zero false correlations or misleading content.
+                  for strict factual validity and event relevance. Our
+                  compliance engine cross-checks and filters search results to
+                  ensure zero false correlations or misleading content.
                 </>
               )}
             </p>
@@ -586,7 +615,8 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
               <div className="mt-2 flex items-center gap-2.5 py-2.5 px-4 rounded-xl bg-amber-50/80 dark:bg-amber-900/10 border border-amber-200/50 dark:border-amber-900/20 text-amber-800 dark:text-amber-400 shadow-sm">
                 <AlertCircle className="w-4 h-4 shrink-0" />
                 <span className="text-[13px] font-sinhala font-medium leading-normal">
-                  සමහර සිංහල අක්ෂර වැරදි විය හැක (Some Sinhala characters may be wrong)
+                  සමහර සිංහල අක්ෂර වැරදි විය හැක (Some Sinhala characters may be
+                  wrong)
                 </span>
               </div>
             )}
@@ -688,8 +718,8 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
         >
           {article.chart && <DynamicNewsChart chartObj={article.chart} />}
 
-          <div className="mt-16 pt-8 border-t border-slate-100">
-            <h3 className="text-xl font-heading mb-6 text-slate-900 tracking-tight">
+          <div className="mt-16 pt-8 border-t border-slate-100 dark:border-zinc-800/80">
+            <h3 className="text-xl font-heading mb-6 text-slate-900 dark:text-zinc-50 tracking-tight">
               Primary Sources
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
@@ -697,7 +727,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                 let domain = source.engine || "News";
                 try {
                   domain = new URL(source.url).hostname.replace(/^www\./i, "");
-                } catch (e) { }
+                } catch (e) {}
 
                 return (
                   <div
@@ -707,9 +737,9 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                       e.stopPropagation();
                       window.open(source.url, "_blank");
                     }}
-                    className="cursor-pointer group flex gap-4 p-4 rounded-2xl border border-primary/10 bg-primary-50/20 transition-all hover:border-primary hover:bg-primary-50/40 hover:shadow-sm"
+                    className="cursor-pointer group flex gap-4 p-4 rounded-2xl border border-primary/10 dark:border-zinc-800 bg-primary-50/10 dark:bg-zinc-900/20 transition-all hover:border-primary dark:hover:border-zinc-700 hover:bg-primary-50/30 dark:hover:bg-zinc-900/40 hover:shadow-sm dark:hover:shadow-[0_4px_20px_rgb(0,0,0,0.3)]"
                   >
-                    <div className="w-8 h-8 overflow-hidden rounded-full bg-white border border-primary/10 flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 overflow-hidden rounded-full bg-white dark:bg-zinc-950 border border-primary/10 dark:border-zinc-800/85 flex items-center justify-center shrink-0">
                       <Image
                         src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
                         alt={domain}
@@ -719,18 +749,18 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h5 className="text-slate-900 text-[15px] leading-snug group-hover:text-primary-700 transition-colors mb-1 line-clamp-2">
+                      <h5 className="text-slate-900 dark:text-zinc-100 text-[15px] leading-snug group-hover:text-primary-700 dark:group-hover:text-primary-400 transition-colors mb-1 line-clamp-2">
                         {source.title || "Reference article"}
                       </h5>
                       <p className="text-xs text-muted-foreground truncate line-clamp-2 mb-1">
                         {source?.content}
                       </p>
                       <div className="flex items-center gap-2">
-                        <Globe className="w-3 h-3" />
-                        <span className="text-[11px] font-medium text-slate-500 truncate">
+                        <Globe className="w-3 h-3 text-slate-400 dark:text-zinc-500" />
+                        <span className="text-[11px] font-medium text-slate-500 dark:text-zinc-400 truncate">
                           {domain}
                         </span>
-                        <ExternalLink className="w-3 h-3 text-slate-300 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                        <ExternalLink className="w-3 h-3 text-slate-300 dark:text-zinc-650 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
                       </div>
                     </div>
                   </div>
@@ -749,7 +779,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   structuredDataSearchResults={rawStructuredData}
                   enrichedSources={aiEnrichedData}
                   customTrigger={
-                    <button className="py-2.5 px-6 bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-750 text-white rounded-full font-medium text-sm transition-all duration-300 shadow-sm outline-none">
+                    <button className="py-2.5 px-6 bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-750 text-white rounded-full font-medium text-sm transition-all duration-300 shadow-sm outline-none cursor-pointer">
                       View All Sources
                     </button>
                   }

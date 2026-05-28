@@ -14,6 +14,34 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  InlineCitation,
+  InlineCitationCard,
+  InlineCitationCardBody,
+  InlineCitationCardTrigger,
+  InlineCitationCarousel,
+  InlineCitationCarouselContent,
+  InlineCitationCarouselHeader,
+  InlineCitationCarouselIndex,
+  InlineCitationCarouselItem,
+  InlineCitationCarouselNext,
+  InlineCitationCarouselPrev,
+  InlineCitationSource,
+  InlineCitationText,
+} from "@/components/ai-elements/inline-citation";
 
 interface SourcesPanelProps {
   title: string;
@@ -37,11 +65,12 @@ export function SourcesPanel({
   customTrigger,
 }: SourcesPanelProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   // 1. Combine and fuzzy search using Fuse.js to filter out unrelated sources
   const allSources = [...structuredDataSearchResults, ...enrichedSources];
   const uniqueAllSources = Array.from(
-    new Map(allSources.map((s) => [s.url, s])).values()
+    new Map(allSources.map((s) => [s.url, s])).values(),
   );
 
   const sourceScores = new Map<string, number>();
@@ -50,7 +79,7 @@ export function SourcesPanel({
     const fuse = new Fuse(uniqueAllSources, {
       keys: [
         { name: "title", weight: 0.7 },
-        { name: "content", weight: 0.3 }
+        { name: "content", weight: 0.3 },
       ],
       threshold: 0.6, // Only show related sources (0 is perfect match, 1 is mismatch)
       includeScore: true,
@@ -66,29 +95,28 @@ export function SourcesPanel({
   }
 
   // 2. Filter top coverage and related coverage, keeping only the ones deemed related by Fuse.js
-  const filteredStructuredResults = structuredDataSearchResults.filter(
-    (s) => sourceScores.has(s.url)
+  const filteredStructuredResults = structuredDataSearchResults.filter((s) =>
+    sourceScores.has(s.url),
   );
-  const filteredEnrichedSources = enrichedSources.filter(
-    (s) => sourceScores.has(s.url)
+  const filteredEnrichedSources = enrichedSources.filter((s) =>
+    sourceScores.has(s.url),
   );
 
   // 3. Deduplicate lists based on URL
-  const topCoverageUrls = new Set(
-    filteredStructuredResults.map((s) => s.url)
-  );
+  const topCoverageUrls = new Set(filteredStructuredResults.map((s) => s.url));
 
   if (url) topCoverageUrls.add(url);
 
   let relatedCoverage = filteredEnrichedSources.filter(
-    (s) => !topCoverageUrls.has(s.url)
+    (s) => !topCoverageUrls.has(s.url),
   );
   const allTopSources = filteredStructuredResults.map((s) => s);
 
   // Find if the primary URL already exists in the search results or enriched sources to use its original raw title
-  const matchingSource = [...filteredStructuredResults, ...filteredEnrichedSources].find(
-    (s) => s.url === url
-  );
+  const matchingSource = [
+    ...filteredStructuredResults,
+    ...filteredEnrichedSources,
+  ].find((s) => s.url === url);
   const primaryTitle = matchingSource?.title || title;
 
   // Deduplicate the top coverage itself just in case
@@ -143,33 +171,82 @@ export function SourcesPanel({
     let domain = s.engine || "News";
     try {
       domain = new URL(s.url).hostname.replace(/^www\./i, "");
-    } catch (e) { }
+    } catch (e) {}
     return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
   });
 
-  const activeFavicons = dynamicFavicons.length > 0 ? dynamicFavicons : favicons;
+  const activeFavicons =
+    dynamicFavicons.length > 0 ? dynamicFavicons : favicons;
   const activeSourcesCount = allAvailableSources.length || sourcesCount;
 
   const SourceAvatars = () => (
     <div className="flex items-center space-x-3">
       <div className="flex -space-x-2">
+        {uniqueTopSources.length > 0 && (
+          <InlineCitation>
+            <InlineCitationCard>
+              <InlineCitationCardTrigger
+                sources={uniqueTopSources.map((source) => source.url)}
+                className="mr-2 hover:bg-slate-200 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+                onClick={(e) => e.stopPropagation()}
+              />
+              <InlineCitationCardBody onClick={(e) => e.stopPropagation()}>
+                <InlineCitationCarousel>
+                  <InlineCitationCarouselHeader className="bg-slate-100 dark:bg-zinc-900 border-b border-slate-200 dark:border-zinc-800">
+                    <InlineCitationCarouselPrev className="hover:bg-slate-200 dark:hover:bg-zinc-800 p-1 rounded-md transition-colors" />
+                    <InlineCitationCarouselNext className="hover:bg-slate-200 dark:hover:bg-zinc-800 p-1 rounded-md transition-colors" />
+                    <InlineCitationCarouselIndex className="font-geist-mono text-xs" />
+                  </InlineCitationCarouselHeader>
+                  <InlineCitationCarouselContent>
+                    {uniqueTopSources.map((source) => (
+                      <InlineCitationCarouselItem
+                        key={source.url}
+                        className="space-y-2 p-4"
+                      >
+                        <InlineCitationSource
+                          description={source.content || ""}
+                          title={source.title || "Reference article"}
+                          url={source.url}
+                          className="space-y-1.5"
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="w-full text-xs h-7 justify-start gap-1 px-2 font-inter font-normal text-muted-foreground hover:text-foreground cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            window.open(source.url, "_blank");
+                          }}
+                        >
+                          <ExternalLink className="w-3 h-3" />
+                          View original article
+                        </Button>
+                      </InlineCitationCarouselItem>
+                    ))}
+                  </InlineCitationCarouselContent>
+                </InlineCitationCarousel>
+              </InlineCitationCardBody>
+            </InlineCitationCard>
+          </InlineCitation>
+        )}
         {activeFavicons && activeFavicons.length > 0
           ? activeFavicons.map((favicon, i) => (
-            <div
-              key={i}
-              className="w-6 h-6 rounded-full bg-white border-2 border-white flex items-center justify-center shadow-sm relative overflow-hidden z-0"
-              style={{ zIndex: 30 - i }}
-            >
-              <Image
-                src={favicon}
-                alt={`Source ${i + 1}`}
-                className="w-full h-full object-contain z-0 relative"
-                width={20}
-                height={20}
-                unoptimized
-              />
-            </div>
-          ))
+              <div
+                key={i}
+                className="w-6 h-6 rounded-full bg-white dark:bg-black border-2 border-white dark:border-gray-950 flex items-center justify-center shadow-sm relative overflow-hidden z-0"
+                style={{ zIndex: 30 - i }}
+              >
+                <Image
+                  src={favicon}
+                  alt={`Source ${i + 1}`}
+                  className="w-full h-full object-contain z-0 relative"
+                  width={20}
+                  height={20}
+                  unoptimized
+                />
+              </div>
+            ))
           : null}
       </div>
       <span className="text-sm text-slate-500 tracking-tight transition-colors group-hover/source:text-slate-900">
@@ -178,11 +255,176 @@ export function SourcesPanel({
     </div>
   );
 
-  return (
+  const renderData = () => {
+    return (
+      <div className="space-y-8 font-inter text-left pb-6">
+        {/* Primary Coverage */}
+        {uniqueTopSources.length > 0 && (
+          <div>
+            <h4 className="text-xs uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-4 px-1">
+              Primary Coverage
+            </h4>
+            <div className="space-y-3">
+              {uniqueTopSources.map((source, i) => {
+                let domain = source.engine || "News";
+                try {
+                  domain = new URL(source.url).hostname.replace(/^www\./i, "");
+                } catch (e) {}
+
+                if (!source?.content) {
+                  return null;
+                }
+
+                return (
+                  <div
+                    key={i}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.open(source.url, "_blank");
+                    }}
+                    className="cursor-pointer group flex gap-4 p-4 rounded-2xl border border-slate-100 dark:border-zinc-900 bg-white dark:bg-zinc-900/40 transition-all hover:border-slate-200 dark:hover:border-zinc-800 hover:shadow-[0_4px_20px_rgb(0,0,0,0.03)]"
+                  >
+                    <div className="w-6 h-6 overflow-hidden rounded-full flex items-center justify-center shrink-0 border bg-slate-50 dark:bg-zinc-800 border-slate-100 dark:border-zinc-700">
+                      <Image
+                        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
+                        alt={domain}
+                        className="w-full h-full object-contain"
+                        width={30}
+                        height={30}
+                        unoptimized
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h5 className="text-slate-900 dark:text-zinc-100 text-xs leading-snug font-medium transition-colors mb-1 line-clamp-2 group-hover:text-primary dark:group-hover:text-primary-400">
+                        {source.title || "Reference article"}
+                      </h5>
+                      <p className="text-xs text-muted-foreground truncate line-clamp-2 mb-1">
+                        {source?.content}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <Globe className="w-3 h-3 text-slate-400 dark:text-zinc-500" />
+                        <span className="text-[11px] font-medium text-slate-500 dark:text-zinc-400 truncate">
+                          {domain}
+                        </span>
+                        <ExternalLink className="w-3 h-3 text-slate-300 dark:text-zinc-600 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Related Coverage */}
+        {relatedCoverage.length > 0 && (
+          <div>
+            <h4 className="text-xs uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-4 px-1">
+              Related Coverage
+            </h4>
+            <div className="space-y-3 pb-10">
+              {relatedCoverage.map((source, i) => {
+                let domain = source.engine || "News";
+                try {
+                  domain = new URL(source.url).hostname.replace(/^www\./i, "");
+                } catch (e) {}
+
+                return (
+                  <div
+                    key={i}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      window.open(source.url, "_blank");
+                    }}
+                    className="cursor-pointer group flex gap-4 p-4 rounded-2xl border border-slate-100 dark:border-zinc-900 bg-white dark:bg-zinc-900/40 transition-all hover:border-slate-200 dark:hover:border-zinc-800 hover:shadow-[0_4px_20px_rgb(0,0,0,0.03)]"
+                  >
+                    <div className="w-6 h-6 overflow-hidden rounded-full flex items-center justify-center shrink-0 border bg-slate-50 dark:bg-zinc-800 border-slate-100 dark:border-zinc-700">
+                      <Image
+                        src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
+                        alt={domain}
+                        className="w-full h-full object-contain"
+                        width={30}
+                        height={30}
+                        unoptimized
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h5 className="text-slate-900 dark:text-zinc-100 text-sm leading-snug font-medium transition-colors mb-1 line-clamp-2 group-hover:text-primary dark:group-hover:text-primary-400">
+                        {source.title || "Reference article"}
+                      </h5>
+                      <p className="text-xs text-muted-foreground truncate line-clamp-2 mb-1">
+                        {source?.content}
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <Globe className="w-3 h-3 text-slate-400 dark:text-zinc-500" />
+                        <span className="text-[11px] font-medium text-slate-500 dark:text-zinc-400 truncate">
+                          {domain}
+                        </span>
+                        <ExternalLink className="w-3 h-3 text-slate-300 dark:text-zinc-600 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  return isMobile ? (
+    <>
+      <Drawer open={isOpen} onOpenChange={setIsOpen}>
+        <DrawerTrigger asChild>
+          {customTrigger ? (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="inline-block cursor-pointer"
+            >
+              {customTrigger}
+            </div>
+          ) : (
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="cursor-pointer group/source transition-opacity hover:opacity-80 inline-block"
+            >
+              <SourceAvatars />
+            </div>
+          )}
+        </DrawerTrigger>
+        <DrawerContent className="">
+          <DrawerHeader className="text-left px-6">
+            <DrawerTitle className="text-2xl font-geist-mono tracking-tighter text-slate-900 dark:text-zinc-50">
+              News Coverage
+            </DrawerTitle>
+            <DrawerDescription className="text-sm text-slate-500 dark:text-zinc-400 font-inter font-light">
+              This article was intelligently aggregated from{" "}
+              {activeSourcesCount} premium sources.
+            </DrawerDescription>
+          </DrawerHeader>
+          <ScrollArea className="h-[45vh] px-6">{renderData()}</ScrollArea>
+          <DrawerFooter className="px-6 pb-6">
+            <DrawerClose asChild>
+              <Button variant="outline" className="w-full cursor-pointer">
+                Close
+              </Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer>
+    </>
+  ) : (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         {customTrigger ? (
-          <div 
+          <div
             onClick={(e) => {
               e.stopPropagation();
             }}
@@ -202,141 +444,20 @@ export function SourcesPanel({
         )}
       </SheetTrigger>
 
-      <SheetContent 
-        side="right" 
+      <SheetContent
+        side="right"
         className="w-full sm:max-w-md h-full overflow-y-auto bg-white dark:bg-zinc-950 border-l border-slate-200/50 dark:border-zinc-800/80 p-6 text-slate-900 dark:text-zinc-100"
       >
         <SheetHeader className="mb-8 border-b border-slate-100 dark:border-zinc-800 pb-6 text-left flex flex-col gap-1.5 p-0">
-          <SheetTitle className="text-2xl font-inter font-semibold tracking-tight text-slate-900 dark:text-zinc-50">
+          <SheetTitle className="text-2xl font-geist-mono tracking-tighter text-slate-900 dark:text-zinc-50">
             News Coverage
           </SheetTitle>
-          <SheetDescription className="text-sm text-slate-500 dark:text-zinc-400 font-inter font-light">
-            This article was intelligently aggregated from{" "}
-            {activeSourcesCount} premium sources.
+          <SheetDescription className="text-sm text-slate-500 dark:text-zinc-400 font-inter font-light pb-2">
+            This article was intelligently aggregated from {activeSourcesCount}{" "}
+            premium sources.
           </SheetDescription>
         </SheetHeader>
-
-        <div className="space-y-8 font-inter text-left">
-          {/* Primary Coverage */}
-          {uniqueTopSources.length > 0 && (
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-4 px-1">
-                Primary Coverage
-              </h4>
-              <div className="space-y-3">
-                {uniqueTopSources.map((source, i) => {
-                  let domain = source.engine || "News";
-                  try {
-                    domain = new URL(source.url).hostname.replace(
-                      /^www\./i,
-                      "",
-                    );
-                  } catch (e) { }
-
-                  if (!source?.content) {
-                    return null;
-                  }
-
-                  return (
-                    <div
-                      key={i}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        window.open(source.url, "_blank");
-                      }}
-                      className="cursor-pointer group flex gap-4 p-4 rounded-2xl border border-slate-100 dark:border-zinc-900 bg-white dark:bg-zinc-900/40 transition-all hover:border-slate-200 dark:hover:border-zinc-800 hover:shadow-[0_4px_20px_rgb(0,0,0,0.03)]"
-                    >
-                      <div className="w-6 h-6 overflow-hidden rounded-full flex items-center justify-center shrink-0 border bg-slate-50 dark:bg-zinc-800 border-slate-100 dark:border-zinc-700">
-                        <Image
-                          src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
-                          alt={domain}
-                          className="w-full h-full object-contain"
-                          width={30}
-                          height={30}
-                          unoptimized
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h5 className="text-slate-900 dark:text-zinc-100 text-sm leading-snug font-medium transition-colors mb-1 line-clamp-2 group-hover:text-primary dark:group-hover:text-primary-400">
-                          {source.title || "Reference article"}
-                        </h5>
-                        <p className="text-xs text-muted-foreground truncate line-clamp-2 mb-1">
-                          {source?.content}
-                        </p>
-                        <div className="flex items-center gap-2">
-                          <Globe className="w-3 h-3 text-slate-400 dark:text-zinc-500" />
-                          <span className="text-[11px] font-medium text-slate-500 dark:text-zinc-400 truncate">
-                            {domain}
-                          </span>
-                          <ExternalLink className="w-3 h-3 text-slate-300 dark:text-zinc-600 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Related Coverage */}
-          {relatedCoverage.length > 0 && (
-            <div>
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-slate-400 dark:text-zinc-500 mb-4 px-1">
-                Related Coverage
-              </h4>
-              <div className="space-y-3 pb-10">
-                {relatedCoverage.map((source, i) => {
-                  let domain = source.engine || "News";
-                  try {
-                    domain = new URL(source.url).hostname.replace(
-                      /^www\./i,
-                      "",
-                    );
-                  } catch (e) { }
-
-                  return (
-                    <div
-                      key={i}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        window.open(source.url, "_blank");
-                      }}
-                      className="cursor-pointer group flex gap-4 p-4 rounded-2xl border border-slate-100 dark:border-zinc-900 bg-white dark:bg-zinc-900/40 transition-all hover:border-slate-200 dark:hover:border-zinc-800 hover:shadow-[0_4px_20px_rgb(0,0,0,0.03)]"
-                    >
-                      <div className="w-6 h-6 overflow-hidden rounded-full flex items-center justify-center shrink-0 border bg-slate-50 dark:bg-zinc-800 border-slate-100 dark:border-zinc-700">
-                        <Image
-                          src={`https://www.google.com/s2/favicons?domain=${domain}&sz=64`}
-                          alt={domain}
-                          className="w-full h-full object-contain"
-                          width={30}
-                          height={30}
-                          unoptimized
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h5 className="text-slate-900 dark:text-zinc-100 text-sm leading-snug font-medium transition-colors mb-1 line-clamp-2 group-hover:text-primary dark:group-hover:text-primary-400">
-                          {source.title || "Reference article"}
-                        </h5>
-                        <p className="text-xs text-muted-foreground truncate line-clamp-2 mb-1">
-                          {source?.content}
-                        </p>
-                        <div className="flex items-center gap-2">
-                          <Globe className="w-3 h-3 text-slate-400 dark:text-zinc-500" />
-                          <span className="text-[11px] font-medium text-slate-500 dark:text-zinc-400 truncate">
-                            {domain}
-                          </span>
-                          <ExternalLink className="w-3 h-3 text-slate-300 dark:text-zinc-600 opacity-0 -translate-x-2 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
+        {renderData()}
       </SheetContent>
     </Sheet>
   );
