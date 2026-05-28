@@ -2,6 +2,7 @@ import { Meteors } from "@/components/custom/news/Meteors";
 import { ThemeToggle } from "@/components/custom/news/ThemeToggle";
 import { LangToggle } from "@/components/custom/news/LangToggle";
 import { FloatingBusiness } from "@/components/custom/news/FloatingBusiness";
+import Link from "next/link";
 
 export default function NewsLayout({
   children,
@@ -33,9 +34,12 @@ export default function NewsLayout({
       <header className="relative w-full z-20 border-b border-slate-200/50 dark:border-white/5 bg-white/60 dark:bg-black/40 backdrop-blur-xl transition-colors duration-300">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-slate-900 dark:text-white font-semibold font-heading tracking-wide text-lg">
+            <Link
+              href="/"
+              className="text-slate-900 dark:text-white font-semibold font-heading tracking-wide text-lg"
+            >
               Neural<span className="text-primary">Press</span>
-            </span>
+            </Link>
           </div>
           <div className="flex items-center gap-5">
             <span className="text-xs font-inter font-light text-slate-500 dark:text-slate-400 hidden sm:inline">
