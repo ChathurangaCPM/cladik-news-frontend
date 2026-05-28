@@ -14,14 +14,8 @@ import {
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLangContext } from "@/providers/langProvider";
-import {
-  AlertDialog,
-  AlertDialogContent,
-} from "@/components/ui/alert-dialog";
-import {
-  Drawer,
-  DrawerContent,
-} from "@/components/ui/drawer";
+import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog";
+import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 // Prepend Language Selection Step as the very first step
@@ -29,10 +23,14 @@ const getOnboardingSteps = (lang: string) => [
   {
     id: "language",
     title: lang === "si" ? "භාෂාව තෝරන්න" : "Choose Language",
-    subtitle: lang === "si" ? "ඔබ කැමති භාෂාව තෝරන්න" : "Select your preferred language",
-    description: lang === "si"
-      ? "ඔබට මෙම පද්ධතිය සිංහලෙන් හෝ ඉංග්‍රීසියෙන් භාවිතා කළ හැක. පසුව වුවද මෙය වෙනස් කළ හැක."
-      : "You can read articles and use all search features in either Sinhala or English. You can switch this at any time.",
+    subtitle:
+      lang === "si"
+        ? "ඔබ කැමති භාෂාව තෝරන්න"
+        : "Select your preferred language",
+    description:
+      lang === "si"
+        ? "ඔබට මෙම පද්ධතිය සිංහලෙන් හෝ ඉංග්‍රීසියෙන් භාවිතා කළ හැක. පසුව වුවද මෙය වෙනස් කළ හැක."
+        : "You can read articles and use all search features in either Sinhala or English. You can switch this at any time.",
     icon: Languages,
     color: "text-indigo-500",
     bg: "bg-indigo-500/10",
@@ -164,14 +162,6 @@ export function NewsOnboarding() {
 
   const renderOnboardingContent = () => (
     <div className="relative w-full text-slate-900 dark:text-zinc-100 font-inter text-left">
-      {/* Absolute Close Button */}
-      <button
-        onClick={handleComplete}
-        className="absolute top-0 right-0 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-zinc-800/60 text-slate-400 hover:text-slate-655 dark:text-zinc-500 dark:hover:text-zinc-300 outline-none transition-colors z-20 cursor-pointer"
-      >
-        <X className="w-5 h-5" />
-      </button>
-
       <div className="relative animate-in fade-in-50 duration-200">
         {/* Header Graphic Section */}
         <div className="overflow-hidden px-1 pt-6 py-0 pb-4 text-center relative">
@@ -184,7 +174,7 @@ export function NewsOnboarding() {
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
               className={cn(
                 "flex items-center mb-5 justify-center mx-auto w-20 h-20 rounded-full",
-                step.bg
+                step.bg,
               )}
             >
               <Icon className={cn("w-10 h-10", step.color)} strokeWidth={1.5} />
@@ -204,7 +194,9 @@ export function NewsOnboarding() {
                 <h2
                   className={cn(
                     "mb-2 leading-tight",
-                    lang === "si" ? "font-sinhala text-2xl font-semibold" : "font-heading text-3xl font-semibold"
+                    lang === "si"
+                      ? "font-sinhala text-2xl font-semibold"
+                      : "font-heading text-3xl font-semibold",
                   )}
                 >
                   {step.title}
@@ -248,20 +240,26 @@ export function NewsOnboarding() {
                   "flex flex-col items-center gap-3 p-5 rounded-2xl border text-center transition-all duration-300 cursor-pointer outline-none relative overflow-hidden group/opt",
                   lang === "si"
                     ? "border-indigo-500 dark:border-indigo-400 bg-indigo-500/5 dark:bg-indigo-500/10 ring-2 ring-indigo-500/20"
-                    : "border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 hover:border-slate-350 dark:hover:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-900/40"
+                    : "border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 hover:border-slate-350 dark:hover:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-900/40",
                 )}
               >
-                <div className={cn(
-                  "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
-                  lang === "si"
-                    ? "bg-indigo-500 text-white"
-                    : "bg-slate-100 dark:bg-zinc-900 text-slate-650 dark:text-zinc-400 group-hover/opt:bg-slate-200 dark:group-hover/opt:bg-zinc-800"
-                )}>
+                <div
+                  className={cn(
+                    "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
+                    lang === "si"
+                      ? "bg-indigo-500 text-white"
+                      : "bg-slate-100 dark:bg-zinc-900 text-slate-650 dark:text-zinc-400 group-hover/opt:bg-slate-200 dark:group-hover/opt:bg-zinc-800",
+                  )}
+                >
                   <span className="font-bold text-sm font-sinhala">සිං</span>
                 </div>
                 <div className="space-y-0.5">
-                  <span className="text-sm font-semibold tracking-tight block font-sinhala">සිංහල</span>
-                  <span className="text-[10px] text-muted-foreground block font-mono">Sinhala</span>
+                  <span className="text-sm font-semibold tracking-tight block font-sinhala">
+                    සිංහල
+                  </span>
+                  <span className="text-[10px] text-muted-foreground block font-mono">
+                    Sinhala
+                  </span>
                 </div>
                 {lang === "si" && (
                   <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-500" />
@@ -276,20 +274,26 @@ export function NewsOnboarding() {
                   "flex flex-col items-center gap-3 p-5 rounded-2xl border text-center transition-all duration-300 cursor-pointer outline-none relative overflow-hidden group/opt",
                   lang === "en"
                     ? "border-indigo-500 dark:border-indigo-400 bg-indigo-500/5 dark:bg-indigo-500/10 ring-2 ring-indigo-500/20"
-                    : "border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 hover:border-slate-350 dark:hover:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-900/40"
+                    : "border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 hover:border-slate-350 dark:hover:border-zinc-700 hover:bg-slate-50/50 dark:hover:bg-zinc-900/40",
                 )}
               >
-                <div className={cn(
-                  "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
-                  lang === "en"
-                    ? "bg-indigo-500 text-white"
-                    : "bg-slate-100 dark:bg-zinc-900 text-slate-650 dark:text-zinc-400 group-hover/opt:bg-slate-200 dark:group-hover/opt:bg-zinc-800"
-                )}>
+                <div
+                  className={cn(
+                    "w-10 h-10 rounded-xl flex items-center justify-center transition-colors",
+                    lang === "en"
+                      ? "bg-indigo-500 text-white"
+                      : "bg-slate-100 dark:bg-zinc-900 text-slate-650 dark:text-zinc-400 group-hover/opt:bg-slate-200 dark:group-hover/opt:bg-zinc-800",
+                  )}
+                >
                   <span className="font-bold text-sm font-inter">EN</span>
                 </div>
                 <div className="space-y-0.5">
-                  <span className="text-sm font-semibold tracking-tight block font-inter">English</span>
-                  <span className="text-[10px] text-muted-foreground block font-mono font-light">English</span>
+                  <span className="text-sm font-semibold tracking-tight block font-inter">
+                    English
+                  </span>
+                  <span className="text-[10px] text-muted-foreground block font-mono font-light">
+                    English
+                  </span>
                 </div>
                 {lang === "en" && (
                   <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-500" />
@@ -306,7 +310,9 @@ export function NewsOnboarding() {
                 transition={{ duration: 0.2 }}
                 className={cn(
                   "text-center flex flex-col justify-center text-sm text-slate-600 dark:text-zinc-350 leading-relaxed",
-                  lang === "si" ? "font-sinhala text-base" : "font-inter font-light"
+                  lang === "si"
+                    ? "font-sinhala text-base"
+                    : "font-inter font-light",
                 )}
               >
                 {step.description}
@@ -339,7 +345,7 @@ export function NewsOnboarding() {
                 <button
                   className={cn(
                     "text-slate-400 hover:text-slate-650 dark:text-zinc-500 dark:hover:text-zinc-350 rounded-full text-xs font-semibold px-4 py-2 hover:bg-slate-50 dark:hover:bg-zinc-900/40 transition-colors cursor-pointer",
-                    lang === "si" ? "font-sinhala text-sm" : ""
+                    lang === "si" ? "font-sinhala text-sm" : "",
                   )}
                   onClick={handlePrevious}
                 >
@@ -374,8 +380,8 @@ export function NewsOnboarding() {
 
   if (isMobile) {
     return (
-      <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerContent className="bg-white dark:bg-zinc-950 border-t border-slate-250/20 dark:border-zinc-800/80 p-5 outline-none">
+      <Drawer open={open} onOpenChange={() => setOpen(true)} dismissible={false}>
+        <DrawerContent className="p-5 outline-none">
           {renderOnboardingContent()}
         </DrawerContent>
       </Drawer>
@@ -384,7 +390,10 @@ export function NewsOnboarding() {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogContent className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl overflow-hidden relative text-slate-900 dark:text-zinc-100 outline-none">
+      <AlertDialogContent
+        onEscapeKeyDown={(e) => e.preventDefault()}
+        className="bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl overflow-hidden relative text-slate-900 dark:text-zinc-100 outline-none"
+      >
         {renderOnboardingContent()}
       </AlertDialogContent>
     </AlertDialog>
