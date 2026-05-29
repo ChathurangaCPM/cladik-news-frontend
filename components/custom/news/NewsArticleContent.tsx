@@ -915,6 +915,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                         className="w-full h-full object-contain"
                         width={30}
                         height={30}
+                        unoptimized
                       />
                     </div>
                     <div className="flex-1 min-w-0">

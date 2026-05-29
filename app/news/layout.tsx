@@ -67,7 +67,7 @@ export default function NewsLayout({
       </header>
 
       {/* Main Content */}
-      <main className="max-w-[1400px] mx-auto z-10 relative pt-10 px-4 sm:px-6 lg:px-8">
+      <main className="max-w-[1400px] mx-auto z-10 relative pt-5 px-4 sm:px-6 lg:px-8">
         {children}
       </main>
 
