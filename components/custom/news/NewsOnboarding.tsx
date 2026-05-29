@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Search,
   Zap,
@@ -27,10 +27,14 @@ const getOnboardingSteps = (lang: string) => [
   {
     id: "language",
     title: lang === "si" ? "භාෂාව තෝරන්න" : "Choose Language",
-    subtitle: lang === "si" ? "ඔබ කැමති භාෂාව තෝරන්න" : "Select your preferred language",
-    description: lang === "si"
-      ? "ඔබට මෙම පද්ධතිය සිංහලෙන් හෝ ඉංග්‍රීසියෙන් භාවිතා කළ හැක. පසුව වුවද මෙය වෙනස් කළ හැක."
-      : "You can read articles and use all search features in either Sinhala or English. You can switch this at any time.",
+    subtitle:
+      lang === "si"
+        ? "ඔබ කැමති භාෂාව තෝරන්න"
+        : "Select your preferred language",
+    description:
+      lang === "si"
+        ? "ඔබට මෙම පද්ධතිය සිංහලෙන් හෝ ඉංග්‍රීසියෙන් භාවිතා කළ හැක. පසුව වුවද මෙය වෙනස් කළ හැක."
+        : "You can read articles and use all search features in either Sinhala or English. You can switch this at any time.",
     icon: Languages,
     color: "text-indigo-500",
     bg: "bg-indigo-500/10",
@@ -123,6 +127,7 @@ export function NewsOnboarding() {
   const [currentStep, setCurrentStep] = useState(0);
   const isMobile = useIsMobile();
   const [mounted, setMounted] = useState(false);
+  const hasForcedDefaultLang = useRef(false);
 
   const STEPS = getOnboardingSteps(lang || "si"); // Default fallback to Sinhala "si"
 
@@ -138,8 +143,11 @@ export function NewsOnboarding() {
 
     if (!hasSeen || forceOnboarding) {
       // Force Sinhala as default language selection immediately as requested
-      if (lang !== "si") {
-        setLanguage("si");
+      if (!hasForcedDefaultLang.current) {
+        hasForcedDefaultLang.current = true;
+        if (lang !== "si") {
+          setLanguage("si");
+        }
       }
       const timer = setTimeout(() => setOpen(true), 500);
       return () => clearTimeout(timer);
@@ -204,14 +212,14 @@ export function NewsOnboarding() {
                     "mb-2 leading-tight",
                     lang === "si"
                       ? "font-sinhala text-2xl font-semibold"
-                      : "font-heading text-3xl font-semibold",
+                      : "text-3xl tracking-[-2px]",
                   )}
                 >
                   {step.title}
                 </h2>
                 <span
                   className={cn(
-                    "text-sm font-medium",
+                    "text-sm ",
                     lang === "si" ? "font-sinhala text-base" : "",
                     step.color,
                   )}
@@ -391,9 +399,15 @@ export function NewsOnboarding() {
   return (
     <>
       {isMobile ? (
-        <Drawer open={open} onOpenChange={() => setOpen(true)} dismissible={false}>
+        <Drawer
+          open={open}
+          onOpenChange={() => setOpen(true)}
+          dismissible={false}
+        >
           <DrawerContent className="p-5 outline-none">
-            <DrawerTitle className="sr-only">NeuralPress Onboarding</DrawerTitle>
+            <DrawerTitle className="sr-only">
+              NeuralPress Onboarding
+            </DrawerTitle>
             <DrawerDescription className="sr-only">
               Choose your preferred language and explore system features.
             </DrawerDescription>
