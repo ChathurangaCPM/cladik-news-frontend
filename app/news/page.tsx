@@ -30,14 +30,14 @@ export default async function NewsMainPage(props: {
       <div className="w-full font-inter relative z-10">
         <div className="mb-10 mt-4 px-4 flex flex-col gap-3 justify-center">
           <Link href={"/news"} className="w-[90px] mx-auto block">
-            <Image
+            <img
               src="/main-logo.png"
               width={100}
               height={100}
               className="w-9 lg:w-[90px] transition-transform duration-700 logo-light"
               alt="NeuralPress"
             />
-            <Image
+            <img
               src="/main-logo-white.png"
               width={100}
               height={100}

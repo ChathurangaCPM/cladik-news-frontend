@@ -39,14 +39,14 @@ export default function NewsLayout({
               href="/"
               className="text-slate-900 dark:text-white tracking-[-1px] text-lg flex items-center gap-2"
             >
-              <Image
+              <img
                 src="/main-logo.png"
                 width={100}
                 height={100}
                 className="w-9 lg:w-[30px] transition-transform duration-700 logo-light"
                 alt="NeuralPress"
               />
-              <Image
+              <img
                 src="/main-logo-white.png"
                 width={100}
                 height={100}
