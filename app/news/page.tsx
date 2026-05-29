@@ -34,14 +34,14 @@ export default async function NewsMainPage(props: {
               src="/main-logo.png"
               width={100}
               height={100}
-              className="w-9 lg:w-[90px] transition-transform duration-700 dark:hidden"
+              className="w-9 lg:w-[90px] transition-transform duration-700 logo-light"
               alt="NeuralPress"
             />
             <Image
               src="/main-logo-white.png"
               width={100}
               height={100}
-              className="w-9 lg:w-[90px] transition-transform duration-700 hidden dark:block"
+              className="w-9 lg:w-[90px] transition-transform duration-700 logo-dark"
               alt="NeuralPress"
             />
           </Link>

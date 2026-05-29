@@ -16,14 +16,14 @@ export default function Footer() {
               src="/main-logo.png"
               width={60}
               height={60}
-              className="w-8 h-8 object-contain opacity-90 dark:opacity-100 dark:hidden"
+              className="w-8 h-8 object-contain opacity-90 dark:opacity-100 logo-light"
               alt="NeuralPress"
             />
             <Image
               src="/main-logo-white.png"
               width={60}
               height={60}
-              className="w-8 h-8 object-contain opacity-90 dark:opacity-100 hidden dark:block"
+              className="w-8 h-8 object-contain opacity-90 dark:opacity-100 logo-dark"
               alt="NeuralPress"
             />
             <div className="flex flex-col">

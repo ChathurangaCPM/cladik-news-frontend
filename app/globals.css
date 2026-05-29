@@ -131,3 +131,17 @@
     @apply font-sans;
   }
 }
+
+/* Bulletproof Theme Logo Switcher Utilities */
+.logo-light {
+  display: block !important;
+}
+.logo-dark {
+  display: none !important;
+}
+.dark .logo-light {
+  display: none !important;
+}
+.dark .logo-dark {
+  display: block !important;
+}

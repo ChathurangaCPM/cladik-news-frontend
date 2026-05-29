@@ -7,7 +7,6 @@ import Fuse from "fuse.js";
 import { useLangContext } from "@/providers/langProvider";
 import Link from "next/link";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { useTheme } from "next-themes";
 
 import {
   ExternalLink,
@@ -107,59 +106,6 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
   // 2: Reveal Meta/Image & Stream Main Content
   // 3: Reveal Chart/Sources Footer
   const [animationStage, setAnimationStage] = useState(0);
-
-  const { theme } = useTheme();
-  const [currentUrl, setCurrentUrl] = useState("");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setCurrentUrl(window.location.origin + "/news/" + article.slug);
-    }
-  }, [article.slug]);
-
-  useEffect(() => {
-    // Load Facebook SDK
-    const id = "facebook-jssdk";
-    if (document.getElementById(id)) {
-      try {
-        if ((window as any).FB) {
-          (window as any).FB.XFBML.parse();
-        }
-      } catch (e) {
-        console.error(e);
-      }
-      return;
-    }
-
-    const fjs = document.getElementsByTagName("script")[0];
-    if (fjs && fjs.parentNode) {
-      const js = document.createElement("script") as HTMLScriptElement;
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0";
-      js.async = true;
-      js.defer = true;
-      js.crossOrigin = "anonymous";
-      fjs.parentNode.insertBefore(js, fjs);
-    } else {
-      const js = document.createElement("script") as HTMLScriptElement;
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0";
-      js.async = true;
-      js.defer = true;
-      js.crossOrigin = "anonymous";
-      document.head.appendChild(js);
-    }
-  }, [lang]);
-
-  useEffect(() => {
-    try {
-      if ((window as any).FB) {
-        (window as any).FB.XFBML.parse();
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }, [theme, currentUrl]);
 
   const activeTitle =
     (lang === "si" ? article.sinhalaTitle : article.title) || "";
@@ -1010,34 +956,9 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
               </div>
             )}
 
-            {/* Facebook Comments Curation Portal */}
-            {currentUrl && (
-              <div className="mt-16 pt-10 border-t border-slate-100 dark:border-zinc-800/80 animate-in fade-in duration-700">
-                <div className="flex items-center justify-between mb-8">
-                  <h3 className="text-xl font-heading text-slate-900 dark:text-zinc-50 tracking-tight flex items-center gap-2">
-                    <span className="w-1.5 h-4 rounded bg-indigo-500" />
-                    {lang === "si" ? "ප්‍රජා අදහස්" : "Discussion Portal"}
-                  </h3>
-                  <span className="text-[10px] font-mono bg-slate-50 dark:bg-zinc-900 border border-slate-200/50 dark:border-zinc-800/60 px-3 py-1.5 rounded-full text-slate-400 dark:text-zinc-500">
-                    {lang === "si" ? "ෆේස්බුක් මගින් බලගන්වයි" : "Powered by Facebook Curation"}
-                  </span>
-                </div>
-                
-                <div 
-                  key={theme} 
-                  className="bg-white/40 dark:bg-zinc-950/20 border border-slate-150 dark:border-zinc-900/60 rounded-3xl p-6 shadow-inner transition-colors duration-300 relative"
-                >
-                  <div id="fb-root"></div>
-                  <div 
-                    className="fb-comments" 
-                    data-href={currentUrl} 
-                    data-width="100%" 
-                    data-numposts="5"
-                    data-colorscheme={theme === "dark" ? "dark" : "light"}
-                  />
-                </div>
-              </div>
-            )}
+            {/* {article.slug && (
+              <NewsComments slug={article.slug} />
+            )} */}
           </div>
         </motion.div>
       </article>

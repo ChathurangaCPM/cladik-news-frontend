@@ -56,8 +56,8 @@ export default function PricingPage() {
         <header className="bg-white/70 dark:bg-white/[0.02] border border-slate-200/50 dark:border-white/[0.05] shadow-[0_10px_30px_rgba(0,0,0,0.02)] backdrop-blur-xl h-20 rounded-full px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2">
-              <Image src="/main-logo.png" width={36} height={36} className="w-8 h-8 object-contain dark:hidden" alt="NeuralPress" />
-              <Image src="/main-logo-white.png" width={36} height={36} className="w-8 h-8 object-contain hidden dark:block" alt="NeuralPress" />
+              <Image src="/main-logo.png" width={36} height={36} className="w-8 h-8 object-contain logo-light" alt="NeuralPress" />
+              <Image src="/main-logo-white.png" width={36} height={36} className="w-8 h-8 object-contain logo-dark" alt="NeuralPress" />
               <span className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                 Neural<span className="text-indigo-600">Press</span>
               </span>
