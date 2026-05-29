@@ -588,33 +588,18 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                 <Sparkles className="w-4 h-4" strokeWidth={1} />
               </div>
               <span className="text-[12px] font-semibold tracking-wide uppercase font-inter">
-                {lang === "si"
-                  ? "NeuralPress AI සත්‍යාපනය"
-                  : "NeuralPress AI Verified Insights"}
+                NeuralPress AI Verified Insights
               </span>
             </div>
             <p className="text-slate-600 dark:text-slate-300 text-[15px] leading-relaxed max-w-2xl font-inter font-light">
-              {lang === "si" ? (
-                <>
-                  මෙම පුවතෙහි නිරවද්‍යතාවය සහ අදාළත්වය තහවුරු කිරීම සඳහා{" "}
-                  <span className="font-semibold text-slate-900 dark:text-white">
-                    NeuralPress's Multi-Agent Verifier
-                  </span>{" "}
-                  තාක්ෂණය මඟින් පරීක්ෂාවට ලක් කර ඇත. කිසිදු අසත්‍ය හෝ නොමඟ යවන
-                  සුළු තොරතුරක් ඇතුළත් නොවීම සහතික කරමින් මෙම තොරතුරු සත්‍යාපනය
-                  කර සපයා ඇත.
-                </>
-              ) : (
-                <>
-                  Vetted by{" "}
-                  <span className="font-semibold text-slate-900 dark:text-white">
-                    NeuralPress's Multi-Agent Verifier
-                  </span>{" "}
-                  for strict factual validity and event relevance. Our
-                  compliance engine cross-checks and filters search results to
-                  ensure zero false correlations or misleading content.
-                </>
-              )}
+              <>
+                Vetted by{" "}
+                <span className="font-semibold text-slate-900 dark:text-white">
+                  NeuralPress's Multi-Agent Verifier,
+                </span>{" "}
+                This article is an AI-generated news summary based on publicly
+                available reporting from cited sources.
+              </>
             </p>
             {lang === "si" && (
               <div className="mt-2 flex items-center gap-2.5 py-2.5 px-4 rounded-xl bg-amber-50/80 dark:bg-amber-900/10 border border-amber-200/50 dark:border-amber-900/20 text-amber-800 dark:text-amber-400 shadow-sm">
