@@ -40,7 +40,7 @@ export default function Footer() {
           </div>
 
           {/* Minimal Navigation Links */}
-          <nav className="flex flex-wrap gap-x-6 gap-y-2 text-[11px] font-mono tracking-tight">
+          <nav className="flex flex-wrap gap-x-6 gap-y-2 tracking-tight">
             <Link
               href="/news"
               className="hover:text-indigo-600 dark:hover:text-white transition duration-200"
