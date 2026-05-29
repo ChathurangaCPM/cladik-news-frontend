@@ -8,11 +8,12 @@ export default function TestimonialsSection() {
       <span className="text-xs uppercase text-indigo-600 font-mono tracking-wider font-bold">
         Testimonials
       </span>
-      <h2 className="text-4xl font-extrabold font-heading text-slate-900 mt-2">
+      <h2 className="text-4xl tracking-[-3px] text-slate-900 mt-2">
         What they say about us?
       </h2>
-      <p className="text-slate-500 max-w-xl mx-auto mt-4 text-sm">
-        Hear from professionals utilizing NeuralPress for conceptual story discovery and reading.
+      <p className="text-slate-500 font-light max-w-xl mx-auto mt-4 text-sm">
+        Hear from professionals utilizing NeuralPress for conceptual story
+        discovery and reading.
       </p>
 
       {/* 4 Testimonial visual Cards */}
@@ -20,8 +21,8 @@ export default function TestimonialsSection() {
         {/* Card 1 */}
         <div className="bg-white border border-slate-200/60 rounded-[2rem] p-6 shadow-sm flex flex-col justify-between relative overflow-hidden group">
           <p className="text-xs text-slate-500 font-normal italic leading-relaxed">
-            &ldquo;The bilingual translation into high-quality Sinhala is seamlessly accurate. I can read
-            worldwide stories instantly.&rdquo;
+            &ldquo;The bilingual translation into high-quality Sinhala is
+            seamlessly accurate. I can read worldwide stories instantly.&rdquo;
           </p>
           <div className="flex items-center gap-3 mt-6 border-t border-slate-100 pt-4">
             <div className="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-500">
@@ -29,7 +30,9 @@ export default function TestimonialsSection() {
             </div>
             <div>
               <h4 className="text-xs font-bold text-slate-800">Kalum Dias</h4>
-              <span className="text-[10px] text-slate-400">Content Analyst</span>
+              <span className="text-[10px] text-slate-400">
+                Content Analyst
+              </span>
             </div>
           </div>
         </div>
@@ -37,8 +40,8 @@ export default function TestimonialsSection() {
         {/* Card 2 */}
         <div className="bg-white border border-slate-200/60 rounded-[2rem] p-6 shadow-sm flex flex-col justify-between relative overflow-hidden group">
           <p className="text-xs text-slate-500 font-normal italic leading-relaxed">
-            &ldquo;Searching news by conceptual subject instead of exact words makes my information discovery
-            twice as fast!&rdquo;
+            &ldquo;Searching news by conceptual subject instead of exact words
+            makes my information discovery twice as fast!&rdquo;
           </p>
           <div className="flex items-center gap-3 mt-6 border-t border-slate-100 pt-4">
             <div className="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-500">
@@ -54,15 +57,17 @@ export default function TestimonialsSection() {
         {/* Card 3 */}
         <div className="bg-white border border-slate-200/60 rounded-[2rem] p-6 shadow-sm flex flex-col justify-between relative overflow-hidden group">
           <p className="text-xs text-slate-500 font-normal italic leading-relaxed">
-            &ldquo;Consensus clustering keeps duplicate stories fully hidden while preserving unique angles.
-            Simple, clean, and amazing.&rdquo;
+            &ldquo;Consensus clustering keeps duplicate stories fully hidden
+            while preserving unique angles. Simple, clean, and amazing.&rdquo;
           </p>
           <div className="flex items-center gap-3 mt-6 border-t border-slate-100 pt-4">
             <div className="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-500">
               MF
             </div>
             <div>
-              <h4 className="text-xs font-bold text-slate-800">Malik Fernando</h4>
+              <h4 className="text-xs font-bold text-slate-800">
+                Malik Fernando
+              </h4>
               <span className="text-[10px] text-slate-400">Journalist</span>
             </div>
           </div>
@@ -71,8 +76,8 @@ export default function TestimonialsSection() {
         {/* Card 4 */}
         <div className="bg-white border border-slate-200/60 rounded-[2rem] p-6 shadow-sm flex flex-col justify-between relative overflow-hidden group">
           <p className="text-xs text-slate-500 font-normal italic leading-relaxed">
-            &ldquo;An incredibly modern, fast discovery UI. Viewport scrolling and console updates run
-            beautifully in real-time.&rdquo;
+            &ldquo;An incredibly modern, fast discovery UI. Viewport scrolling
+            and console updates run beautifully in real-time.&rdquo;
           </p>
           <div className="flex items-center gap-3 mt-6 border-t border-slate-100 pt-4">
             <div className="w-9 h-9 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-500">
@@ -80,7 +85,9 @@ export default function TestimonialsSection() {
             </div>
             <div>
               <h4 className="text-xs font-bold text-slate-800">Sahan Raj</h4>
-              <span className="text-[10px] text-slate-400">Software Developer</span>
+              <span className="text-[10px] text-slate-400">
+                Software Developer
+              </span>
             </div>
           </div>
         </div>

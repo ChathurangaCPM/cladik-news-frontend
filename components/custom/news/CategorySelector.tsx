@@ -37,103 +37,142 @@ export interface CategoryItem {
   name: string;
   icon: React.ComponentType<any>;
   image: string;
+  path: string;
 }
 
 export const CATEGORIES: CategoryItem[] = [
   {
     name: "All",
     icon: LayoutGrid,
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&q=80",
+    path: "/news",
   },
   {
     name: "Sri Lanka",
     icon: MapPin,
-    image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=300&q=80",
+    path: "/news/sri-lanka",
   },
   {
     name: "Technology",
     icon: Cpu,
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&q=80",
+    path: "/news/technology",
   },
   {
     name: "AI & Future",
     icon: Bot,
-    image: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://plus.unsplash.com/premium_photo-1683121718643-fb18d2668d53?q=80&w=300&auto=format&fit=crop",
+    path: "/news/ai-technology",
   },
   {
     name: "Crypto",
     icon: Coins,
-    image: "https://images.unsplash.com/photo-1516245834210-c4c142787335?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1516245834210-c4c142787335?auto=format&fit=crop&w=300&q=80",
+    path: "/news/crypto",
   },
   {
     name: "Business",
     icon: Briefcase,
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=300&q=80",
+    path: "/news/business",
   },
   {
     name: "Politics",
     icon: Landmark,
-    image: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=300&q=80",
+    path: "/news/politics",
   },
   {
     name: "Sports",
     icon: Trophy,
-    image: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=300&q=80",
+    path: "/news/sports",
   },
   {
     name: "Entertainment",
     icon: Clapperboard,
-    image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=300&q=80",
+    path: "/news/entertainment",
   },
   {
     name: "Health",
     icon: HeartPulse,
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=300&q=80",
+    path: "/news/health",
   },
   {
     name: "Science",
     icon: FlaskConical,
-    image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=300&q=80",
+    path: "/news/science",
   },
   {
     name: "World News",
     icon: Globe,
-    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=300&q=80",
+    path: "/news/world-news",
   },
   {
     name: "Climate",
     icon: Leaf,
-    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&q=80",
+    path: "/news/climate",
   },
   {
     name: "Investigations",
     icon: ShieldAlert,
-    image: "https://images.unsplash.com/photo-1453847668080-482ed755ff9f?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1453847668080-482ed755ff9f?auto=format&fit=crop&w=300&q=80",
+    path: "/news/investigations",
   },
   {
     name: "Opinion",
     icon: MessageSquare,
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80",
+    path: "/news/opinion",
   },
   {
     name: "Fact Check",
     icon: CheckCircle2,
-    image: "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=300&q=80",
+    path: "/news/fact-check",
   },
   {
     name: "Lifestyle",
     icon: Palmtree,
-    image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=300&q=80",
+    path: "/news/lifestyle",
   },
   {
     name: "Travel",
     icon: Plane,
-    image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=300&q=80",
+    path: "/news/travel",
   },
   {
     name: "Food",
     icon: Utensils,
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=300&q=80",
+    image:
+      "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=300&q=80",
+    path: "/news/food",
   },
 ];
 
@@ -143,7 +182,7 @@ interface CategorySelectorProps {
 
 export function CategorySelector({ selectedCategory }: CategorySelectorProps) {
   return (
-    <div className="w-full py-4 mb-10 sticky top-0 border-b border-neutral-250/20 dark:border-white/[0.04] backdrop-blur-2xl bg-white/60 dark:bg-[#07090e]/60 z-30 transition-colors duration-300">
+    <div className="w-full py-4 mb-10 sticky top-0 border-b border-neutral-250/20 dark:border-white/[0.04] backdrop-blur-2xl bg-white/60 dark:bg-[#07090e]/60 z-10 transition-colors duration-300">
       <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <Carousel
           opts={{
@@ -159,12 +198,10 @@ export function CategorySelector({ selectedCategory }: CategorySelectorProps) {
           {/* Categories embla scroll track */}
           <CarouselContent className="flex gap-1 py-1">
             {CATEGORIES.map((cat) => {
-              const isActive = selectedCategory.toLowerCase() === cat.name.toLowerCase();
+              const isActive =
+                selectedCategory.toLowerCase() === cat.name.toLowerCase();
               const Icon = cat.icon;
-              const href =
-                cat.name === "All"
-                  ? "/news"
-                  : `/news/${encodeURIComponent(cat.name.toLowerCase().replace(/ /g, "-"))}`;
+              const href = cat.path;
 
               return (
                 <CarouselItem

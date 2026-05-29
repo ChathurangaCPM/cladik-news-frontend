@@ -37,16 +37,23 @@ export default function NewsLayout({
           <div className="flex items-center gap-2">
             <Link
               href="/"
-              className="text-slate-900 dark:text-white font-semibold font-heading tracking-wide text-lg flex items-center gap-2"
+              className="text-slate-900 dark:text-white tracking-[-1px] text-lg flex items-center gap-2"
             >
               <Image
                 src="/main-logo.png"
                 width={100}
                 height={100}
-                className="w-9 lg:w-[30px] transition-transform duration-700"
-                alt="Cladik"
+                className="w-9 lg:w-[30px] transition-transform duration-700 dark:hidden"
+                alt="NeuralPress"
               />
-              Neural<span className="text-primary">Press</span>
+              <Image
+                src="/main-logo-white.png"
+                width={100}
+                height={100}
+                className="w-9 lg:w-[30px] transition-transform duration-700 hidden dark:block"
+                alt="NeuralPress"
+              />
+              NeuralPress
             </Link>
           </div>
           <div className="flex items-center gap-5">

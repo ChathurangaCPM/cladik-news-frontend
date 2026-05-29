@@ -34,16 +34,23 @@ export default async function NewsMainPage(props: {
               src="/main-logo.png"
               width={100}
               height={100}
-              className="w-9 lg:w-[90px] transition-transform duration-700 "
-              alt="Cladik"
+              className="w-9 lg:w-[90px] transition-transform duration-700 dark:hidden"
+              alt="NeuralPress"
+            />
+            <Image
+              src="/main-logo-white.png"
+              width={100}
+              height={100}
+              className="w-9 lg:w-[90px] transition-transform duration-700 hidden dark:block"
+              alt="NeuralPress"
             />
           </Link>
           <TextAnimate
             animation="blurInUp"
             by="word"
-            className={`text-5xl font-heading sm:text-7xl lg:text-7xl tracking-tighter leading-[0.95] text-center`}
+            className={`text-5xl sm:text-7xl lg:text-5xl tracking-tighter leading-[0.95] text-center`}
           >
-            AI News Aggregator
+            AI News Discovery Portal
           </TextAnimate>
           <TextAnimate
             animation="blurInUp"

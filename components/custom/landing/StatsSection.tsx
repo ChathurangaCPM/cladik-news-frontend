@@ -12,7 +12,7 @@ export default function StatsSection() {
       subtitle: "Parsed in real-time",
       badge: "+15 active",
       desc: "Active international sources scanned.",
-      tags: ["Global", "Direct Index", "Scrape Engine"]
+      tags: ["Global", "Direct Index", "Scrape Engine"],
     },
     {
       stat: "99.5%",
@@ -20,7 +20,7 @@ export default function StatsSection() {
       subtitle: "Overlap duplicate filters",
       badge: "Verified",
       desc: "Deduplication and conflict ratio.",
-      tags: ["Deduplication", "Semantic Map", "Fact-Checked"]
+      tags: ["Deduplication", "Semantic Map", "Fact-Checked"],
     },
     {
       stat: "520k+",
@@ -28,8 +28,8 @@ export default function StatsSection() {
       subtitle: "Continuous search scanner",
       badge: "Active",
       desc: "Daily indexed and parsed stories.",
-      tags: ["Continuous", "Active Scan", "Swarm Nodes"]
-    }
+      tags: ["Continuous", "Active Scan", "Swarm Nodes"],
+    },
   ];
 
   return (
@@ -37,7 +37,7 @@ export default function StatsSection() {
       <span className="text-xs uppercase text-indigo-600 font-mono tracking-wider font-bold">
         About Us
       </span>
-      <h2 className="text-3xl md:text-5xl tracking-tighter mt-3 text-slate-900 leading-tight">
+      <h2 className="text-3xl md:text-5xl tracking-[-3px] mt-3 text-slate-900 leading-tight">
         Empowering global news parsing
         <br />
         with a highly advanced{" "}
@@ -65,16 +65,16 @@ export default function StatsSection() {
               type: "spring",
               stiffness: 100,
               damping: 15,
-              delay: idx * 0.1
+              delay: idx * 0.1,
             }}
-            className="bg-[#f0ffec] border border-[#d5edcc] rounded-[2.5rem] p-6 hover:shadow-[0_25px_60px_rgba(15,23,42,0.25)] transition-all duration-500 flex flex-col justify-between min-h-[380px] cursor-pointer relative overflow-hidden group"
+            className="bg-[#f0ffec]/40 border border-[#d5edcc]/60 rounded-[2.5rem] p-6 transition-all duration-500 flex flex-col justify-between min-h-[380px] cursor-pointer relative overflow-hidden group"
           >
             {/* Top portion: ice-blue / sky-cream header capsule matching theme */}
-            <div className="bg-[#89d171] rounded-[1.75rem] p-5 text-[#0f172a] border border-white/5 transition-transform duration-500 group-hover:scale-[1.01]">
-              <h3 className="text-xl tracking-tighter leading-tight">
+            <div className="bg-[#89d171]/10 rounded-[1.75rem] p-5 text-[#0f172a] border border-white/5 transition-transform duration-500 group-hover:scale-[1.01]">
+              <h3 className="text-xl tracking-tighter leading-tight font-normal">
                 {card.title}
               </h3>
-              <p className="text-xs text-[#475569] mt-1 font-medium">
+              <p className="text-xs text-[#475569] mt-1 font-light">
                 {card.subtitle}
               </p>
             </div>
@@ -89,7 +89,7 @@ export default function StatsSection() {
                   {card.badge}
                 </span>
               </div>
-              <p className="text-xs text-[#94a3b8] font-medium mt-3">
+              <p className="text-xs text-[#94a3b8] font-light mt-3 ">
                 {card.desc}
               </p>
             </div>

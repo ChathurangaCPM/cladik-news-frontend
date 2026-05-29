@@ -11,13 +11,16 @@ export default function CTASection() {
         <div className="absolute top-[-30%] left-[-20%] w-72 h-72 bg-white/20 rounded-full blur-[80px] pointer-events-none group-hover:scale-125 transition-transform duration-500" />
         <div className="absolute bottom-[-30%] right-[-20%] w-72 h-72 bg-white/20 rounded-full blur-[80px] pointer-events-none group-hover:scale-125 transition-transform duration-500" />
 
-        <h2 className="text-3xl md:text-5xl font-black tracking-tight font-heading leading-tight">
+        <h2 className="text-3xl md:text-5xl tracking-[-2px] leading-tight">
           We combine human
           <br />
-          insight with artificial intelligence.
+          <span className="capitalize font-heading italic">
+            insight with artificial intelligence.
+          </span>
         </h2>
         <p className="mt-4 text-white/85 text-sm md:text-base font-light max-w-xl mx-auto">
-          Experience NeuralPress' smart bilingual translations and consensus story directory now.
+          Experience NeuralPress' smart bilingual translations and consensus
+          story directory now.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 relative z-10">
           <Link

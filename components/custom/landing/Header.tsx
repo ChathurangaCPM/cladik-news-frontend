@@ -14,34 +14,31 @@ export default function Header() {
           width={100}
           height={100}
           className="w-9 lg:w-[40px] transition-transform duration-700"
-          alt="Cladik"
+          alt="NeuralPress"
         />
         <span className="text-xl font-bold tracking-tight text-white">
           Neural<span className="text-white/80">Press</span>
         </span>
       </div>
 
-      <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-white/90">
+      {/* <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-white/90">
         <Link href="/news" className="hover:text-white transition duration-200">
           Discovery Feed
         </Link>
-        <a href="#engine" className="hover:text-white transition duration-200">
-          Our Technology
-        </a>
-        <a
-          href="#performance"
-          className="hover:text-white transition duration-200"
-        >
-          Operations
-        </a>
-      </nav>
+        <Link href="/pricing" className="hover:text-white transition duration-200">
+          API Pricing
+        </Link>
+        <Link href="/developer/dashboard" className="hover:text-white transition duration-200">
+          Developer Portal
+        </Link>
+      </nav> */}
 
       <div className="flex items-center gap-4">
         <Link
           href="/news"
           className="px-6 py-3 rounded-full text-xs font-semibold bg-white text-[#2b86ff] hover:bg-slate-50 shadow-lg shadow-black/10 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
         >
-          Launch Portal
+          Discovery Feed
         </Link>
       </div>
     </header>

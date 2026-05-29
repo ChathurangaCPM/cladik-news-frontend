@@ -60,6 +60,13 @@ interface NewsArticleProps {
     slug?: string;
     chart?: any;
     views?: number;
+    whatHappened?: { en: string; si: string };
+    whyItMatters?: { en: string; si: string };
+    historicalContext?: { en: string; si: string };
+    peopleInvolved?: string[];
+    importance?: number;
+    sentiment?: string;
+    isBreakingNews?: boolean;
   };
 }
 
@@ -383,13 +390,13 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
       <div className="max-w-5xl mx-auto flex justify-between">
         <Link href={"/news"} className="flex items-center gap-2 cursor-pointer">
           <ChevronLeft />
-          <Image
+          {/* <Image
             src="/main-logo.png"
             width={100}
             height={100}
             className="w-9 lg:w-[40px] transition-transform duration-700 "
             alt="NeuralPress"
-          />
+          /> */}
           <div className="flex flex-col">
             <span className="font-light font-inter">Back to News</span>
             {/* <span className="font-light font-inter text-xs text-muted-foreground">
@@ -445,6 +452,17 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
 
       <article className="max-w-5xl mx-auto lg;px-4 py-8 bg-transparent">
         <header className="mb-8">
+          {article.isBreakingNews && (
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 rounded-full bg-rose-500/10 dark:bg-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-semibold uppercase tracking-wider animate-pulse border border-rose-500/20"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
+              {lang === "si" ? "උණුසුම් පුවත්" : "Breaking News"}
+            </motion.div>
+          )}
+
           <motion.h1
             ref={titleRef}
             animate={{
@@ -612,6 +630,166 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
             )}
           </div>
         </motion.div>
+
+        {/* Quick AI Breakdown Panel */}
+        {(article.whatHappened ||
+          article.whyItMatters ||
+          article.historicalContext ||
+          article.peopleInvolved ||
+          article.importance ||
+          article.sentiment) && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: animationStage >= 2 ? 1 : 0,
+              y: animationStage >= 2 ? 0 : 20,
+            }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mb-10 grid grid-cols-1 md:grid-cols-3 gap-6"
+          >
+            {/* Left/Middle 2 Columns: Context Breakdown Cards */}
+            <div className="md:col-span-2 flex flex-col gap-6">
+              {article.whatHappened &&
+                (article.whatHappened.en || article.whatHappened.si) && (
+                  <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-4">
+                    <h4 className="text-base font-semibold text-slate-900 dark:text-zinc-50 flex items-center gap-2">
+                      <span className="w-1.5 h-4 rounded bg-indigo-500" />
+                      {lang === "si" ? "සිදුවීම කුමක්ද?" : "What Happened"}
+                    </h4>
+                    <p
+                      className={`text-[15px] leading-relaxed text-slate-650 dark:text-slate-300 font-light ${lang === "si" ? "font-sinhala" : "font-inter"}`}
+                    >
+                      {lang === "si"
+                        ? article.whatHappened.si
+                        : article.whatHappened.en}
+                    </p>
+                  </div>
+                )}
+
+              {article.whyItMatters &&
+                (article.whyItMatters.en || article.whyItMatters.si) && (
+                  <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-4">
+                    <h4 className="text-base font-semibold text-slate-900 dark:text-zinc-50 flex items-center gap-2">
+                      <span className="w-1.5 h-4 rounded bg-amber-500" />
+                      {lang === "si" ? "වැදගත් වන්නේ ඇයි?" : "Why It Matters"}
+                    </h4>
+                    <p
+                      className={`text-[15px] leading-relaxed text-slate-650 dark:text-slate-300 font-light ${lang === "si" ? "font-sinhala" : "font-inter"}`}
+                    >
+                      {lang === "si"
+                        ? article.whyItMatters.si
+                        : article.whyItMatters.en}
+                    </p>
+                  </div>
+                )}
+
+              {article.historicalContext &&
+                (article.historicalContext.en ||
+                  article.historicalContext.si) && (
+                  <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-4">
+                    <h4 className="text-base font-semibold text-slate-900 dark:text-zinc-50 flex items-center gap-2">
+                      <span className="w-1.5 h-4 rounded bg-sky-500" />
+                      {lang === "si" ? "පසුබිම් ඉතිහාසය" : "Historical Context"}
+                    </h4>
+                    <p
+                      className={`text-[15px] leading-relaxed text-slate-650 dark:text-slate-300 font-light ${lang === "si" ? "font-sinhala" : "font-inter"}`}
+                    >
+                      {lang === "si"
+                        ? article.historicalContext.si
+                        : article.historicalContext.en}
+                    </p>
+                  </div>
+                )}
+            </div>
+
+            {/* Right 1 Column: Metrics, Sentiment & People */}
+            <div className="flex flex-col gap-6">
+              {/* Importance & Sentiment Card */}
+              {(typeof article.importance === "number" ||
+                article.sentiment) && (
+                <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-5">
+                  <h4 className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider">
+                    {lang === "si" ? "පුවතෙහි වැදගත්කම" : "Metrics & Sentiment"}
+                  </h4>
+
+                  {/* Importance Meter */}
+                  {typeof article.importance === "number" && (
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                          {lang === "si" ? "වැදගත්කම" : "Importance Score"}
+                        </span>
+                        <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">
+                          {article.importance}%
+                        </span>
+                      </div>
+                      <div className="w-full h-2 rounded-full bg-slate-100 dark:bg-zinc-800 overflow-hidden">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${article.importance}%` }}
+                          transition={{ duration: 1.2, ease: "easeOut" }}
+                          className="h-full bg-gradient-to-r from-indigo-500 to-primary rounded-full"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Sentiment Metric */}
+                  {article.sentiment && (
+                    <div className="pt-3 border-t border-slate-100 dark:border-zinc-800/80">
+                      <span className="text-sm font-medium text-slate-700 dark:text-slate-300 block mb-2">
+                        {lang === "si" ? "මනෝභාවය" : "Article Sentiment"}
+                      </span>
+                      <div
+                        className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold
+                        ${article.sentiment === "Positive" ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400" : ""}
+                        ${article.sentiment === "Negative" ? "bg-rose-500/10 border-rose-500/20 text-rose-600 dark:text-rose-400" : ""}
+                        ${article.sentiment === "Neutral" ? "bg-slate-500/10 border-slate-500/20 text-slate-650 dark:text-slate-400" : ""}
+                      `}
+                      >
+                        <span
+                          className={`w-2 h-2 rounded-full
+                          ${article.sentiment === "Positive" ? "bg-emerald-500" : ""}
+                          ${article.sentiment === "Negative" ? "bg-rose-500" : ""}
+                          ${article.sentiment === "Neutral" ? "bg-slate-500" : ""}
+                        `}
+                        />
+                        {lang === "si"
+                          ? article.sentiment === "Positive"
+                            ? "ධනාත්මක"
+                            : article.sentiment === "Negative"
+                              ? "ඍණාත්මක"
+                              : "මධ්‍යස්ථ"
+                          : article.sentiment}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* People Involved Card */}
+              {article.peopleInvolved && article.peopleInvolved.length > 0 && (
+                <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-4">
+                  <h4 className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider">
+                    {lang === "si"
+                      ? "සම්බන්ධ පුද්ගලයින් / ආයතන"
+                      : "Key Actors & Entities"}
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {article.peopleInvolved.map((actor, idx) => (
+                      <span
+                        key={idx}
+                        className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-100 dark:border-zinc-850 text-xs font-medium text-slate-700 dark:text-zinc-300"
+                      >
+                        {actor}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
 
         <div
           ref={contentRef}

@@ -91,12 +91,12 @@ export default async function RootLayout({
             </UserLangProvider>
           </Providers>
         </TooltipProvider>
-        {/* <ThirdPartyAnalytics
+        <ThirdPartyAnalytics
           GA_MEASUREMENT_ID=""
           GA_TRACKING_ID={""}
           FB_PIXEL_ID=""
           CLARITY_ID={"wyb9qfv76w"}
-        /> */}
+        />
       </body>
     </html>
   );

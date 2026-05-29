@@ -34,10 +34,10 @@ export default function Home() {
       {/* <PricingSection /> */}
 
       {/* Verified user testimonials grid */}
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
 
       {/* Latest resource center insights cards */}
-      <InsightsSection />
+      {/* <InsightsSection /> */}
 
       {/* Sky blue bottom CTA portal */}
       <CTASection />

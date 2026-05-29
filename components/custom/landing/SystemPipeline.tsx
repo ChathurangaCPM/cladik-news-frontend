@@ -12,28 +12,82 @@ import {
   CheckCircle2,
   Activity,
   Cpu,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Premium non-technical simulated log updates
 const SIMULATED_LOGS = [
   { text: "Scanning global publications for fresh updates..." },
-  { text: "Identified new breaking stories regarding clean energy achievements." },
-  { text: "Connecting related news coverage from multiple international publishers..." },
+  {
+    text: "Identified new breaking stories regarding clean energy achievements.",
+  },
+  {
+    text: "Connecting related news coverage from multiple international publishers...",
+  },
   { text: "Filtering out duplicate stories to isolate unique viewpoints." },
-  { text: "Translating international reports to high-quality Sinhala automatically..." },
-  { text: "Indexing story concepts to build our intelligent search directory." },
+  {
+    text: "Translating international reports to high-quality Sinhala automatically...",
+  },
+  {
+    text: "Indexing story concepts to build our intelligent search directory.",
+  },
   { text: "Linking updates to our live story discovery catalog." },
-  { text: "Verified, formatted, and published on the live feed." }
+  { text: "Verified, formatted, and published on the live feed." },
 ];
 
 export default function SystemPipeline() {
   const [activeStep, setActiveStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [logIndex, setLogIndex] = useState(0);
-  const [activeLogs, setActiveLogs] = useState<{ id: string; text: string }[]>([]);
+  const [activeLogs, setActiveLogs] = useState<{ id: string; text: string }[]>(
+    [],
+  );
   const [langFlip, setLangFlip] = useState("en");
   const consoleContainerRef = useRef<HTMLDivElement | null>(null);
+
+  const stepperContainerRef = useRef<HTMLDivElement | null>(null);
+  const [lineCoords, setLineCoords] = useState({
+    top: 20,
+    height: 0,
+    dashedHeight: 0,
+  });
+
+  // Dynamically calculate the vertical line coordinates to perfectly align with circle centers
+  useEffect(() => {
+    const updateLinePosition = () => {
+      if (!stepperContainerRef.current) return;
+
+      const dots = stepperContainerRef.current.querySelectorAll(
+        ".step-indicator-dot",
+      );
+      if (dots.length === 0) return;
+
+      const containerRect = stepperContainerRef.current.getBoundingClientRect();
+      const firstDotRect = dots[0].getBoundingClientRect();
+      const activeDotRect =
+        dots[activeStep]?.getBoundingClientRect() || firstDotRect;
+      const lastDotRect = dots[dots.length - 1].getBoundingClientRect();
+
+      const top =
+        firstDotRect.top - containerRect.top + firstDotRect.height / 2;
+      const height = activeDotRect.top - firstDotRect.top;
+      const dashedHeight = lastDotRect.top - firstDotRect.top;
+
+      setLineCoords({ top, height, dashedHeight });
+    };
+
+    updateLinePosition();
+
+    // Double check after a short delay for any rendering/font layout shifts
+    const timer = setTimeout(updateLinePosition, 150);
+
+    window.addEventListener("resize", updateLinePosition);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", updateLinePosition);
+    };
+  }, [activeStep]);
 
   // Stepper workflow interval timer for system overview
   useEffect(() => {
@@ -53,7 +107,10 @@ export default function SystemPipeline() {
         const nextIndex = (prevIndex + 1) % SIMULATED_LOGS.length;
         setActiveLogs((prevLogs) => {
           const nextId = `${Date.now()}-${Math.random()}`;
-          const updated = [...prevLogs, { id: nextId, text: SIMULATED_LOGS[nextIndex].text }];
+          const updated = [
+            ...prevLogs,
+            { id: nextId, text: SIMULATED_LOGS[nextIndex].text },
+          ];
           // Keep only the last 6 logs
           if (updated.length > 6) updated.shift();
           return updated;
@@ -76,7 +133,8 @@ export default function SystemPipeline() {
   // Safe, container-only scroll (keeps browser viewport fixed!)
   useEffect(() => {
     if (consoleContainerRef.current) {
-      consoleContainerRef.current.scrollTop = consoleContainerRef.current.scrollHeight;
+      consoleContainerRef.current.scrollTop =
+        consoleContainerRef.current.scrollHeight;
     }
   }, [activeLogs]);
 
@@ -87,10 +145,12 @@ export default function SystemPipeline() {
       tagSi: "පියවර 1",
       titleEn: "Intelligent Search",
       titleSi: "බුද්ධිමත් සෙවුම් පද්ධතිය",
-      descEn: "NeuralPress crawls the global web using our own independent search engine to discover fresh breaking updates.",
-      descSi: "NeuralPress අපගේ ස්වාධීන සෙවුම් එන්ජිම භාවිතයෙන් ගෝලීය වෙබ් අඩවි නිරන්තරයෙන් ගවේෂණය කරමින් නැවුම් පුවත් සොයා ගනී.",
+      descEn:
+        "NeuralPress crawls the global web using our own independent search engine to discover fresh breaking updates.",
+      descSi:
+        "NeuralPress අපගේ ස්වාධීන සෙවුම් එන්ජිම භාවිතයෙන් ගෝලීය වෙබ් අඩවි නිරන්තරයෙන් ගවේෂණය කරමින් නැවුම් පුවත් සොයා ගනී.",
       badgeEn: "Search Engine",
-      badgeSi: "සෙවුම් එන්ජිම"
+      badgeSi: "සෙවුම් එන්ජිම",
     },
     {
       icon: <Brain className="w-4 h-4" />,
@@ -98,10 +158,12 @@ export default function SystemPipeline() {
       tagSi: "පියවර 2",
       titleEn: "Contextual Analysis",
       titleSi: "සන්දර්භීය විශ්ලේෂණය",
-      descEn: "Our intelligence parsing layer normalizes layout noise, filters false correlations, and extracts event relevance.",
-      descSi: "අපගේ බුද්ධිමත් පෙරහන් මඟින් පුවත්පත්වල ව්‍යාජ තොරතුරු සහ අනවශ්‍ය දෑ ඉවත් කර සත්‍ය සන්දර්භය පමණක් උකහා ගනී.",
+      descEn:
+        "Our intelligence parsing layer normalizes layout noise, filters false correlations, and extracts event relevance.",
+      descSi:
+        "අපගේ බුද්ධිමත් පෙරහන් මඟින් පුවත්පත්වල ව්‍යාජ තොරතුරු සහ අනවශ්‍ය දෑ ඉවත් කර සත්‍ය සන්දර්භය පමණක් උකහා ගනී.",
       badgeEn: "Parsing & Vetting",
-      badgeSi: "පිරික්සීම සහ තහවුරු කිරීම"
+      badgeSi: "පිරික්සීම සහ තහවුරු කිරීම",
     },
     {
       icon: <Globe2 className="w-4 h-4" />,
@@ -109,10 +171,12 @@ export default function SystemPipeline() {
       tagSi: "පියවර 3",
       titleEn: "Consensus Clustering",
       titleSi: "එකඟතා පොකුරුගත කිරීම",
-      descEn: "We merge duplicate signals and group multiple regional reports together to identify solid, objective core stories.",
-      descSi: "එකම පුවත විවිධ මාධ්‍ය වාර්තා කර ඇති ආකාරය සංසන්දනය කර පොදු සත්‍යය හඳුනාගෙන අදාළ පුවත් පොකුරුගත කරයි.",
+      descEn:
+        "We merge duplicate signals and group multiple regional reports together to identify solid, objective core stories.",
+      descSi:
+        "එකම පුවත විවිධ මාධ්‍ය වාර්තා කර ඇති ආකාරය සංසන්දනය කර පොදු සත්‍යය හඳුනාගෙන අදාළ පුවත් පොකුරුගත කරයි.",
       badgeEn: "Core Consensus",
-      badgeSi: "පොදු එකඟතාව"
+      badgeSi: "පොදු එකඟතාව",
     },
     {
       icon: <Languages className="w-4 h-4" />,
@@ -120,10 +184,12 @@ export default function SystemPipeline() {
       tagSi: "පියවර 4",
       titleEn: "Bilingual Translation",
       titleSi: "ද්විභාෂා පරිවර්තනය",
-      descEn: "Our neural translation models translate global articles into premium, grammatically sound, high-fidelity Sinhala.",
-      descSi: "අපගේ ස්නායුක පරිවර්තන ආකෘති මඟින් ගෝලීය ලිපි උසස්, ව්‍යාකරණානුකූල සහ කියවීමට පහසු සිංහල භාෂාවට පරිවර්තනය කරයි.",
+      descEn:
+        "Our neural translation models translate global articles into premium, grammatically sound, high-fidelity Sinhala.",
+      descSi:
+        "අපගේ ස්නායුක පරිවර්තන ආකෘති මඟින් ගෝලීය ලිපි උසස්, ව්‍යාකරණානුකූල සහ කියවීමට පහසු සිංහල භාෂාවට පරිවර්තනය කරයි.",
       badgeEn: "Premium Sinhala",
-      badgeSi: "උසස් සිංහල"
+      badgeSi: "උසස් සිංහල",
     },
     {
       icon: <Flame className="w-4 h-4" />,
@@ -131,46 +197,67 @@ export default function SystemPipeline() {
       tagSi: "පියවර 5",
       titleEn: "Vetted Delivery",
       titleSi: "සත්‍යාපිත බෙදාහැරීම",
-      descEn: "Clean, objective news is published directly into the feed, accompanied by consensus scores and direct source verification links.",
-      descSi: "සියලු මූලාශ්‍ර සහ විශ්වාසනීයත්ව දර්ශකයන් සමඟින් සත්‍යාපනය කළ පුවත් සෘජුවම පරිශීලක පුවත් සංග්‍රහය වෙත නිකුත් කෙරේ.",
+      descEn:
+        "Clean, objective news is published directly into the feed, accompanied by consensus scores and direct source verification links.",
+      descSi:
+        "සියලු මූලාශ්‍ර සහ විශ්වාසනීයත්ව දර්ශකයන් සමඟින් සත්‍යාපනය කළ පුවත් සෘජුවම පරිශීලක පුවත් සංග්‍රහය වෙත නිකුත් කෙරේ.",
       badgeEn: "Live Feed",
-      badgeSi: "සජීවී පුවත්"
-    }
+      badgeSi: "සජීවී පුවත්",
+    },
   ];
 
   return (
-    <section id="engine" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32 relative z-10 text-center">
+    <section
+      id="engine"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32 relative z-10 text-center"
+    >
       <span className="text-xs uppercase text-indigo-600 font-mono tracking-wider font-bold">
         OPERATIONAL FLOW
       </span>
-      <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mt-3 text-slate-900 leading-tight">
-        How our intelligent news system works
+      <h2 className="text-3xl md:text-5xl tracking-[-3px] mt-3 text-slate-900 leading-tight">
+        How our <br />
+        <span className="font-heading italic text-[#2b86ff]">
+          intelligent news
+        </span>{" "}
+        system works
       </h2>
-      <p className="text-slate-500 max-w-xl mx-auto mt-4 text-sm font-normal">
-        Track our real-time flow from independent search to verified consensus stories.
+      <p className="text-slate-500 max-w-xl mx-auto mt-4 text-sm font-light">
+        Track our real-time flow from independent search to verified consensus
+        stories.
       </p>
 
       {/* Split Screen Showcase */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mt-16 max-w-5xl mx-auto items-stretch">
         {/* Left Side: Step Stepper List */}
         <div
+          ref={stepperContainerRef}
           className="md:col-span-5 relative flex flex-col justify-between py-2 space-y-6 animate-fade-in"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
           {/* Flow Line */}
-          <div className="absolute left-[19px] top-[20px] bottom-[20px] w-[2px] border-l border-dashed border-slate-200/80 pointer-events-none hidden md:block">
+          <div
+            style={{
+              top: `${lineCoords.top}px`,
+              height: `${lineCoords.dashedHeight}px`,
+            }}
+            className="absolute left-[19px] w-[2px] border-l border-dashed border-slate-200/80 pointer-events-none hidden md:block"
+          >
             {/* Active fill segment */}
             <motion.div
               className="absolute top-0 left-[-1px] w-[3px] bg-gradient-to-b from-[#2b86ff] to-indigo-600 rounded-full"
-              animate={{ height: `${(activeStep / 4) * 100}%` }}
+              animate={{ height: `${lineCoords.height}px` }}
               transition={{ type: "spring", stiffness: 80, damping: 15 }}
             >
               {/* Glowing Tip Indicator */}
               <motion.div
                 className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-[#2b86ff] shadow-[0_0_12px_#2b86ff] border border-white"
                 animate={{ scale: [1, 1.4, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
               />
             </motion.div>
           </div>
@@ -186,31 +273,37 @@ export default function SystemPipeline() {
               <div
                 key={idx}
                 className={`relative z-10 flex gap-5 cursor-pointer text-left group/step transition-all duration-300 ${
-                  isActive ? "opacity-100 scale-[1.01]" : "opacity-50 hover:opacity-85"
+                  isActive ? "opacity-100 scale-[1.01]" : "opacity-100 "
                 }`}
                 onClick={() => setActiveStep(idx)}
               >
                 {/* Step Indicator Dot */}
                 <div
-                  className={`w-10 h-10 rounded-full shrink-0 flex items-center justify-center border transition-all duration-500 shadow-sm ${
+                  className={`step-indicator-dot w-10 h-10 rounded-full shrink-0 flex items-center justify-center border transition-all duration-500 shadow-sm ${
                     isActive
-                      ? "bg-[#2b86ff] border-[#2b86ff] text-white shadow-[0_0_15px_rgba(43,134,255,0.4)] scale-110"
+                      ? "bg-[#2b86ff] border-[#2b86ff] text-white scale-110"
                       : "bg-white border-slate-200 text-slate-400 group-hover/step:border-slate-300"
                   }`}
                 >
-                  {isActive ? step.icon : <span className="text-xs font-bold font-mono">{idx + 1}</span>}
+                  {isActive ? (
+                    step.icon
+                  ) : (
+                    <span className="text-xs font-bold font-mono">
+                      {idx + 1}
+                    </span>
+                  )}
                 </div>
 
                 {/* Step Text Info */}
                 <div className="flex-1">
                   <span
-                    className={`text-[9px] font-bold font-mono tracking-widest block uppercase transition-all duration-300 ${
+                    className={`text-[9px] font-mono tracking-widest block uppercase transition-all duration-300 ${
                       isActive ? "text-[#2b86ff]" : "text-slate-400"
                     }`}
                   >
                     {tag} • {badge}
                   </span>
-                  <h4 className="text-base font-bold text-slate-900 mt-1 mb-1.5 transition-all duration-300">
+                  <h4 className="text-base text-slate-900 mt-1 mb-1.5 transition-all duration-300">
                     {title}
                   </h4>
                   <p className="text-xs text-slate-500 font-light leading-relaxed transition-all duration-300 font-inter">
@@ -266,17 +359,23 @@ export default function SystemPipeline() {
                 <div className="space-y-2 font-mono text-[10px] text-slate-500 text-left">
                   <div className="flex items-center justify-between py-1 px-3 bg-blue-50/40 rounded-xl border border-blue-100/50">
                     <span className="text-[#2b86ff] font-bold">[200 OK]</span>
-                    <span className="truncate flex-1 ml-3 text-slate-600">stateofsurveillance.org</span>
+                    <span className="truncate flex-1 ml-3 text-slate-600">
+                      stateofsurveillance.org
+                    </span>
                     <span className="text-slate-400 ml-2">14ms</span>
                   </div>
                   <div className="flex items-center justify-between py-1 px-3 bg-lime-50/40 rounded-xl border border-lime-100/50">
                     <span className="text-lime-600 font-bold">[200 OK]</span>
-                    <span className="truncate flex-1 ml-3 text-slate-600">globalrenewables.net</span>
+                    <span className="truncate flex-1 ml-3 text-slate-600">
+                      globalrenewables.net
+                    </span>
                     <span className="text-slate-400 ml-2">22ms</span>
                   </div>
                   <div className="flex items-center justify-between py-1 px-3 bg-purple-50/40 rounded-xl border border-purple-100/50">
                     <span className="text-purple-600 font-bold">[200 OK]</span>
-                    <span className="truncate flex-1 ml-3 text-slate-600">powertech-insight.org</span>
+                    <span className="truncate flex-1 ml-3 text-slate-600">
+                      powertech-insight.org
+                    </span>
                     <span className="text-slate-400 ml-2">18ms</span>
                   </div>
                 </div>
@@ -298,8 +397,8 @@ export default function SystemPipeline() {
                   <p className="line-through opacity-55 leading-normal mt-3">
                     {"<!-- AD SPONSOR BLOCK -->"}
                     <br />
-                    Buy premium coins now! 1536-dimensional vectors embeddings generated in PostgreSQL raw
-                    pipeline index crawls...
+                    Buy premium coins now! 1536-dimensional vectors embeddings
+                    generated in PostgreSQL raw pipeline index crawls...
                   </p>
                 </div>
 
@@ -309,7 +408,8 @@ export default function SystemPipeline() {
                     VETTED DATA
                   </div>
                   <p className="leading-relaxed mt-3 font-semibold text-emerald-900">
-                    Extracted core factual summary detailing localized active clean grid performance metrics.
+                    Extracted core factual summary detailing localized active
+                    clean grid performance metrics.
                   </p>
                 </div>
               </motion.div>
@@ -336,7 +436,15 @@ export default function SystemPipeline() {
                   </div>
                   {/* Connecting Line 1 */}
                   <svg className="absolute left-[38px] top-[24px] w-24 h-16 pointer-events-none">
-                    <line x1="0" y1="0" x2="80" y2="50" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3" />
+                    <line
+                      x1="0"
+                      y1="0"
+                      x2="80"
+                      y2="50"
+                      stroke="#cbd5e1"
+                      strokeWidth="1"
+                      strokeDasharray="3 3"
+                    />
                   </svg>
 
                   {/* Peripheral Source Node 2 */}
@@ -345,7 +453,15 @@ export default function SystemPipeline() {
                   </div>
                   {/* Connecting Line 2 */}
                   <svg className="absolute left-[44px] bottom-[28px] w-20 h-12 pointer-events-none">
-                    <line x1="0" y1="40" x2="70" y2="0" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3" />
+                    <line
+                      x1="0"
+                      y1="40"
+                      x2="70"
+                      y2="0"
+                      stroke="#cbd5e1"
+                      strokeWidth="1"
+                      strokeDasharray="3 3"
+                    />
                   </svg>
 
                   {/* Peripheral Source Node 3 */}
@@ -354,7 +470,15 @@ export default function SystemPipeline() {
                   </div>
                   {/* Connecting Line 3 */}
                   <svg className="absolute right-[44px] top-[46px] w-20 h-12 pointer-events-none">
-                    <line x1="70" y1="0" x2="0" y2="20" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="3 3" />
+                    <line
+                      x1="70"
+                      y1="0"
+                      x2="0"
+                      y2="20"
+                      stroke="#cbd5e1"
+                      strokeWidth="1"
+                      strokeDasharray="3 3"
+                    />
                   </svg>
                 </div>
               </motion.div>
@@ -369,12 +493,14 @@ export default function SystemPipeline() {
               >
                 <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col justify-between min-h-[100px] shadow-sm">
                   <div className="border-b border-slate-200/50 pb-2 flex items-center justify-between">
-                    <span className="text-slate-400 text-[8px]">ORIGINAL (ENGLISH)</span>
+                    <span className="text-slate-400 text-[8px]">
+                      ORIGINAL (ENGLISH)
+                    </span>
                     <span className="text-xs">🇺🇸</span>
                   </div>
                   <p className="text-slate-700 leading-normal mt-2">
-                    “Advanced grid arrays have successfully delivered sustainable clean energy across localized
-                    regions.”
+                    “Advanced grid arrays have successfully delivered
+                    sustainable clean energy across localized regions.”
                   </p>
                 </div>
 
@@ -383,11 +509,14 @@ export default function SystemPipeline() {
                     NEURAL
                   </div>
                   <div className="border-b border-indigo-100 pb-2 flex items-center justify-between">
-                    <span className="text-indigo-400 text-[8px]">BILINGUAL SYNTHESIS</span>
+                    <span className="text-indigo-400 text-[8px]">
+                      BILINGUAL SYNTHESIS
+                    </span>
                     <span className="text-xs">🇱🇰</span>
                   </div>
-                  <p className="text-indigo-900 leading-relaxed text-xs mt-2 font-medium">
-                    “නවීන විදුලිබල පද්ධති මඟින් දේශීය ප්‍රදේශ පුරා තිරසාර පිරිසිදු බලශක්තිය සාර්ථකව ලබා දී ඇත.”
+                  <p className="text-indigo-900 font-sinhala leading-relaxed text-xs mt-2 font-medium">
+                    “නවීන විදුලිබල පද්ධති මඟින් දේශීය ප්‍රදේශ පුරා තිරසාර
+                    පිරිසිදු බලශක්තිය සාර්ථකව ලබා දී ඇත.”
                   </p>
                 </div>
               </motion.div>
@@ -404,23 +533,26 @@ export default function SystemPipeline() {
                 <div className="bg-white border border-slate-200 shadow-[0_15px_30px_rgba(0,0,0,0.06)] rounded-3xl p-5 text-left relative overflow-hidden group">
                   <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                     <span className="text-[10px] text-emerald-500 font-bold font-mono flex items-center gap-1">
-                      <Sparkles className="w-3.5 h-3.5" /> NEURALPRESS AI VERIFIED
+                      <Sparkles className="w-3.5 h-3.5" /> NEURALPRESS AI
+                      VERIFIED
                     </span>
                     <div className="flex gap-1">
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-300" />
                     </div>
                   </div>
-                  <h4 className="text-sm font-bold text-slate-900 mt-3 mb-2">
+                  <h4 className="text-sm text-slate-900 mt-3 mb-2">
                     Dynamic growth of clean sustainable energy arrays
                   </h4>
                   <p className="text-slate-500 text-[11px] leading-relaxed font-light">
-                    Vetted across 14 trusted international sources. Consensus verified with zero false duplicate
-                    references.
+                    Vetted across 14 trusted international sources. Consensus
+                    verified with zero false duplicate references.
                   </p>
                   <div className="mt-4 flex items-center justify-between text-[9px] font-mono text-slate-400">
                     <span>Confidence Score: 99%</span>
-                    <span className="text-emerald-500 font-bold">CONSENSUS MATCH OK</span>
+                    <span className="text-emerald-500 font-bold">
+                      CONSENSUS MATCH OK
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -442,7 +574,10 @@ export default function SystemPipeline() {
       </div>
 
       {/* Console log terminal view (System pipeline log stream) */}
-      <div id="performance" className="max-w-3xl mx-auto mt-20 relative bg-white border border-slate-200/80 rounded-[2rem] shadow-sm overflow-hidden select-none">
+      <div
+        id="performance"
+        className="max-w-5xl  mx-auto mt-20 relative bg-white border border-slate-200/80 rounded-[2rem] shadow-sm overflow-hidden select-none"
+      >
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between select-none">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
@@ -455,7 +590,7 @@ export default function SystemPipeline() {
           </span>
         </div>
 
-        <div
+        <ScrollArea
           ref={consoleContainerRef}
           className="p-6 bg-slate-50/30 rounded-b-[1.75rem] h-[220px] font-mono text-xs overflow-y-auto space-y-3 scroll-smooth custom-scrollbar border border-slate-100/50"
         >
@@ -465,9 +600,12 @@ export default function SystemPipeline() {
               const text = log.text;
               const logKey = `${log.id}-${index}`;
 
-              if (text.startsWith("Filtering")) colorClass = "text-emerald-600 font-semibold";
-              if (text.startsWith("Translating")) colorClass = "text-indigo-600 font-semibold";
-              if (text.startsWith("Verified")) colorClass = "text-cyan-600 font-bold";
+              if (text.startsWith("Filtering"))
+                colorClass = "text-emerald-600 font-semibold";
+              if (text.startsWith("Translating"))
+                colorClass = "text-indigo-600 font-semibold";
+              if (text.startsWith("Verified"))
+                colorClass = "text-cyan-600 font-bold";
 
               return (
                 <motion.div
@@ -484,7 +622,7 @@ export default function SystemPipeline() {
               );
             })}
           </AnimatePresence>
-        </div>
+        </ScrollArea>
       </div>
 
       {/* Feature blocks (Comprehensive consulting and intelligent innovation) */}
@@ -494,9 +632,12 @@ export default function SystemPipeline() {
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold font-heading mb-2 text-slate-900">AI Accuracy</h3>
+            <h3 className="text-lg tracking-[-0.5px] mb-2 text-slate-900">
+              AI Accuracy
+            </h3>
             <p className="text-slate-500 text-xs font-normal leading-relaxed">
-              Smart indexing models read and cluster stories conceptually, giving you semantic matching maps.
+              Smart indexing models read and cluster stories conceptually,
+              giving you semantic matching maps.
             </p>
           </div>
         </div>
@@ -510,9 +651,12 @@ export default function SystemPipeline() {
             <Languages className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold font-heading mb-2 text-slate-900">Bilingual Reading</h3>
+            <h3 className="text-lg tracking-[-0.5px] mb-2 text-slate-900">
+              Bilingual Reading
+            </h3>
             <p className="text-slate-500 text-xs font-normal leading-relaxed">
-              We automatically translate global news to premium, high-quality Sinhala automatically.
+              We automatically translate global news to premium, high-quality
+              Sinhala automatically.
             </p>
           </div>
         </div>
@@ -522,9 +666,12 @@ export default function SystemPipeline() {
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
-            <h3 className="text-lg font-bold font-heading mb-2">Vetted Catalog</h3>
+            <h3 className="text-lg tracking-[-0.5px] mb-2 text-slate-900">
+              Vetted Catalog
+            </h3>
             <p className="text-slate-500 text-xs font-normal leading-relaxed">
-              We keep unique story coverage angles while removing duplicates and ensuring strict safety standards.
+              We keep unique story coverage angles while removing duplicates and
+              ensuring strict safety standards.
             </p>
           </div>
         </div>
