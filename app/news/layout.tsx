@@ -61,7 +61,7 @@ export default function NewsLayout({
               AI News Discovery Portal
             </span>
             <LangToggle />
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
           </div>
         </div>
       </header>
