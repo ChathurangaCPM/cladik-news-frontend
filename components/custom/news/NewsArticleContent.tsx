@@ -17,6 +17,7 @@ import {
   Eye,
   Link2,
   ArrowLeft,
+  Plus,
 } from "lucide-react";
 import { incrementViewCountAction } from "@/app/news/actions";
 import { ReportButton } from "./ReportButton";
@@ -30,6 +31,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 export interface EnrichedSource {
   title?: string;
   url: string;
@@ -413,7 +422,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full bg-white dark:bg-zinc-950 fixed top-0 left-0 z-50 shadow-sm border-b border-slate-100 dark:border-zinc-800/80"
+            className="w-full bg-white dark:bg-zinc-950 fixed top-0 left-0 z-50 border-b border-slate-100 dark:border-zinc-800/80"
           >
             <div className="max-w-5xl mx-auto py-4 px-4 lg:px-0">
               <div className="flex items-center gap-5">
@@ -492,61 +501,151 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
               y: animationStage >= 2 ? 0 : 10,
             }}
             transition={{ duration: 0.5 }}
-            className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground font-inter font-light"
+            className="flex items-center gap-4 text-sm text-muted-foreground font-light w-full"
           >
-            <div className="flex items-center gap-2">
-              <span>Published</span>
+            {isMobile ? (
+              <div className="w-full space-y-2">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span>Published</span>
 
-              <time dateTime={article.pubDate || article.createdAt}>
-                {formatPubDate(article.pubDate || article.createdAt)}
-              </time>
-            </div>
+                    <time dateTime={article.pubDate || article.createdAt}>
+                      {formatPubDate(article.pubDate || article.createdAt)}
+                    </time>
+                  </div>
+                  {viewCount > 0 && (
+                    <div className="flex items-center gap-1.5 border-l border-slate-100 dark:border-zinc-800 pl-4 text-slate-500">
+                      <Eye className="w-4 h-4" />
+                      <span>{formatViews(viewCount)}</span>
+                    </div>
+                  )}
+                </div>
 
-            {viewCount > 0 && (
-              <div className="flex items-center gap-1.5 border-l border-slate-100 dark:border-zinc-800 pl-4 text-slate-500">
-                <Eye className="w-4 h-4" />
-                <span>{formatViews(viewCount)}</span>
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center border-l border-slate-100 dark:border-zinc-800 h-5">
+                    <SourcesPanel
+                      title={article.title}
+                      url={article.url}
+                      originalSource={article.originalSource}
+                      structuredDataSearchResults={rawStructuredData}
+                      enrichedSources={aiEnrichedData}
+                      sourcesCount={uniqueTopSources.length}
+                      favicons={displaySources.slice(0, 3).map((s) => {
+                        let d = s.engine || "News";
+                        try {
+                          d = new URL(s.url).hostname.replace(/^www\./i, "");
+                        } catch (e) {}
+                        return `https://www.google.com/s2/favicons?domain=${d}&sz=64`;
+                      })}
+                    />
+                  </div>
+
+                  {articleCategory.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <Link
+                        href={`/news/${encodeURIComponent(articleCategory[0].toLowerCase().replace(/ /g, "-"))}`}
+                        className="px-4 py-1 border bg-white dark:bg-zinc-900 border-gray-100 dark:border-gray-800 rounded-full text-xs font-normal text-slate-800 dark:text-zinc-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white"
+                      >
+                        {articleCategory[0]}
+                      </Link>
+
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <div className="w-auto px-2 text-xs h-6 border border-slate-100 dark:border-zinc-800 rounded-full flex items-center justify-center">
+                            <Plus className="w-3 h-3" />{" "}
+                            {articleCategory.length - 1} More
+                          </div>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <PopoverHeader>
+                            <PopoverTitle className="text-sm font-normal">
+                              Tags
+                            </PopoverTitle>
+                            <PopoverDescription className="text-xs font-normal text-muted-foreground dark:text-zinc-200">
+                              Filter news by tags
+                            </PopoverDescription>
+                          </PopoverHeader>
+                          <div className="flex gap-2 flex-wrap">
+                            {articleCategory.slice(1).map((tag, index) => (
+                              <Link
+                                key={index}
+                                href={`/news/${encodeURIComponent(
+                                  tag.toLowerCase().replace(/ /g, "-"),
+                                )}`}
+                                className="px-4 py-1 border bg-white dark:bg-zinc-900 border-gray-100 dark:border-gray-800 rounded-full text-xs font-normal text-slate-800 dark:text-zinc-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white"
+                              >
+                                {tag}
+                              </Link>
+                            ))}
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
+            ) : (
+              <div className="space-y-8 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2">
+                      <span>Published</span>
 
-            {/* Show Source Avatars and Panel mapping right in the header row just like the card */}
-            <div className="flex items-center border-l border-slate-100 dark:border-zinc-800 pl-4 h-5">
-              <SourcesPanel
-                title={article.title}
-                url={article.url}
-                originalSource={article.originalSource}
-                structuredDataSearchResults={rawStructuredData}
-                enrichedSources={aiEnrichedData}
-                sourcesCount={uniqueTopSources.length}
-                favicons={displaySources.slice(0, 3).map((s) => {
-                  let d = s.engine || "News";
-                  try {
-                    d = new URL(s.url).hostname.replace(/^www\./i, "");
-                  } catch (e) {}
-                  return `https://www.google.com/s2/favicons?domain=${d}&sz=64`;
-                })}
-              />
-            </div>
+                      <time dateTime={article.pubDate || article.createdAt}>
+                        {formatPubDate(article.pubDate || article.createdAt)}
+                      </time>
+                    </div>
 
-            {articleCategory.length > 0 && (
-              <div className="flex gap-2 flex-wrap">
-                {articleCategory.map((cat, idx) => (
-                  <Link
-                    href={`/news/${encodeURIComponent(cat.toLowerCase().replace(/ /g, "-"))}`}
-                    key={idx}
-                    className="px-4 py-1 border bg-white dark:bg-zinc-900 border-gray-100 dark:border-gray-800 rounded-full text-xs font-normal text-slate-800 dark:text-zinc-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white"
-                  >
-                    {cat}
-                  </Link>
-                ))}
-              </div>
-            )}
-            {article._id && (
-              <div className="flex items-center ml-auto">
-                <span className="text-xs mr-2 text-muted-foreground font-inter font-light">
-                  Report
-                </span>
-                <ReportButton id={article._id.toString()} />
+                    {viewCount > 0 && (
+                      <div className="flex items-center gap-1.5 border-l border-slate-100 dark:border-zinc-800 pl-4 text-slate-500">
+                        <Eye className="w-4 h-4" />
+                        <span>{formatViews(viewCount)}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    {/* Show Source Avatars and Panel mapping right in the header row just like the card */}
+                    <div className="flex items-center border-r border-slate-200 dark:border-zinc-800 pr-4 h-4">
+                      <SourcesPanel
+                        title={article.title}
+                        url={article.url}
+                        originalSource={article.originalSource}
+                        structuredDataSearchResults={rawStructuredData}
+                        enrichedSources={aiEnrichedData}
+                        sourcesCount={uniqueTopSources.length}
+                        favicons={displaySources.slice(0, 3).map((s) => {
+                          let d = s.engine || "News";
+                          try {
+                            d = new URL(s.url).hostname.replace(/^www\./i, "");
+                          } catch (e) {}
+                          return `https://www.google.com/s2/favicons?domain=${d}&sz=64`;
+                        })}
+                      />
+                    </div>
+                    {article._id && (
+                      <div className="flex items-center ml-auto">
+                        <span className="text-xs mr-2 text-muted-foreground font-inter font-light">
+                          Report
+                        </span>
+                        <ReportButton id={article._id.toString()} />
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {articleCategory.length > 0 && (
+                  <div className="flex gap-2 flex-wrap">
+                    {articleCategory.map((cat, idx) => (
+                      <Link
+                        href={`/news/${encodeURIComponent(cat.toLowerCase().replace(/ /g, "-"))}`}
+                        key={idx}
+                        className="px-4 py-1 border bg-white dark:bg-zinc-900 border-gray-100 dark:border-gray-800 rounded-full text-xs font-normal text-slate-800 dark:text-zinc-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white"
+                      >
+                        {cat}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </motion.div>
@@ -561,7 +660,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
             }}
             transition={{ duration: 0.7 }}
           >
-            <figure className="mb-0 w-full relative rounded-xl overflow-hidden shadow-sm group">
+            <figure className="mb-0 w-full relative rounded-xl overflow-hidden group">
               <img
                 src={displayImage}
                 alt={article.title}
@@ -651,7 +750,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
             <div className="md:col-span-2 flex flex-col gap-6">
               {article.whatHappened &&
                 (article.whatHappened.en || article.whatHappened.si) && (
-                  <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-4">
+                  <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 flex flex-col gap-4">
                     <h4 className="text-base font-semibold text-slate-900 dark:text-zinc-50 flex items-center gap-2">
                       <span className="w-1.5 h-4 rounded bg-indigo-500" />
                       {lang === "si" ? "සිදුවීම කුමක්ද?" : "What Happened"}
@@ -668,7 +767,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
 
               {article.whyItMatters &&
                 (article.whyItMatters.en || article.whyItMatters.si) && (
-                  <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-4">
+                  <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 flex flex-col gap-4">
                     <h4 className="text-base font-semibold text-slate-900 dark:text-zinc-50 flex items-center gap-2">
                       <span className="w-1.5 h-4 rounded bg-amber-500" />
                       {lang === "si" ? "වැදගත් වන්නේ ඇයි?" : "Why It Matters"}
@@ -686,7 +785,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
               {article.historicalContext &&
                 (article.historicalContext.en ||
                   article.historicalContext.si) && (
-                  <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-4">
+                  <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 flex flex-col gap-4">
                     <h4 className="text-base font-semibold text-slate-900 dark:text-zinc-50 flex items-center gap-2">
                       <span className="w-1.5 h-4 rounded bg-sky-500" />
                       {lang === "si" ? "පසුබිම් ඉතිහාසය" : "Historical Context"}
@@ -705,9 +804,10 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
             {/* Right 1 Column: Metrics, Sentiment & People */}
             <div className="flex flex-col gap-6">
               {/* Importance & Sentiment Card */}
-              {(typeof article.importance === "number" ||
+              {((typeof article.importance === "number" &&
+                article.importance !== 0) ||
                 article.sentiment) && (
-                <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-5">
+                <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 flex flex-col gap-5">
                   <h4 className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider">
                     {lang === "si" ? "පුවතෙහි වැදගත්කම" : "Metrics & Sentiment"}
                   </h4>
@@ -769,7 +869,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
 
               {/* People Involved Card */}
               {article.peopleInvolved && article.peopleInvolved.length > 0 && (
-                <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 shadow-sm flex flex-col gap-4">
+                <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-100 dark:border-zinc-800 flex flex-col gap-4">
                   <h4 className="text-xs font-semibold text-slate-400 dark:text-zinc-500 uppercase tracking-wider">
                     {lang === "si"
                       ? "සම්බන්ධ පුද්ගලයින් / ආයතන"
@@ -906,7 +1006,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                       e.stopPropagation();
                       window.open(source.url, "_blank");
                     }}
-                    className="cursor-pointer group flex gap-4 p-4 rounded-2xl border border-primary/10 dark:border-zinc-800 bg-primary-50/10 dark:bg-zinc-900/20 transition-all hover:border-primary dark:hover:border-zinc-700 hover:bg-primary-50/30 dark:hover:bg-zinc-900/40 hover:shadow-sm dark:hover:shadow-[0_4px_20px_rgb(0,0,0,0.3)]"
+                    className="cursor-pointer group flex gap-4 p-4 rounded-2xl border border-primary/10 dark:border-zinc-800 bg-primary-50/10 dark:bg-zinc-900/20 transition-all hover:border-primary dark:hover:border-zinc-700 hover:bg-primary-50/30 dark:hover:bg-zinc-900/40 hover:dark:hover:shadow-[0_4px_20px_rgb(0,0,0,0.3)]"
                   >
                     <div className="w-8 h-8 overflow-hidden rounded-full bg-white dark:bg-zinc-950 border border-primary/10 dark:border-zinc-800/85 flex items-center justify-center shrink-0">
                       <Image
@@ -949,7 +1049,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   structuredDataSearchResults={rawStructuredData}
                   enrichedSources={aiEnrichedData}
                   customTrigger={
-                    <button className="py-2.5 px-6 bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-750 text-white rounded-full font-medium text-sm transition-all duration-300 shadow-sm outline-none cursor-pointer">
+                    <button className="py-2.5 px-6 bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-750 text-white rounded-full font-medium text-sm transition-all duration-300 outline-none cursor-pointer">
                       View All Sources
                     </button>
                   }
