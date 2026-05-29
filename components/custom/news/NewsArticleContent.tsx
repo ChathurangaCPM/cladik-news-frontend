@@ -777,12 +777,13 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {article.peopleInvolved.map((actor, idx) => (
-                      <span
+                      <Link
+                        href={`/news?search=${encodeURIComponent(actor)}`}
                         key={idx}
                         className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-100 dark:border-zinc-850 text-xs font-medium text-slate-700 dark:text-zinc-300"
                       >
                         {actor}
-                      </span>
+                      </Link>
                     ))}
                   </div>
                 </div>
