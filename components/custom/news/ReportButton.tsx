@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Flag } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { reportNewsItem } from "@/app/news/actions";
+import { reportNewsItem } from "@/app/developer/news/actions";
 import {
   AlertDialog,
   AlertDialogAction,

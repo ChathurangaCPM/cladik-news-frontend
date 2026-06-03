@@ -18,22 +18,22 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Premium non-technical simulated log updates
 const SIMULATED_LOGS = [
-  { text: "Scanning global publications for fresh updates..." },
   {
-    text: "Identified new breaking stories regarding clean energy achievements.",
+    text: "Crawling global news worldwide using our proprietary search engine...",
+  },
+  { text: "Parsing article bodies and cleaning layout boilerplate noise..." },
+  {
+    text: "Generating 384-dimensional vector embeddings for semantic search...",
   },
   {
-    text: "Connecting related news coverage from multiple international publishers...",
-  },
-  { text: "Filtering out duplicate stories to isolate unique viewpoints." },
-  {
-    text: "Translating international reports to high-quality Sinhala automatically...",
+    text: "Deduplicating incoming feeds and grouping under unique event IDs...",
   },
   {
-    text: "Indexing story concepts to build our intelligent search directory.",
+    text: "Extracting semantic concept keywords and multi-domain references...",
   },
-  { text: "Linking updates to our live story discovery catalog." },
-  { text: "Verified, formatted, and published on the live feed." },
+  { text: "Synthesizing AI summaries and bilingual translations..." },
+  { text: "Indexing articles into the elastic developer news database..." },
+  { text: "Serving live updates to connected webhooks and SSE channels." },
 ];
 
 export default function SystemPipeline() {
@@ -143,66 +143,66 @@ export default function SystemPipeline() {
       icon: <Search className="w-4 h-4" />,
       tagEn: "Stage 1",
       tagSi: "පියවර 1",
-      titleEn: "Intelligent Search",
-      titleSi: "බුද්ධිමත් සෙවුම් පද්ධතිය",
+      titleEn: "Continuous Crawling",
+      titleSi: "නිරන්තර ගවේෂණය",
       descEn:
-        "NeuralPress crawls the global web using our own independent search engine to discover fresh breaking updates.",
+        "Our own proprietary search engine crawls and ingests fresh updates from 150+ global publications continuously to capture news events worldwide.",
       descSi:
-        "NeuralPress අපගේ ස්වාධීන සෙවුම් එන්ජිම භාවිතයෙන් ගෝලීය වෙබ් අඩවි නිරන්තරයෙන් ගවේෂණය කරමින් නැවුම් පුවත් සොයා ගනී.",
-      badgeEn: "Search Engine",
-      badgeSi: "සෙවුම් එන්ජිම",
+        "ගෝලීය ප්‍රකාශන 150+ කට වඩා වැඩි ප්‍රමාණයකින් නිරන්තරයෙන් පුවත් උකහා ගනිමින් නැවුම් තොරතුරු ගබඩා කරයි.",
+      badgeEn: "Raw Ingestion",
+      badgeSi: "අමු දත්ත",
     },
     {
       icon: <Brain className="w-4 h-4" />,
       tagEn: "Stage 2",
       tagSi: "පියවර 2",
-      titleEn: "Contextual Analysis",
-      titleSi: "සන්දර්භීය විශ්ලේෂණය",
+      titleEn: "Vector Embeddings",
+      titleSi: "දෛශික දත්තකරණය",
       descEn:
-        "Our intelligence parsing layer normalizes layout noise, filters false correlations, and extracts event relevance.",
+        "Generate 384-dimensional semantic embeddings for all news articles to support conceptual query logic.",
       descSi:
-        "අපගේ බුද්ධිමත් පෙරහන් මඟින් පුවත්පත්වල ව්‍යාජ තොරතුරු සහ අනවශ්‍ය දෑ ඉවත් කර සත්‍ය සන්දර්භය පමණක් උකහා ගනී.",
-      badgeEn: "Parsing & Vetting",
-      badgeSi: "පිරික්සීම සහ තහවුරු කිරීම",
+        "ස්වාභාවික භාෂා සෙවුම් සඳහා ලිපි 384-dimensional දෛශික ඛණ්ඩාංක සහිතව සුචිගත කරයි.",
+      badgeEn: "Vector Mappings",
+      badgeSi: "දෛශික සිතියම්",
     },
     {
       icon: <Globe2 className="w-4 h-4" />,
       tagEn: "Stage 3",
       tagSi: "පියවර 3",
-      titleEn: "Consensus Clustering",
-      titleSi: "එකඟතා පොකුරුගත කිරීම",
+      titleEn: "Citation Clustering",
+      titleSi: "මූලාශ්‍ර පොකුරුගත කිරීම",
       descEn:
-        "We merge duplicate signals and group multiple regional reports together to identify solid, objective core stories.",
+        "Deduplicate overlapping news articles and compile multiple domain sources into single citation graphs.",
       descSi:
-        "එකම පුවත විවිධ මාධ්‍ය වාර්තා කර ඇති ආකාරය සංසන්දනය කර පොදු සත්‍යය හඳුනාගෙන අදාළ පුවත් පොකුරුගත කරයි.",
-      badgeEn: "Core Consensus",
-      badgeSi: "පොදු එකඟතාව",
+        "එකම පුවත වාර්තා කළ විවිධ ප්‍රභවයන් සංසන්දනය කර අනුපිටපත් ඉවත් කර මූලාශ්‍ර සිතියම් සාදයි.",
+      badgeEn: "Citation Engine",
+      badgeSi: "මූලාශ්‍ර එන්ජිම",
     },
     {
       icon: <Languages className="w-4 h-4" />,
       tagEn: "Stage 4",
       tagSi: "පියවර 4",
-      titleEn: "Bilingual Translation",
-      titleSi: "ද්විභාෂා පරිවර්තනය",
+      titleEn: "AI Enhancement",
+      titleSi: "AI සාරාංශකරණය",
       descEn:
-        "Our neural translation models translate global articles into premium, grammatically sound, high-fidelity Sinhala.",
+        "Synthesize objective summaries, extract core semantic concepts, and produce bilingual translations using LLMs.",
       descSi:
-        "අපගේ ස්නායුක පරිවර්තන ආකෘති මඟින් ගෝලීය ලිපි උසස්, ව්‍යාකරණානුකූල සහ කියවීමට පහසු සිංහල භාෂාවට පරිවර්තනය කරයි.",
-      badgeEn: "Premium Sinhala",
-      badgeSi: "උසස් සිංහල",
+        "AI මඟින් ලිපි සාරාංශ ලබා ගනිමින් උසස් සිංහල පරිවර්තන සහ සන්දර්භීය සංකල්ප සකස් කරයි.",
+      badgeEn: "AI Enrichment",
+      badgeSi: "AI සාරාංශ",
     },
     {
       icon: <Flame className="w-4 h-4" />,
       tagEn: "Stage 5",
       tagSi: "පියවර 5",
-      titleEn: "Vetted Delivery",
-      titleSi: "සත්‍යාපිත බෙදාහැරීම",
+      titleEn: "REST API & SSE",
+      titleSi: "සංවර්ධන මෙවලම්",
       descEn:
-        "Clean, objective news is published directly into the feed, accompanied by consensus scores and direct source verification links.",
+        "Expose clean JSON REST endpoints, real-time webhooks, and Server-Sent Event (SSE) channels for developer applications.",
       descSi:
-        "සියලු මූලාශ්‍ර සහ විශ්වාසනීයත්ව දර්ශකයන් සමඟින් සත්‍යාපනය කළ පුවත් සෘජුවම පරිශීලක පුවත් සංග්‍රහය වෙත නිකුත් කෙරේ.",
-      badgeEn: "Live Feed",
-      badgeSi: "සජීවී පුවත්",
+        "සංවර්ධකයින් සඳහා REST API, වෙබ් කොක්ක (webhooks) සහ SSE සජීවී විකාශන මාර්ග සපයයි.",
+      badgeEn: "Developer Delivery",
+      badgeSi: "සජීවී බෙදාහැරීම",
     },
   ];
 
@@ -212,18 +212,18 @@ export default function SystemPipeline() {
       className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32 relative z-10 text-center"
     >
       <span className="text-xs uppercase text-indigo-600 font-mono tracking-wider font-bold">
-        OPERATIONAL FLOW
+        API INGESTION & PIPELINE
       </span>
       <h2 className="text-3xl md:text-5xl tracking-[-3px] mt-3 text-slate-900 leading-tight">
         How our <br />
         <span className="font-heading italic text-[#2b86ff]">
-          intelligent news
+          AI News API
         </span>{" "}
-        system works
+        processes feeds
       </h2>
       <p className="text-slate-500 max-w-xl mx-auto mt-4 text-sm font-light">
-        Track our real-time flow from independent search to verified consensus
-        stories.
+        Monitor how raw feeds are crawled, vectorized, clustered with citations,
+        and served in real-time.
       </p>
 
       {/* Split Screen Showcase */}
@@ -251,7 +251,7 @@ export default function SystemPipeline() {
             >
               {/* Glowing Tip Indicator */}
               <motion.div
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-[#2b86ff] shadow-[0_0_12px_#2b86ff] border border-white"
+                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rounded-full bg-[#2b86ff]  border border-white"
                 animate={{ scale: [1, 1.4, 1] }}
                 transition={{
                   duration: 2,
@@ -279,7 +279,7 @@ export default function SystemPipeline() {
               >
                 {/* Step Indicator Dot */}
                 <div
-                  className={`step-indicator-dot w-10 h-10 rounded-full shrink-0 flex items-center justify-center border transition-all duration-500 shadow-sm ${
+                  className={`step-indicator-dot w-10 h-10 rounded-full shrink-0 flex items-center justify-center border transition-all duration-500  ${
                     isActive
                       ? "bg-[#2b86ff] border-[#2b86ff] text-white scale-110"
                       : "bg-white border-slate-200 text-slate-400 group-hover/step:border-slate-300"
@@ -327,11 +327,11 @@ export default function SystemPipeline() {
               <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
               <div className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
               <span className="text-[10px] font-mono text-slate-400 ml-4">
-                neuralpress://engine/pipeline-preview
+                neuralpress://api/v1/news/search
               </span>
             </div>
             <span className="text-[9px] uppercase font-bold tracking-widest font-mono text-slate-400 px-2 py-0.5 bg-slate-50 border border-slate-100 rounded-md">
-              ACTIVE STAGE
+              API CALL
             </span>
           </div>
 
@@ -349,7 +349,7 @@ export default function SystemPipeline() {
                   <div className="flex items-center gap-3">
                     <Search className="w-4 h-4 text-[#2b86ff] animate-pulse" />
                     <span className="text-xs font-mono text-slate-700">
-                      search: consensus-verified energy breakthroughs...
+                      GET /v1/access/news/search?q=ai+models
                     </span>
                   </div>
                   <div className="w-2 h-4 bg-[#2b86ff] animate-ping shrink-0" />
@@ -360,21 +360,23 @@ export default function SystemPipeline() {
                   <div className="flex items-center justify-between py-1 px-3 bg-blue-50/40 rounded-xl border border-blue-100/50">
                     <span className="text-[#2b86ff] font-bold">[200 OK]</span>
                     <span className="truncate flex-1 ml-3 text-slate-600">
-                      stateofsurveillance.org
+                      GET /v1/access/news?limit=20
                     </span>
                     <span className="text-slate-400 ml-2">14ms</span>
                   </div>
                   <div className="flex items-center justify-between py-1 px-3 bg-lime-50/40 rounded-xl border border-lime-100/50">
-                    <span className="text-lime-600 font-bold">[200 OK]</span>
+                    <span className="text-lime-600 font-bold">
+                      [201 CREATED]
+                    </span>
                     <span className="truncate flex-1 ml-3 text-slate-600">
-                      globalrenewables.net
+                      POST /v1/access/webhooks
                     </span>
                     <span className="text-slate-400 ml-2">22ms</span>
                   </div>
                   <div className="flex items-center justify-between py-1 px-3 bg-purple-50/40 rounded-xl border border-purple-100/50">
                     <span className="text-purple-600 font-bold">[200 OK]</span>
                     <span className="truncate flex-1 ml-3 text-slate-600">
-                      powertech-insight.org
+                      GET /v1/access/news/search
                     </span>
                     <span className="text-slate-400 ml-2">18ms</span>
                   </div>
@@ -392,24 +394,32 @@ export default function SystemPipeline() {
                 {/* Dirty Raw Inputs */}
                 <div className="bg-rose-50/40 border border-rose-100 rounded-2xl p-4 text-[9px] font-mono text-rose-800 text-left relative overflow-hidden select-none">
                   <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-rose-100 text-rose-700 text-[8px] font-bold">
-                    RAW JUNK
+                    RAW INGESTION
                   </div>
                   <p className="line-through opacity-55 leading-normal mt-3">
-                    {"<!-- AD SPONSOR BLOCK -->"}
+                    {"<html><body>"}
                     <br />
-                    Buy premium coins now! 1536-dimensional vectors embeddings
-                    generated in PostgreSQL raw pipeline index crawls...
+                    {"<div>AD SPONSOR BLOCK</div>"}
+                    <br />
+                    {"<h1>AI models show breakthrough performance...</h1>"}
+                    <br />
+                    {"</body></html>"}
                   </p>
                 </div>
 
                 {/* Clean Filtered summary */}
                 <div className="bg-emerald-50/40 border border-emerald-100 rounded-2xl p-4 text-[9px] font-mono text-emerald-800 text-left relative overflow-hidden">
                   <div className="absolute top-2 right-2 px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 text-[8px] font-bold">
-                    VETTED DATA
+                    STRUCTURED API RES
                   </div>
                   <p className="leading-relaxed mt-3 font-semibold text-emerald-900">
-                    Extracted core factual summary detailing localized active
-                    clean grid performance metrics.
+                    {"{ id: 'news_102',"}
+                    <br />
+                    {"  title: 'AI models breakthrough...',"}
+                    <br />
+                    {"  publishDate: '2026-06-03T12:00:00Z',"}
+                    <br />
+                    {"  categories: ['AI', 'Tech'] }"}
                   </p>
                 </div>
               </motion.div>
@@ -427,12 +437,12 @@ export default function SystemPipeline() {
                   {/* Central Consensus Node */}
                   <div className="w-14 h-14 rounded-full bg-emerald-500 border border-white shadow-[0_0_20px_rgba(16,185,129,0.4)] flex flex-col items-center justify-center text-white z-10 animate-pulse">
                     <CheckCircle2 className="w-5 h-5" />
-                    <span className="text-[8px] font-bold mt-0.5">99.2%</span>
+                    <span className="text-[8px] font-bold mt-0.5">REST</span>
                   </div>
 
                   {/* Peripheral Source Node 1 */}
-                  <div className="absolute top-2 left-6 w-9 h-9 rounded-full bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-500 shadow-sm text-[8px] font-bold">
-                    US
+                  <div className="absolute top-2 left-6 w-9 h-9 rounded-full bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-500  text-[8px] font-bold">
+                    Search
                   </div>
                   {/* Connecting Line 1 */}
                   <svg className="absolute left-[38px] top-[24px] w-24 h-16 pointer-events-none">
@@ -448,8 +458,8 @@ export default function SystemPipeline() {
                   </svg>
 
                   {/* Peripheral Source Node 2 */}
-                  <div className="absolute bottom-2 left-10 w-9 h-9 rounded-full bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-500 shadow-sm text-[8px] font-bold">
-                    EU
+                  <div className="absolute bottom-2 left-10 w-9 h-9 rounded-full bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-500  text-[8px] font-bold">
+                    Vectors
                   </div>
                   {/* Connecting Line 2 */}
                   <svg className="absolute left-[44px] bottom-[28px] w-20 h-12 pointer-events-none">
@@ -465,8 +475,8 @@ export default function SystemPipeline() {
                   </svg>
 
                   {/* Peripheral Source Node 3 */}
-                  <div className="absolute top-10 right-6 w-9 h-9 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-500 shadow-sm text-[8px] font-bold">
-                    LK
+                  <div className="absolute top-10 right-6 w-9 h-9 rounded-full bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-500  text-[8px] font-bold">
+                    Citations
                   </div>
                   {/* Connecting Line 3 */}
                   <svg className="absolute right-[44px] top-[46px] w-20 h-12 pointer-events-none">
@@ -491,32 +501,35 @@ export default function SystemPipeline() {
                 transition={{ duration: 0.4 }}
                 className="w-full space-y-3 text-left font-mono text-[10px]"
               >
-                <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col justify-between min-h-[100px] shadow-sm">
+                <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-4 flex flex-col justify-between min-h-[100px] ">
                   <div className="border-b border-slate-200/50 pb-2 flex items-center justify-between">
                     <span className="text-slate-400 text-[8px]">
-                      ORIGINAL (ENGLISH)
+                      RAW WEB DATA (HTML)
                     </span>
-                    <span className="text-xs">🇺🇸</span>
+                    <span className="text-xs">🌐</span>
                   </div>
                   <p className="text-slate-700 leading-normal mt-2">
-                    “Advanced grid arrays have successfully delivered
-                    sustainable clean energy across localized regions.”
+                    “New clean energy solar arrays have successfully delivered
+                    sustainable power across localized regions.”
                   </p>
                 </div>
 
                 <div className="bg-indigo-50/80 border border-indigo-200/50 rounded-2xl p-4 flex flex-col justify-between min-h-[100px] shadow-[0_10px_25px_rgba(99,102,241,0.04)] relative group">
                   <div className="absolute top-0 right-4 h-5 w-12 bg-indigo-500 text-white text-[8px] font-bold flex items-center justify-center rounded-b-lg animate-pulse uppercase tracking-wider">
-                    NEURAL
+                    API
                   </div>
                   <div className="border-b border-indigo-100 pb-2 flex items-center justify-between">
                     <span className="text-indigo-400 text-[8px]">
-                      BILINGUAL SYNTHESIS
+                      API JSON PAYLOAD
                     </span>
-                    <span className="text-xs">🇱🇰</span>
+                    <span className="text-xs">⚙️</span>
                   </div>
-                  <p className="text-indigo-900 font-sinhala leading-relaxed text-xs mt-2 font-medium">
-                    “නවීන විදුලිබල පද්ධති මඟින් දේශීය ප්‍රදේශ පුරා තිරසාර
-                    පිරිසිදු බලශක්තිය සාර්ථකව ලබා දී ඇත.”
+                  <p className="text-indigo-900 leading-relaxed text-xs mt-2 font-medium">
+                    {'{ "title": "AI Clean Energy Solar Arrays", '}
+                    <br />
+                    {'  "summary": "[LOCKED - Upgrade to Business Plan]", '}
+                    <br />
+                    {'  "references": [ { "url": "..." } ] }'}
                   </p>
                 </div>
               </motion.div>
@@ -533,8 +546,7 @@ export default function SystemPipeline() {
                 <div className="bg-white border border-slate-200 shadow-[0_15px_30px_rgba(0,0,0,0.06)] rounded-3xl p-5 text-left relative overflow-hidden group">
                   <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                     <span className="text-[10px] text-emerald-500 font-bold font-mono flex items-center gap-1">
-                      <Sparkles className="w-3.5 h-3.5" /> NEURALPRESS AI
-                      VERIFIED
+                      <Sparkles className="w-3.5 h-3.5" /> NEURALPRESS API
                     </span>
                     <div className="flex gap-1">
                       <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
@@ -542,16 +554,16 @@ export default function SystemPipeline() {
                     </div>
                   </div>
                   <h4 className="text-sm text-slate-900 mt-3 mb-2">
-                    Dynamic growth of clean sustainable energy arrays
+                    News API Search Endpoint Integration
                   </h4>
                   <p className="text-slate-500 text-[11px] leading-relaxed font-light">
-                    Vetted across 14 trusted international sources. Consensus
-                    verified with zero false duplicate references.
+                    Query conceptually using natural language to retrieve
+                    structured news metadata, vector embeddings, and webhooks.
                   </p>
                   <div className="mt-4 flex items-center justify-between text-[9px] font-mono text-slate-400">
-                    <span>Confidence Score: 99%</span>
+                    <span>Response Time: 88ms</span>
                     <span className="text-emerald-500 font-bold">
-                      CONSENSUS MATCH OK
+                      API REQUEST: 200 OK
                     </span>
                   </div>
                 </div>
@@ -561,7 +573,7 @@ export default function SystemPipeline() {
 
           {/* Mockup footer progress bar indicating pipeline cycle */}
           <div className="border-t border-slate-100 pt-4 flex items-center justify-between text-[10px] text-slate-400 font-mono select-none">
-            <span>Pipeline Cycle: Autonomous Swarm</span>
+            <span>Pipeline Cycle: Real-Time AI Ingestion</span>
             <div className="w-32 bg-slate-100 h-1 rounded-full overflow-hidden">
               <motion.div
                 className="bg-[#2b86ff] h-full rounded-full"
@@ -576,17 +588,17 @@ export default function SystemPipeline() {
       {/* Console log terminal view (System pipeline log stream) */}
       <div
         id="performance"
-        className="max-w-5xl  mx-auto mt-20 relative bg-white border border-slate-200/80 rounded-[2rem] shadow-sm overflow-hidden select-none"
+        className="max-w-5xl  mx-auto mt-20 relative bg-white border border-slate-200/80 rounded-[2rem]  overflow-hidden select-none"
       >
         <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between select-none">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-slate-300" />
             <span className="text-[10px] font-mono text-slate-400 font-semibold tracking-wider">
-              neuralpress@engine:~
+              neuralpress@api:~
             </span>
           </div>
           <span className="text-[10px] font-mono font-semibold uppercase bg-indigo-50 text-indigo-600 border border-indigo-100 px-2.5 py-0.5 rounded-full">
-            Live Index
+            Live Stream
           </span>
         </div>
 
@@ -600,11 +612,11 @@ export default function SystemPipeline() {
               const text = log.text;
               const logKey = `${log.id}-${index}`;
 
-              if (text.startsWith("Filtering"))
+              if (text.includes("Deduplicating") || text.includes("Extracting"))
                 colorClass = "text-emerald-600 font-semibold";
-              if (text.startsWith("Translating"))
+              if (text.includes("Generating") || text.includes("Synthesizing"))
                 colorClass = "text-indigo-600 font-semibold";
-              if (text.startsWith("Verified"))
+              if (text.includes("Serving") || text.includes("Indexing"))
                 colorClass = "text-cyan-600 font-bold";
 
               return (
@@ -627,22 +639,22 @@ export default function SystemPipeline() {
 
       {/* Feature blocks (Comprehensive consulting and intelligent innovation) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 max-w-5xl mx-auto">
-        <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 text-left shadow-sm flex flex-col justify-between min-h-[220px]">
+        <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 text-left  flex flex-col justify-between min-h-[220px]">
           <div className="w-10 h-10 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-500 mb-6">
             <Sparkles className="w-5 h-5" />
           </div>
           <div>
             <h3 className="text-lg tracking-[-0.5px] mb-2 text-slate-900">
-              AI Accuracy
+              Vector Search
             </h3>
             <p className="text-slate-500 text-xs font-normal leading-relaxed">
-              Smart indexing models read and cluster stories conceptually,
-              giving you semantic matching maps.
+              Semantic indexing models map articles into 384-dimensional vector
+              spaces, enabling conceptual queries.
             </p>
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 text-left shadow-sm flex flex-col justify-between min-h-[220px] relative overflow-hidden group">
+        <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 text-left  flex flex-col justify-between min-h-[220px] relative overflow-hidden group">
           {/* Bilingual translation active preview */}
           <div className="absolute top-4 right-4 bg-indigo-50 border border-indigo-100 rounded-lg p-2 font-mono text-[9px] text-indigo-500 h-9 flex items-center justify-center font-bold">
             {langFlip === "en" ? "EN: Clean Energy" : "SI: පිරිසිදු බලශක්තිය"}
@@ -652,26 +664,26 @@ export default function SystemPipeline() {
           </div>
           <div>
             <h3 className="text-lg tracking-[-0.5px] mb-2 text-slate-900">
-              Bilingual Reading
+              AI Summaries
             </h3>
             <p className="text-slate-500 text-xs font-normal leading-relaxed">
-              We automatically translate global news to premium, high-quality
-              Sinhala automatically.
+              Extract core facts and generate concise AI-synthesized summaries,
+              along with high-fidelity translations.
             </p>
           </div>
         </div>
 
-        <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 text-left shadow-sm flex flex-col justify-between min-h-[220px]">
+        <div className="bg-white border border-slate-200/60 rounded-[2rem] p-8 text-left  flex flex-col justify-between min-h-[220px]">
           <div className="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-500 mb-6">
             <ShieldCheck className="w-5 h-5" />
           </div>
           <div>
             <h3 className="text-lg tracking-[-0.5px] mb-2 text-slate-900">
-              Vetted Catalog
+              Structured Citations
             </h3>
             <p className="text-slate-500 text-xs font-normal leading-relaxed">
-              We keep unique story coverage angles while removing duplicates and
-              ensuring strict safety standards.
+              Group matching reports to compile comprehensive citation lists,
+              eliminating duplicate noise.
             </p>
           </div>
         </div>

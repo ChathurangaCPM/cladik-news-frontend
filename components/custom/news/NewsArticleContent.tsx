@@ -19,7 +19,7 @@ import {
   ArrowLeft,
   Plus,
 } from "lucide-react";
-import { incrementViewCountAction } from "@/app/news/actions";
+import { incrementViewCountAction } from "@/app/developer/news/actions";
 import { ReportButton } from "./ReportButton";
 import moment from "moment";
 import { DynamicNewsChart } from "@/components/news/DynamicNewsChart";
@@ -397,7 +397,10 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
   return (
     <>
       <div className="max-w-5xl mx-auto flex justify-between">
-        <Link href={"/news"} className="flex items-center gap-2 cursor-pointer">
+        <Link
+          href={"/developer/news"}
+          className="flex items-center gap-2 cursor-pointer"
+        >
           <ChevronLeft />
           {/* <Image
             src="/main-logo.png"
@@ -415,19 +418,19 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
         </Link>
       </div>
 
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {showSticky && (
           <motion.div
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="w-full bg-white dark:bg-zinc-950 fixed top-0 left-0 z-50 border-b border-slate-100 dark:border-zinc-800/80"
+            className="w-full bg-white dark:bg-zinc-950 fixed top-0 left-[250px] z-50 border-b border-slate-100 dark:border-zinc-800/80"
           >
-            <div className="max-w-5xl mx-auto py-4 px-4 lg:px-0">
+            <div className="max-w-6xl mx-auto py-4 px-4 lg:px-0">
               <div className="flex items-center gap-5">
                 <Link
-                  href={"/news"}
+                  href={"/developer/news"}
                   className="flex items-center gap-1 hover:text-primary transition-colors duration-300 xs:bg-gray-300"
                 >
                   {isMobile ? (
@@ -457,7 +460,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <article className="max-w-5xl mx-auto lg;px-4 py-8 bg-transparent">
         <header className="mb-8">
@@ -543,7 +546,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   {articleCategory.length > 0 && (
                     <div className="flex items-center gap-2">
                       <Link
-                        href={`/news/${encodeURIComponent(articleCategory[0].toLowerCase().replace(/ /g, "-"))}`}
+                        href={`/developer/news/${encodeURIComponent(articleCategory[0].toLowerCase().replace(/ /g, "-"))}`}
                         className="px-4 py-1 border bg-white dark:bg-zinc-900 border-gray-100 dark:border-gray-800 rounded-full text-xs font-normal text-slate-800 dark:text-zinc-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white"
                       >
                         {articleCategory[0]}
@@ -569,7 +572,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                             {articleCategory.slice(1).map((tag, index) => (
                               <Link
                                 key={index}
-                                href={`/news/${encodeURIComponent(
+                                href={`/developer/news/${encodeURIComponent(
                                   tag.toLowerCase().replace(/ /g, "-"),
                                 )}`}
                                 className="px-4 py-1 border bg-white dark:bg-zinc-900 border-gray-100 dark:border-gray-800 rounded-full text-xs font-normal text-slate-800 dark:text-zinc-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white"
@@ -637,7 +640,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   <div className="flex gap-2 flex-wrap">
                     {articleCategory.map((cat, idx) => (
                       <Link
-                        href={`/news/${encodeURIComponent(cat.toLowerCase().replace(/ /g, "-"))}`}
+                        href={`/developer/news/${encodeURIComponent(cat.toLowerCase().replace(/ /g, "-"))}`}
                         key={idx}
                         className="px-4 py-1 border bg-white dark:bg-zinc-900 border-gray-100 dark:border-gray-800 rounded-full text-xs font-normal text-slate-800 dark:text-zinc-200 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-zinc-800 hover:text-black dark:hover:text-white"
                       >

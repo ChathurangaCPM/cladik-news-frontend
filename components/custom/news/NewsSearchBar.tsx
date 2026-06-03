@@ -3,7 +3,7 @@
 import { Search, X, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback, useTransition, useEffect, useRef } from "react";
-import { searchNewsAction } from "@/app/news/actions";
+import { searchNewsAction } from "@/app/developer/news/actions";
 import moment from "moment";
 
 export default function NewsSearchBar() {
@@ -64,9 +64,9 @@ export default function NewsSearchBar() {
       startTransition(() => {
         const trimmed = query.trim();
         if (trimmed) {
-          router.push(`/news?q=${encodeURIComponent(trimmed)}`);
+          router.push(`/developer/news?q=${encodeURIComponent(trimmed)}`);
         } else {
-          router.push(`/news`);
+          router.push(`/developer/news`);
         }
       });
     },
@@ -77,7 +77,7 @@ export default function NewsSearchBar() {
     setQuery("");
     setShowSuggestions(false);
     startTransition(() => {
-      router.push(`/news`);
+      router.push(`/developer/news`);
     });
   };
 

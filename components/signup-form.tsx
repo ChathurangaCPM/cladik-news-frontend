@@ -1,76 +1,242 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { GalleryVerticalEndIcon } from "lucide-react"
+import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { signupAction } from "@/app/actions/auth";
+import { Key, Mail, User, Phone, Lock, Eye, EyeOff, Loader2, Sparkles, ShieldCheck } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    contactNumber: "",
+  });
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+    if (error) setError(null);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    // Validate inputs
+    if (!formData.firstName || !formData.email || !formData.password) {
+      setError("Please fill out all required fields.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const result = await signupAction(formData);
+
+      if (result.success) {
+        const from = searchParams.get("from");
+        if (from) {
+          router.push(from);
+        } else {
+          const plan = searchParams.get("plan");
+          const billing = searchParams.get("billing") || "monthly";
+          if (plan) {
+            router.push(`/checkout?plan=${plan}&billing=${billing}`);
+          } else {
+            router.push("/developer/dashboard");
+          }
+        }
+      } else {
+        setError(result.error || "Failed to create account. Please check your inputs.");
+      }
+    } catch (err: any) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form>
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col items-center gap-2 text-center font-sans">
-            <a
-              href="#"
-              className="flex flex-col items-center gap-2 font-medium"
-            >
-              <div className="flex size-8 items-center justify-center rounded-md">
-                <GalleryVerticalEndIcon className="size-6" />
-              </div>
-              <span className="sr-only">NeuralPress</span>
-            </a>
-            <h1 className="text-xl font-bold">Welcome to NeuralPress</h1>
-            <p className="text-xs text-muted-foreground">
-              Already have an account? <a href="#" className="underline">Sign in</a>
+      <div className="bg-white/80 backdrop-blur-3xl border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.02),0_30px_60px_rgba(0,0,0,0.03)] p-8 rounded-[2rem] w-full text-center relative overflow-hidden group transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03),0_30px_60px_rgba(0,0,0,0.05)] hover:border-slate-200">
+        
+        {/* Soft ambient glows */}
+        <div className="absolute -top-12 -left-12 w-24 h-24 bg-indigo-100/50 rounded-full blur-2xl group-hover:scale-150 transition duration-700 pointer-events-none" />
+        <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-blue-100/50 rounded-full blur-2xl group-hover:scale-150 transition duration-700 pointer-events-none" />
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          
+          {/* Header branding info */}
+          <div className="flex flex-col items-center gap-2">
+            <Link href="/" className="flex items-center gap-2 mb-2">
+              <Image src="/main-logo.png" width={36} height={36} className="w-9 h-9 object-contain" alt="NeuralPress" />
+              <span className="text-xl tracking-tight text-slate-900 font-bold">
+                Neural<span className="text-[#2b86ff]">Press</span>
+              </span>
+            </Link>
+            <h1 className="text-xl tracking-tight text-slate-900 flex items-center gap-1.5 justify-center">
+              Developer Account
+              <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
+            </h1>
+            <p className="text-xs text-slate-500 font-light max-w-xs mx-auto">
+              Get immediate access to conceptual news streams, Sinhala translation matrices, and webhooks.
             </p>
           </div>
-          
-          <div className="space-y-1 text-left">
-            <label htmlFor="email" className="text-xs font-medium text-slate-700 dark:text-slate-300">Email</label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="m@example.com"
-              required
-            />
-          </div>
-          
-          <Button type="submit" className="w-full">Create Account</Button>
-          
-          <div className="relative text-center text-xs after:absolute after:inset-0 after:top-1/2 after:z-0 after:h-px after:w-full after:bg-border">
-            <span className="relative z-10 bg-background px-2 text-muted-foreground">Or</span>
-          </div>
-          
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Button variant="outline" type="button" className="w-full">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4 shrink-0 mr-1.5">
-                <path
-                  d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"
-                  fill="currentColor"
+
+          {error && (
+            <div className="bg-rose-50 border border-rose-100 rounded-xl p-3.5 text-xs text-rose-600 font-semibold text-left flex items-start gap-2.5 animate-shake">
+              <span className="text-base leading-none">⚠️</span>
+              <span>{error}</span>
+            </div>
+          )}
+
+          {/* Form Fields grid layout */}
+          <div className="space-y-4">
+            
+            {/* First & Last Name double column */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-1.5 text-left">
+                <label htmlFor="firstName" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">First Name *</label>
+                <div className="relative group">
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
+                  <Input
+                    id="firstName"
+                    type="text"
+                    required
+                    placeholder="John"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="bg-slate-50/50 border-slate-200/80 focus:border-[#2b86ff]/80 focus:bg-white focus:ring-4 focus:ring-blue-500/10 rounded-xl pl-10 text-sm text-slate-900 placeholder-slate-400 focus:outline-none w-full h-11 transition-all duration-200"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5 text-left">
+                <label htmlFor="lastName" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">Last Name</label>
+                <div className="relative group">
+                  <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
+                  <Input
+                    id="lastName"
+                    type="text"
+                    placeholder="Doe"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="bg-slate-50/50 border-slate-200/80 focus:border-[#2b86ff]/80 focus:bg-white focus:ring-4 focus:ring-blue-500/10 rounded-xl pl-10 text-sm text-slate-900 placeholder-slate-400 focus:outline-none w-full h-11 transition-all duration-200"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Email Field */}
+            <div className="space-y-1.5 text-left">
+              <label htmlFor="email" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">Email Address *</label>
+              <div className="relative group">
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
+                <Input
+                  id="email"
+                  type="email"
+                  required
+                  placeholder="name@company.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="bg-slate-50/50 border-slate-200/80 focus:border-[#2b86ff]/80 focus:bg-white focus:ring-4 focus:ring-blue-500/10 rounded-xl pl-10 text-sm text-slate-900 placeholder-slate-400 focus:outline-none w-full h-11 transition-all duration-200"
                 />
-              </svg>
-              Apple
-            </Button>
-            <Button variant="outline" type="button" className="w-full">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" className="w-4 h-4 shrink-0 mr-1.5">
-                <path
-                  d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                  fill="currentColor"
+              </div>
+            </div>
+
+            {/* Contact Number Field */}
+            <div className="space-y-1.5 text-left">
+              <label htmlFor="contactNumber" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">Contact Phone</label>
+              <div className="relative group">
+                <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
+                <Input
+                  id="contactNumber"
+                  type="tel"
+                  placeholder="+94 77 123 4567"
+                  value={formData.contactNumber}
+                  onChange={handleChange}
+                  className="bg-slate-50/50 border-slate-200/80 focus:border-[#2b86ff]/80 focus:bg-white focus:ring-4 focus:ring-blue-500/10 rounded-xl pl-10 text-sm text-slate-900 placeholder-slate-400 focus:outline-none w-full h-11 transition-all duration-200"
                 />
-              </svg>
-              Google
-            </Button>
+              </div>
+            </div>
+
+            {/* Password Field */}
+            <div className="space-y-1.5 text-left">
+              <label htmlFor="password" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">Password * (Min 8 chars)</label>
+              <div className="relative group">
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  required
+                  placeholder="••••••••"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="bg-slate-50/50 border-slate-200/80 focus:border-[#2b86ff]/80 focus:bg-white focus:ring-4 focus:ring-blue-500/10 rounded-xl pl-10 pr-10 text-sm text-slate-900 placeholder-slate-400 focus:outline-none w-full h-11 transition-all duration-200"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition focus:outline-none"
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+            </div>
+
           </div>
-        </div>
-      </form>
-      <p className="px-6 text-center text-xs text-muted-foreground font-sans leading-relaxed">
-        By clicking continue, you agree to our <a href="#" className="underline">Terms of Service</a>{" "}
-        and <a href="#" className="underline">Privacy Policy</a>.
-      </p>
+
+          {/* Submit Action */}
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#2b86ff] hover:bg-[#1e76ed] disabled:opacity-50 text-white text-xs font-bold uppercase tracking-wider rounded-xl h-11 shadow-lg shadow-blue-500/15 hover:shadow-blue-500/20 active:scale-[0.99] transition duration-200"
+          >
+            {loading ? (
+              <span className="flex items-center gap-1.5 justify-center">
+                <Loader2 className="w-4 h-4 animate-spin" /> Provisioning Node...
+              </span>
+            ) : (
+              "Initialize Developer Suite"
+            )}
+          </Button>
+
+          {/* Switch to login option */}
+          <div className="text-center text-xs text-slate-500 mt-4 font-light">
+            Already have an account?{" "}
+            <Link 
+              href={`/login${searchParams.toString() ? `?${searchParams.toString()}` : ""}`} 
+              className="text-[#2b86ff] hover:text-[#1e76ed] hover:underline font-bold font-sans transition"
+            >
+              Sign In
+            </Link>
+          </div>
+
+        </form>
+
+        <p className="text-[10px] text-slate-400 leading-relaxed max-w-xs mx-auto mt-6 flex items-center justify-center gap-1.5 border-t border-slate-100 pt-4">
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> Secure production connection encrypted via TLS.
+        </p>
+
+      </div>
     </div>
-  )
+  );
 }

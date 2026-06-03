@@ -12,22 +12,21 @@ export default function CTASection() {
         <div className="absolute bottom-[-30%] right-[-20%] w-72 h-72 bg-white/20 rounded-full blur-[80px] pointer-events-none group-hover:scale-125 transition-transform duration-500" />
 
         <h2 className="text-3xl md:text-5xl tracking-[-2px] leading-tight">
-          We combine human
+          Build the next-generation
           <br />
           <span className="capitalize font-heading italic">
-            insight with artificial intelligence.
+            of AI applications.
           </span>
         </h2>
         <p className="mt-4 text-white/85 text-sm md:text-base font-light max-w-xl mx-auto">
-          Experience NeuralPress' smart bilingual translations and consensus
-          story directory now.
+          Get your free developer API key now and experience vector search, structured summaries, and real-time streams powered by our own proprietary search engine indexing news worldwide.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 relative z-10">
           <Link
-            href="/news"
+            href="/signup"
             className="px-8 py-4 bg-lime-400 text-slate-900 hover:bg-lime-300 text-sm font-semibold rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 shrink-0"
           >
-            Enter Discovery Feed
+            Create Developer Account
           </Link>
           {/* <Link
             href="/dashboard"

@@ -4,6 +4,8 @@ import { NewsFeed } from "@/components/custom/news/NewsFeed";
 import NewsSearchBar from "@/components/custom/news/NewsSearchBar";
 import Link from "next/link";
 import Image from "next/image";
+import { getDeveloperSession } from "@/app/actions/auth";
+import { redirect } from "next/navigation";
 
 import { NewsOnboarding } from "@/components/custom/news/NewsOnboarding";
 import { TextAnimate } from "@/components/ui/text-animate";
@@ -13,6 +15,16 @@ export const dynamic = "force-dynamic";
 export default async function NewsMainPage(props: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const session = await getDeveloperSession();
+  if (!session) {
+    redirect("/login?from=/developer/news");
+  }
+
+  const plan = session.subscriptionPlanType;
+  if (!plan || plan === "none" || plan === "pending") {
+    redirect("/pricing");
+  }
+
   const searchParams = await props.searchParams;
   const q = typeof searchParams.q === "string" ? searchParams.q : "";
   const rawNews = q
@@ -58,7 +70,7 @@ export default async function NewsMainPage(props: {
             className="text-neutral-400 text-center text-sm font-light mb-8 max-w-xl mx-auto"
           >
             Search conceptually to instantly find matching events across
-            thousands of published articles.
+            thousands of published articles indexed worldwide by our own proprietary search engine.
           </TextAnimate>
           <NewsSearchBar />
         </div>

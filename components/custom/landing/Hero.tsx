@@ -12,7 +12,7 @@ import {
   Compass,
   ShieldCheck,
 } from "lucide-react";
-import { fetchNews } from "@/app/news/actions";
+import { fetchNews } from "@/app/developer/news/actions";
 import Header from "./Header";
 
 // Helper to detect Sinhala unicode characters to apply the custom font
@@ -65,7 +65,7 @@ export default function Hero() {
       const truncatedTitle =
         title.length > 55 ? title.substring(0, 52) + "..." : title;
       const slug = article.slug || "";
-      const path = slug ? `/news/${slug}` : "/news";
+      const path = slug ? `/developer/news/${slug}` : "/developer/news";
 
       return {
         tag: category.toUpperCase(),
@@ -98,52 +98,52 @@ export default function Hero() {
 
     const fallbacks = [
       {
-        tag: isSinhala ? "ද්විභාෂා කියවීම" : "BILINGUAL READ",
+        tag: isSinhala ? "ද්විභාෂා සාරාංශ" : "AI SUMMARIES",
         text: isSinhala
-          ? "ගෝලීය පුවත් ක්ෂණිකව සිංහල භාෂාවෙන්."
-          : "Instant translation to premium Sinhala.",
+          ? "ලිපි සාරාංශ සහ පරිවර්තන ක්ෂණිකව ජනනය කරන්න."
+          : "Generate structured summaries and translations instantly.",
         icon: <Languages className="w-3 h-3" />,
-        path: "/news",
+        path: "/developer/news",
         tagColor: "text-[#2b86ff]",
         iconBg: "bg-blue-50 text-[#2b86ff]",
       },
       {
-        tag: isSinhala ? "නිරන්තර දර්ශකය" : "CONTINUOUS INDEX",
+        tag: isSinhala ? "දර්ශක දත්ත" : "VECTOR EMBEDDINGS",
         text: isSinhala
-          ? "අපගේ තාක්ෂණය නිරන්තරයෙන් පුවත් දර්ශකගත කරයි."
-          : "Our engine continuously indexes search maps.",
+          ? "සෙවීම සඳහා 384-dimensional දෛශික ඛණ්ඩාංක."
+          : "Semantic search enabled with vector coordinate offsets.",
         icon: <Activity className="w-3.5 h-3.5" />,
-        path: "/news",
+        path: "/developer/news",
         tagColor: "text-lime-600",
         iconBg: "bg-lime-50 text-lime-600",
       },
       {
-        tag: isSinhala ? "ප්‍රකාශිත එකඟතාවය" : "Consensus OK",
+        tag: isSinhala ? "සූචිගත මූලාශ්‍ර" : "CITATION GRAPH",
         text: isSinhala
-          ? "ගෝලීය පුවත් ප්‍රභවයන් 14ක් එකඟතාවයකට ගෙන ඇත."
-          : "Consolidated 14 global story duplicate signals.",
+          ? "ලිපි 14ක් දක්වා සෘජු මූලාශ්‍ර එකඟතා සිතියම්."
+          : "Cross-referenced sources with direct citation links.",
         icon: <CheckCircle2 className="w-3.5 h-3.5" />,
-        path: "/news",
+        path: "/developer/news",
         tagColor: "text-emerald-500",
         iconBg: "bg-emerald-50 text-emerald-500",
       },
       {
-        tag: isSinhala ? "සෙවුම් දිශාව" : "SEARCH DIRECTION",
+        tag: isSinhala ? "සජීවී විකාශය" : "REAL-TIME SSE",
         text: isSinhala
-          ? "පුවත් සංකල්ප සිතියම්කරණය සක්‍රීයයි..."
-          : "Tracing concept concept mappings...",
+          ? "Server-Sent Events භාවිතයෙන් සජීවී යාවත්කාලීන."
+          : "Stream updates instantly using low-latency server-sent events.",
         icon: <Compass className="w-3.5 h-3.5" />,
-        path: "/news",
+        path: "/developer/news",
         tagColor: "text-purple-500",
         iconBg: "bg-purple-50 text-purple-500",
       },
       {
-        tag: isSinhala ? "සත්‍යාපිත පුවත්" : "VETTED ACTIVE",
+        tag: isSinhala ? "පාලන පැනලය" : "DEVELOPER PORTAL",
         text: isSinhala
-          ? "සත්‍යාපනය කරන ලද සක්‍රීය පුවත් වාර්තා."
-          : "Consensus-verified active story.",
+          ? "අන්තර්ක්‍රියාකාරී පරිසරය සහ විනිශ්චය මෙවලම්."
+          : "Interactive playground with developer console diagnostics.",
         icon: <ShieldCheck className="w-3 h-3" />,
-        path: "/news",
+        path: "/developer/news",
         tagColor: "text-amber-500",
         iconBg: "bg-amber-50 text-amber-500",
       },
@@ -170,27 +170,32 @@ export default function Hero() {
       {/* Hero Headline content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-16 md:mt-24 relative z-10 md:pt-[40px]">
         <h1 className="text-5xl md:text-5xl tracking-[-2px] leading-[1.05] max-w-5xl mx-auto text-white">
-          Bridging global news with conceptual clarity
+          Structured News API built for AI applications
           <br />
           <span className="font-heading italic font-extralight">
-            And Bilingual AI.
+            With Vector Search & Citations.
           </span>
         </h1>
         <p className="mt-8 text-base text-white/85 font-light max-w-2xl mx-auto leading-relaxed">
-          Discover a smarter, conceptual way to navigate global news.
-          NeuralPress aggregates multiple perspectives, translates articles
-          seamlessly, and ensures complete clarity.
+          Access global news feeds indexed worldwide by our own proprietary search engine, enriched with vector embeddings, semantic categories, and AI summaries.
+          Query conceptually with natural language, retrieve detailed citation graphs, and stream updates in real-time.
         </p>
 
         {/* Action buttons */}
-        {/* <div className="mt-10 flex justify-center gap-4">
+        <div className="mt-10 flex justify-center gap-4">
           <Link
-            href="/news"
+            href="/pricing"
             className="px-8 py-4 bg-lime-400 text-slate-900 hover:bg-lime-300 text-sm font-semibold rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2"
           >
-            Get Started <ArrowRight className="w-4 h-4" />
+            View API Pricing <ArrowRight className="w-4 h-4" />
           </Link>
-        </div> */}
+          <Link
+            href="/how-it-works"
+            className="px-8 py-4 bg-white/10 text-white hover:bg-white/20 border border-white/25 text-sm font-semibold rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2"
+          >
+            How It Works
+          </Link>
+        </div>
 
         {/* Curved Floating Card Deck (Aeline signature visual) */}
         <div className="mt-20 max-w-5xl mx-auto relative flex items-center justify-center h-[220px] select-none">

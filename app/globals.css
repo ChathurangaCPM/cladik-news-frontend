@@ -145,3 +145,276 @@
 .dark .logo-dark {
   display: block !important;
 }
+
+/* ========================================================================= */
+/* PREMIUM DEVELOPER HUB LIGHT THEME OVERRIDES */
+/* ========================================================================= */
+.developer-hub-light {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* Card overrides */
+.developer-hub-light .bg-white\/\[0\.01\],
+.developer-hub-light .bg-white\/\[0\.02\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Border overrides */
+.developer-hub-light .border-white\/\[0\.05\],
+.developer-hub-light .border-white\/\[0\.08\],
+.developer-hub-light .border-white\/5,
+.developer-hub-light .border-white\/10 {
+  border-color: #e2e8f0 !important;
+}
+
+.developer-hub-light .divide-white\/5 > * {
+  border-color: #f1f5f9 !important;
+}
+
+/* Inner elements and logs */
+.developer-hub-light .bg-black\/20,
+.developer-hub-light .bg-black\/40,
+.developer-hub-light .bg-black\/50,
+.developer-hub-light .bg-black\/60 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+/* Font and text color overrides */
+.developer-hub-light .text-white {
+  color: #0f172a !important;
+}
+
+.developer-hub-light .text-neutral-300 {
+  color: #334155 !important;
+}
+
+.developer-hub-light .text-neutral-400 {
+  color: #475569 !important;
+}
+
+.developer-hub-light .text-neutral-500 {
+  color: #64748b !important;
+}
+
+.developer-hub-light .text-neutral-600 {
+  color: #94a3b8 !important;
+}
+
+/* Modals and popups */
+.developer-hub-light .bg-\[\#0b0f19\],
+.developer-hub-light .bg-\[\#0f172a\] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* Input elements */
+.developer-hub-light input,
+.developer-hub-light textarea,
+.developer-hub-light select {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.developer-hub-light input::placeholder,
+.developer-hub-light textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Code blocks and JSON outputs */
+.developer-hub-light pre,
+.developer-hub-light code {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+/* Circular chart track */
+.developer-hub-light circle[stroke="rgba(255,255,255,0.03)"] {
+  stroke: #f1f5f9 !important;
+}
+
+/* Recharts Tooltip styles overrides */
+.developer-hub-light .recharts-tooltip-wrapper {
+  color: #0f172a !important;
+}
+
+/* Interactive Map grid */
+.developer-hub-light .bg-black\/60 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+.developer-hub-light .border-white\/10 {
+  border-color: #e2e8f0 !important;
+}
+
+.developer-hub-light .bg-slate-900\/90 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-color: #e2e8f0 !important;
+}
+
+/* Badge colors */
+.developer-hub-light .text-indigo-400 {
+  color: #4f46e5 !important;
+}
+
+.developer-hub-light .bg-indigo-500\/10 {
+  background-color: #e0e7ff !important;
+  color: #4338ca !important;
+}
+
+.developer-hub-light .bg-emerald-400\/10 {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+}
+
+.developer-hub-light .border-emerald-400\/20 {
+  border-color: #a7f3d0 !important;
+}
+
+.developer-hub-light .text-emerald-400 {
+  color: #047857 !important;
+}
+
+/* Blur locks and masks */
+.developer-hub-light .bg-\[\#07090e\]\/80 {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  border-color: #e2e8f0 !important;
+}
+
+.developer-hub-light .text-lime-400 {
+  color: #16a34a !important;
+}
+
+.developer-hub-light .bg-lime-400\/20 {
+  background-color: #dcfce7 !important;
+  color: #15803d !important;
+}
+
+.developer-hub-light .bg-white\/5 {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* ==========================================================================
+   DEVELOPER HUB GLOBAL FONT SIZE SCALING & LEGIBILITY UPGRADES
+   ========================================================================== */
+
+/* Elevate baseline typography scale slightly */
+.developer-hub-light {
+  font-size: 14.5px !important;
+}
+
+/* Scaling micro-sizes (e.g., small metrics, log fields, timestamps) */
+.developer-hub-light .text-\[8px\],
+.developer-hub-light .text-\[9px\],
+.developer-hub-light .text-\[9\.5px\] {
+  font-size: 11.5px !important;
+}
+
+/* Scaling small descriptions, parameter labels, code headers */
+.developer-hub-light .text-\[10px\],
+.developer-hub-light .text-\[10\.5px\] {
+  font-size: 12.5px !important;
+}
+
+/* Scaling body copies, fields, tags, list row items */
+.developer-hub-light .text-xs {
+  font-size: 13.5px !important;
+}
+
+/* Scaling secondary title descriptions, input parameters, labels */
+.developer-hub-light .text-sm {
+  font-size: 15px !important;
+}
+
+/* Scaling core content headings and selectors */
+.developer-hub-light .text-base {
+  font-size: 16.5px !important;
+}
+
+.developer-hub-light .text-lg {
+  font-size: 18.5px !important;
+}
+
+/* Scaling monospaced terminals, code blocks and JSON outputs */
+.developer-hub-light pre,
+.developer-hub-light code {
+  font-size: 12px !important;
+}
+
+/* Scaling input fields, select forms and textareas */
+.developer-hub-light input,
+.developer-hub-light textarea,
+.developer-hub-light select {
+  font-size: 13.5px !important;
+}
+
+/* Scoped Dark Theme overrides for the Sandbox Console Terminal */
+.developer-hub-light .terminal-dark-view {
+  background-color: #0d1117 !important;
+  color: #c9d1d9 !important;
+  border-color: #30363d !important;
+}
+
+.developer-hub-light .terminal-dark-view pre,
+.developer-hub-light .terminal-dark-view code,
+.developer-hub-light .terminal-dark-view pre code {
+  background-color: #161b22 !important;
+  border-color: #30363d !important;
+  color: #c9d1d9 !important;
+}
+
+/* Custom highlight.js GitHub Dark theme styling mappings */
+.developer-hub-light .terminal-dark-view .hljs-keyword {
+  color: #ff7b72 !important;
+  font-weight: bold !important;
+}
+
+.developer-hub-light .terminal-dark-view .hljs-string {
+  color: #a5d6ff !important;
+  font-weight: 500 !important;
+}
+
+.developer-hub-light .terminal-dark-view .hljs-comment {
+  color: #8b949e !important;
+  font-style: italic !important;
+  font-weight: normal !important;
+}
+
+.developer-hub-light .terminal-dark-view .hljs-number {
+  color: #79c0ff !important;
+  font-weight: bold !important;
+}
+
+.developer-hub-light .terminal-dark-view .hljs-title,
+.developer-hub-light .terminal-dark-view .hljs-title.function_ {
+  color: #d2a8ff !important;
+  font-weight: bold !important;
+}
+
+.developer-hub-light .terminal-dark-view .hljs-built_in {
+  color: #ffa657 !important;
+  font-weight: bold !important;
+}
+
+.developer-hub-light .terminal-dark-view .hljs-meta {
+  color: #ff7b72 !important;
+  font-weight: bold !important;
+}
+
+.developer-hub-light .terminal-dark-view .hljs-attr {
+  color: #79c0ff !important;
+}
+
+.developer-hub-light .terminal-dark-view .hljs-literal {
+  color: #ff7b72 !important;
+  font-weight: bold !important;
+}

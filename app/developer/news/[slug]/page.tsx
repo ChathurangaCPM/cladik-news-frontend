@@ -1,5 +1,5 @@
 import React from "react";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Metadata } from "next";
 import { isSameSiteNews } from "@/lib/utils";
 import NewsArticleContent from "@/components/custom/news/NewsArticleContent";
@@ -9,6 +9,7 @@ import { NewsFeed } from "@/components/custom/news/NewsFeed";
 import NewsSearchBar from "@/components/custom/news/NewsSearchBar";
 import Link from "next/link";
 import Image from "next/image";
+import { getDeveloperSession } from "@/app/actions/auth";
 
 const NEWS_API_URL =
   process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL ||
@@ -27,7 +28,7 @@ export const CATEGORY_DETAILS: Record<string, CategoryMetaDetails> = {
     image:
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=85",
     tagline:
-      "Explore the complete global spectrum of real-time intelligence, breaking reports, and conceptual trends.",
+      "Explore the complete global spectrum of real-time intelligence, breaking reports, and conceptual trends indexed worldwide by our own proprietary search engine.",
     accentColor: "from-indigo-500 to-purple-600",
   },
   "sri lanka": {
@@ -184,7 +185,7 @@ export async function generateMetadata({
 
   const article = await getArticle(slug);
 
-  if (!article || isSameSiteNews(article)) {
+  if (!article) {
     // Fallback to Curated Category/Keyword SEO metadata
     const capitalizedTopic =
       decodedSlug.charAt(0).toUpperCase() + decodedSlug.slice(1);
@@ -193,7 +194,7 @@ export async function generateMetadata({
     const details = CATEGORY_DETAILS[key] || {
       image:
         "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=85",
-      tagline: `Read the latest conceptual news, semantic research events, and dynamic neural aggregations for ${capitalizedTopic}.`,
+      tagline: `Read the latest conceptual news, semantic research events, and dynamic neural aggregations for ${capitalizedTopic} retrieved by our own proprietary search engine.`,
       accentColor: "from-indigo-500 to-purple-600",
     };
 
@@ -251,12 +252,46 @@ const NewsArticlePage = async ({
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
+  const session = await getDeveloperSession();
+  if (!session) {
+    redirect(`/login?from=/developer/news/${slug}`);
+  }
+
+  const plan = session.subscriptionPlanType;
+  if (!plan || plan === "none" || plan === "pending") {
+    redirect("/pricing");
+  }
+
   const decodedSlug = decodeURIComponent(slug).replace(/-/g, " ");
 
   const article = await getArticle(slug);
 
-  if (article && isSameSiteNews(article)) {
-    notFound();
+  if (article) {
+    // Enforce plan-based filters on the article data to prevent free plan bypass
+    if (plan !== "business" && plan !== "advanced" && plan !== "internal") {
+      // Free plan restrictions
+      article.sinhalaTitle = '[LOCKED - Upgrade to Business Plan to read Sinhala translations]';
+      article.sinhalaSummary = '[LOCKED - Upgrade to Business Plan to read Sinhala summaries]';
+      article.summary = '[LOCKED - Upgrade to Business Plan to unlock synthesized summaries]';
+      article.content = '[LOCKED - Upgrade to Business Plan to unlock full news details]';
+      article.sinhalaContent = '[LOCKED - Upgrade to Business Plan to read Sinhala translations]';
+      article.aiEnrichedContent = null;
+      article.dynamicOgImage = null;
+    } else if (plan === "business") {
+      // Business plan limits (locks vectors)
+      if (article.aiEnrichedContent) {
+        try {
+          const parsed = JSON.parse(article.aiEnrichedContent);
+          if (Array.isArray(parsed)) {
+            article.aiEnrichedContent = JSON.stringify(parsed.map(item => ({
+              concept: item.concept,
+              relevance: item.relevance,
+              vectors: '[LOCKED - Upgrade to Advanced Plan to retrieve vector coordinates]',
+            })));
+          }
+        } catch (_) {}
+      }
+    }
   }
 
   if (!article) {

@@ -7,49 +7,49 @@ import { CheckCircle2 } from "lucide-react";
 export default function StatsSection() {
   const cards = [
     {
-      stat: "120+",
-      title: "Publications",
-      subtitle: "Parsed in real-time",
-      badge: "+15 active",
-      desc: "Active international sources scanned.",
-      tags: ["Global", "Direct Index", "Scrape Engine"],
+      stat: "150+",
+      title: "Monitored Sources",
+      subtitle: "Parsed every 60 seconds",
+      badge: "Real-time",
+      desc: "Our own proprietary search engine scans global publications continuously.",
+      tags: ["REST API", "Continuous Ingestion", "JSON Feed"],
     },
     {
-      stat: "99.5%",
-      title: "Consensus",
-      subtitle: "Overlap duplicate filters",
-      badge: "Verified",
-      desc: "Deduplication and conflict ratio.",
-      tags: ["Deduplication", "Semantic Map", "Fact-Checked"],
+      stat: "< 100ms",
+      title: "API Response",
+      subtitle: "Fast edge search latency",
+      badge: "Optimized",
+      desc: "Optimized elastic queries for search latency.",
+      tags: ["High Throughput", "Optimized Query", "Edge Delivery"],
     },
     {
-      stat: "520k+",
-      title: "Daily Check",
-      subtitle: "Continuous search scanner",
-      badge: "Active",
-      desc: "Daily indexed and parsed stories.",
-      tags: ["Continuous", "Active Scan", "Swarm Nodes"],
+      stat: "100k+",
+      title: "Daily Ingestion",
+      subtitle: "Vector embedding scanner",
+      badge: "AI Indexed",
+      desc: "Structured data items indexed with coordinates daily.",
+      tags: ["Vector Embeddings", "AI Conceptual", "Semantic Index"],
     },
   ];
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 relative z-10 text-center">
       <span className="text-xs uppercase text-indigo-600 font-mono tracking-wider font-bold">
-        About Us
+        API Stats
       </span>
       <h2 className="text-3xl md:text-5xl tracking-[-3px] mt-3 text-slate-900 leading-tight">
-        Empowering global news parsing
+        Scale your news aggregation
         <br />
         with a highly advanced{" "}
         <span className="inline-flex font-heading items-center gap-1 text-[#2b86ff] italic font-extralight tracking-normal">
-          Consensus engine
+          AI News Search API
         </span>
         <br />
         and{" "}
         <span className="inline-flex font-heading items-center gap-1 text-lime-600 italic font-extralight tracking-normal">
-          Bilingual translation
+          multi-source Citation
         </span>{" "}
-        pipeline.
+        engine.
       </h2>
 
       {/* Modern, High-Fidelity Bento Grid matching NeuralPress brand theme colors */}

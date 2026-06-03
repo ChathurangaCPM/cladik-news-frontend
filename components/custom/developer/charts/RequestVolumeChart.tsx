@@ -1,0 +1,134 @@
+"use client";
+
+import React from "react";
+import { useDeveloper } from "@/app/developer/layout";
+import { TrendingUp } from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const defaultDailyData = [
+  { name: "Mon", queries: 0, latency: 0, success: 0, errors: 0 },
+  { name: "Tue", queries: 0, latency: 0, success: 0, errors: 0 },
+  { name: "Wed", queries: 0, latency: 0, success: 0, errors: 0 },
+  { name: "Thu", queries: 0, latency: 0, success: 0, errors: 0 },
+  { name: "Fri", queries: 0, latency: 0, success: 0, errors: 0 },
+  { name: "Sat", queries: 0, latency: 0, success: 0, errors: 0 },
+  { name: "Sun", queries: 0, latency: 0, success: 0, errors: 0 },
+];
+
+export default function RequestVolumeChart() {
+  const { activePlan, realChartData, loadingTelemetry } = useDeveloper();
+
+  if (loadingTelemetry) {
+    return (
+      <div className="bg-white border border-slate-200 rounded-3xl p-6 flex flex-col justify-between min-h-[300px]">
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex items-center gap-2">
+            <Skeleton className="w-4 h-4 rounded-full bg-slate-100" />
+            <Skeleton className="h-4 w-36 bg-slate-150 rounded-md" />
+          </div>
+          <Skeleton className="h-4.5 w-24 bg-slate-100 rounded-full" />
+        </div>
+        <div className="w-full h-[180px] flex items-end gap-3 pt-6">
+          <Skeleton className="w-full h-[30%] bg-slate-50 rounded-lg animate-pulse" />
+          <Skeleton className="w-full h-[55%] bg-slate-100/70 rounded-lg animate-pulse" />
+          <Skeleton className="w-full h-[40%] bg-slate-50 rounded-lg animate-pulse" />
+          <Skeleton className="w-full h-[70%] bg-slate-100/70 rounded-lg animate-pulse" />
+          <Skeleton className="w-full h-[60%] bg-slate-50 rounded-lg animate-pulse" />
+          <Skeleton className="w-full h-[85%] bg-slate-100/70 rounded-lg animate-pulse" />
+          <Skeleton className="w-full h-[65%] bg-slate-50 rounded-lg animate-pulse" />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-3xl p-6 min-h-[300px] flex flex-col justify-between">
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center gap-2">
+          <TrendingUp className="w-4 h-4 text-indigo-650 animate-pulse" />
+          <h3 className="text-slate-800 text-sm font-sans">
+            7-Day Request Volume
+          </h3>
+        </div>
+        <span className="text-[9px] uppercase text-slate-405 bg-slate-50 px-2 py-0.5 rounded-full border border-slate-100 font-sans">
+          LATENCY:{" "}
+          {activePlan === "free"
+            ? "142ms"
+            : activePlan === "business"
+              ? "88ms"
+              : "32ms"}
+        </span>
+      </div>
+
+      <div className="w-full h-[180px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={
+              realChartData && realChartData.length > 0
+                ? realChartData
+                : defaultDailyData
+            }
+            margin={{ top: 5, right: 5, left: -25, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="queryGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#6366f1" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="successGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#10b981" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <XAxis
+              dataKey="name"
+              stroke="#94a3b8"
+              fontSize={9}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              stroke="#94a3b8"
+              fontSize={9}
+              tickLine={false}
+              axisLine={false}
+            />
+            <Tooltip
+              contentStyle={{
+                background: "#fff",
+                border: "1px solid #e2e8f0",
+                borderRadius: "12px",
+                color: "#1e293b",
+                fontSize: "11px",
+              }}
+            />
+            <Area
+              type="monotone"
+              dataKey="queries"
+              stroke="#6366f1"
+              strokeWidth={2}
+              fill="url(#queryGrad)"
+              name="Total Requests"
+            />
+            <Area
+              type="monotone"
+              dataKey="success"
+              stroke="#10b981"
+              strokeWidth={2}
+              fill="url(#successGrad)"
+              name="Successful Hits"
+            />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+}

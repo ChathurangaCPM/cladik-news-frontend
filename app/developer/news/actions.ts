@@ -1,5 +1,7 @@
 "use server";
 
+import { cookies } from "next/headers";
+
 const NEWS_API_URL =
   process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL ||
   process.env.NEWS_AGGREGATOR_URL ||
@@ -60,13 +62,20 @@ export async function fetchNews(
   category?: string,
 ) {
   try {
-    let url = `${NEWS_API_URL}/news?limit=${limit}&skip=${skip}`;
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
+    if (!token) {
+      console.warn("fetchNews: No developer session token found in cookies.");
+      return [];
+    }
+
+    let url = `${NEWS_API_URL}/v1/access/news?limit=${limit}&skip=${skip}`;
     if (category && category !== "All") {
       url += `&category=${encodeURIComponent(category)}`;
     }
     const res = await fetch(url, {
       headers: {
-        "x-service-api-key": process.env.SERVICE_API_KEY || "",
+        Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
     });
@@ -86,10 +95,17 @@ export async function fetchNews(
 
 export async function searchNewsAction(query: string, limit: number = 20) {
   try {
-    const url = `${NEWS_API_URL}/news/search?q=${encodeURIComponent(query)}&limit=${limit}`;
+    const cookieStore = await cookies();
+    const token = cookieStore.get("accessToken")?.value;
+    if (!token) {
+      console.warn("searchNewsAction: No developer session token found in cookies.");
+      return [];
+    }
+
+    const url = `${NEWS_API_URL}/v1/access/news/search?q=${encodeURIComponent(query)}&limit=${limit}`;
     const res = await fetch(url, {
       headers: {
-        "x-service-api-key": process.env.SERVICE_API_KEY || "",
+        Authorization: `Bearer ${token}`,
       },
       cache: "no-store",
     });

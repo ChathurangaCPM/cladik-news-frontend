@@ -32,7 +32,7 @@ export default function NewsLayout({
       <Meteors className="z-10 opacity-5 dark:opacity-15" />
 
       {/* Standalone Header Section */}
-      <header className="relative w-full z-20 border-b border-slate-200/50 dark:border-white/5 bg-white/60 dark:bg-black/40 backdrop-blur-xl transition-colors duration-300">
+      {/* <header className="relative w-full z-20 border-b border-slate-200/50 dark:border-white/5 bg-white/60 dark:bg-black/40 backdrop-blur-xl transition-colors duration-300">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Link
@@ -61,10 +61,10 @@ export default function NewsLayout({
               AI News Discovery Portal
             </span>
             <LangToggle />
-            {/* <ThemeToggle /> */}
+            
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* Main Content */}
       <main className="max-w-[1400px] mx-auto z-10 relative pt-5 px-4 sm:px-6 lg:px-8">

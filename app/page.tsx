@@ -14,7 +14,7 @@ import Footer from "@/components/custom/landing/Footer";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen text-slate-800 overflow-x-hidden font-inter bg-[#fafbfe] pb-16 select-none">
+    <div className="relative min-h-screen text-slate-800 overflow-x-hidden font-inter bg-[#fafbfe] pb-16">
       {/* Light Mesh background grid */}
       <InteractiveBackground />
 
@@ -31,7 +31,7 @@ export default function Home() {
       <CapabilitiesSection />
 
       {/* Flexible membership plans */}
-      {/* <PricingSection /> */}
+      <PricingSection />
 
       {/* Verified user testimonials grid */}
       {/* <TestimonialsSection /> */}

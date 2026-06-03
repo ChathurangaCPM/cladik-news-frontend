@@ -34,7 +34,7 @@ export default function Footer() {
                 </span>
               </span>
               <span className="text-[10px] text-slate-400 dark:text-neutral-500 mt-0.5">
-                AI News Aggregator
+                AI News Search API
               </span>
             </div>
           </div>
@@ -42,23 +42,29 @@ export default function Footer() {
           {/* Minimal Navigation Links */}
           <nav className="flex flex-wrap gap-x-6 gap-y-2 tracking-tight">
             <Link
-              href="/news"
+              href="/developer/news"
               className="hover:text-indigo-600 dark:hover:text-white transition duration-200"
             >
               Discovery Feed
             </Link>
-            {/* <Link
+            <Link
+              href="/how-it-works"
+              className="hover:text-indigo-600 dark:hover:text-white transition duration-200"
+            >
+              How It Works
+            </Link>
+            <Link
               href="/pricing"
               className="hover:text-indigo-600 dark:hover:text-white transition duration-200"
             >
               API Pricing
             </Link>
             <Link
-              href="/developer/dashboard"
+              href="/developer"
               className="hover:text-indigo-600 dark:hover:text-white transition duration-200"
             >
               Developer Portal
-            </Link> */}
+            </Link>
           </nav>
         </div>
 
@@ -66,7 +72,7 @@ export default function Footer() {
         <div className="pt-8 border-t border-slate-100 dark:border-white/[0.02] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-[10px] tracking-wide text-slate-400 dark:text-neutral-500">
           <div>
             <p>
-              © {new Date().getFullYear()} NeuralPress. Sri Lankan news index.
+              © {new Date().getFullYear()} NeuralPress. Global AI news index.
               All rights reserved.
             </p>
           </div>

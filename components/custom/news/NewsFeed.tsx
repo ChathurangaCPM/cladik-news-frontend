@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { NewsCard } from "./NewsCard";
-import { fetchNews } from "@/app/news/actions";
+import { fetchNews } from "@/app/developer/news/actions";
 import { cn, isSameSiteNews } from "@/lib/utils";
 import moment from "moment";
 import Link from "next/link";
@@ -133,7 +133,7 @@ export function NewsFeed({
   // Flat map the infinite pages
   let items = data?.pages.flat() || [];
 
-  // Deduplicate items by slug and _id, and filter out same-site articles
+  // Deduplicate items by slug and _id
   items = items
     .filter(
       (item, index, self) =>
@@ -142,8 +142,7 @@ export function NewsFeed({
           (n) =>
             n._id === item._id || (n.slug && item.slug && n.slug === item.slug),
         ),
-    )
-    .filter((item) => !isSameSiteNews(item));
+    );
 
   // Setup Server-Sent Events for Real-Time UI Updates mapped into TanStack cache
   useEffect(() => {
@@ -250,30 +249,47 @@ export function NewsFeed({
   };
 
   const mapItem = (raw: any, index: number) => {
-    const sourceLower = (raw.source || "").toLowerCase();
-    const showImage = [
-      "techcrunch",
-      "wired",
-      "aljazeera",
-      "techcrunch.com",
-      "wired.com",
-      "aljazeera.com",
-    ].some((s) => sourceLower.includes(s));
+    const isDevApi = "publishDate" in raw || "imageUrl" in raw;
 
-    const imageUrl = showImage ? raw.ogImage : undefined;
+    const id = raw.id || raw._id;
+    const title = raw.title || raw.sinhalaTitle || "Untitled News";
+    const sinhalaTitle = raw.sinhalaTitle;
+    const snippet = raw.summary || raw.sinhalaSummary;
+    const sinhalaSummary = raw.sinhalaSummary;
 
+    // Get image URL (developer API uses restructured raw.imageUrl)
+    let imageUrl = raw.imageUrl;
+    if (!isDevApi) {
+      const sourceLower = (raw.source || "").toLowerCase();
+      const showImage = [
+        "techcrunch",
+        "wired",
+        "aljazeera",
+        "techcrunch.com",
+        "wired.com",
+        "aljazeera.com",
+      ].some((s) => sourceLower.includes(s));
+      imageUrl = showImage ? raw.ogImage : undefined;
+    }
+
+    const publishedAt = formatPubDate(raw.publishDate || raw.createdAt || raw.pubDate);
+
+    // References / Enriched sources
     let enrichedData: any[] = [];
-    try {
-      if (raw.aiEnrichedContent) {
-        const parsed = JSON.parse(raw.aiEnrichedContent);
-        if (Array.isArray(parsed)) {
-          enrichedData = parsed;
-        } else if (parsed && Array.isArray(parsed.searchResults)) {
-          // Handle Next-Gen Structured Schema
-          enrichedData = parsed.searchResults;
+    if (Array.isArray(raw.references)) {
+      enrichedData = raw.references;
+    } else {
+      try {
+        if (raw.aiEnrichedContent) {
+          const parsed = JSON.parse(raw.aiEnrichedContent);
+          if (Array.isArray(parsed)) {
+            enrichedData = parsed;
+          } else if (parsed && Array.isArray(parsed.searchResults)) {
+            enrichedData = parsed.searchResults;
+          }
         }
-      }
-    } catch (e) {}
+      } catch (e) {}
+    }
 
     const sourcesCount = enrichedData.length || 0;
     const referenceUrls = enrichedData.map((d: any) => d.url).filter(Boolean);
@@ -296,14 +312,14 @@ export function NewsFeed({
     else variant = "horizontal";
 
     return {
-      id: raw._id,
+      id,
       variant,
-      title: raw.title || raw.sinhalaTitle || "Untitled News",
-      sinhalaTitle: raw.sinhalaTitle,
-      snippet: raw.summary || raw.sinhalaSummary,
-      sinhalaSummary: raw.sinhalaSummary,
+      title,
+      sinhalaTitle,
+      snippet,
+      sinhalaSummary,
       imageUrl,
-      publishedAt: formatPubDate(raw.createdAt || raw.pubDate),
+      publishedAt,
       sourcesCount,
       favicons,
       category:
@@ -312,8 +328,8 @@ export function NewsFeed({
           : raw.source || "General",
       originalSource: raw.source,
       url: raw.url,
-      dynamicOgImage: raw.dynamicOgImage,
-      dynamicSourceUrl: raw.dynamicSourceUrl,
+      dynamicOgImage: raw.dynamicOgImage || (isDevApi ? raw.imageUrl : undefined),
+      dynamicSourceUrl: raw.dynamicSourceUrl || raw.url,
       referenceUrls,
       enrichedSources: enrichedData,
       structuredDataSearchResults: raw.structuredData?.searchResults || [],

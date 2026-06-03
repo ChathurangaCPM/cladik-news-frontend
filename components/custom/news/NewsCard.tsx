@@ -91,7 +91,7 @@ export function NewsCard({
 
   const handleCardClick = () => {
     if (slug) {
-      router.push(`/news/${slug}`);
+      router.push(`/developer/news/${slug}`);
     } else if (url) {
       window.open(url, "_blank");
     }
@@ -120,7 +120,7 @@ export function NewsCard({
         >
           <CategoryBadge />
           <Link
-            href={slug ? `/news/${slug}` : url || "#"}
+            href={slug ? `/developer/news/${slug}` : url || "#"}
             className="cursor-pointer"
           >
             <h2
@@ -130,7 +130,7 @@ export function NewsCard({
             </h2>
           </Link>
           <Link
-            href={slug ? `/news/${slug}` : url || "#"}
+            href={slug ? `/developer/news/${slug}` : url || "#"}
             className="cursor-pointer"
           >
             <div className="flex items-center text-slate-400 text-sm py-2 space-x-2">
@@ -139,7 +139,7 @@ export function NewsCard({
             </div>
           </Link>
           <Link
-            href={slug ? `/news/${slug}` : url || "#"}
+            href={slug ? `/developer/news/${slug}` : url || "#"}
             className="cursor-pointer"
           >
             {(lang === "si" ? sinhalaSummary : snippet) && (
@@ -172,7 +172,7 @@ export function NewsCard({
         {activeImageUrl && (
           <div className="w-full lg:w-[55%] aspect-[4/3] relative rounded-[2rem] overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.3)] order-1 lg:order-2 transform transition-transform duration-500 hover:shadow-[0_20px_40px_rgb(0,0,0,0.1)] dark:hover:shadow-[0_20px_40px_rgb(0,0,0,0.4)] group/img">
             <Link
-              href={slug ? `/news/${slug}` : url || "#"}
+              href={slug ? `/developer/news/${slug}` : url || "#"}
               className="block relative aspect-[4/3] z-10 cursor-pointer"
             >
               <img
@@ -215,7 +215,7 @@ export function NewsCard({
               </span>
             </div>
             <Link
-              href={slug ? `/news/${slug}` : url || "#"}
+              href={slug ? `/developer/news/${slug}` : url || "#"}
               className="cursor-pointer"
             >
               <img
@@ -252,7 +252,7 @@ export function NewsCard({
             </div>
           )}
           <Link
-            href={slug ? `/news/${slug}` : url || "#"}
+            href={slug ? `/developer/news/${slug}` : url || "#"}
             className="cursor-pointer"
           >
             <h3
@@ -307,7 +307,7 @@ export function NewsCard({
         {activeImageUrl && (
           <div className="w-full lg:w-[35%] aspect-[16/10] relative rounded-[24px] overflow-hidden shadow-[0_4px_20px_rgb(0,0,0,0.04)] bg-slate-50 dark:bg-zinc-950/40 group/img">
             <Link
-              href={slug ? `/news/${slug}` : url || "#"}
+              href={slug ? `/developer/news/${slug}` : url || "#"}
               className="cursor-pointer"
             >
               <img
@@ -338,7 +338,7 @@ export function NewsCard({
             </span>
             <span className="text-slate-300 dark:text-zinc-700">•</span>
             <Link
-              href={slug ? `/news/${slug}` : url || "#"}
+              href={slug ? `/developer/news/${slug}` : url || "#"}
               className="cursor-pointer"
             >
               <div className="flex items-center text-slate-400 text-xs">
@@ -348,7 +348,7 @@ export function NewsCard({
             </Link>
           </div>
           <Link
-            href={slug ? `/news/${slug}` : url || "#"}
+            href={slug ? `/developer/news/${slug}` : url || "#"}
             className="space-y-3 cursor-pointer"
           >
             <h2

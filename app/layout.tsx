@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
 import ThirdPartyAnalytics from "@/components/custom/thirdPartyScripts";
+import { Toaster } from "@/components/ui/sonner";
 
 // Resolve the base URL dynamically for localhost, Vercel deployments, or custom production domains
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
@@ -22,11 +23,11 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "News Discovery | NeuralPress",
+    default: "NeuralPress - Real-time AI News Search API for Developers",
     template: "%s | NeuralPress",
   },
   description:
-    "Search conceptually to instantly find matching events across thousands of published articles.",
+    "Structured news API built for AI applications. Powered by our own proprietary search engine to crawl and index global news worldwide. Query conceptually using vector embeddings, retrieve source citations, and stream updates.",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -77,7 +78,7 @@ export default async function RootLayout({
       className={cn("font-sans", inter.variable)}
     >
       <body
-        className={`${inter.variable} ${customSinhalaFont.variable} ${customFont.variable} ${playfair.variable} ${geistMono.variable} subpixel-antialiased bg-background text-foreground`}
+        className={`${inter.variable} ${customSinhalaFont.variable} ${customFont.variable} ${playfair.variable} ${geistMono.variable} subpixel-antialiased`}
         suppressHydrationWarning
       >
         <NextTopLoader color="#000" height={3} crawl={true} crawlSpeed={200} />
@@ -89,14 +90,15 @@ export default async function RootLayout({
             >
               <div className="leading-snug min-h-screen">{children}</div>
             </UserLangProvider>
+            <Toaster />
           </Providers>
         </TooltipProvider>
-        <ThirdPartyAnalytics
+        {/* <ThirdPartyAnalytics
           GA_MEASUREMENT_ID=""
           GA_TRACKING_ID={""}
           FB_PIXEL_ID=""
           CLARITY_ID={"wyb9qfv76w"}
-        />
+        /> */}
       </body>
     </html>
   );

@@ -24,6 +24,7 @@ export function isSameSiteNews(article: {
   aiEnrichedContent?: string | any[];
   structuredData?: { searchResults?: any[] };
   structuredDataSearchResults?: any[];
+  references?: any[];
 }): boolean {
   if (!article) return true;
   
@@ -52,6 +53,16 @@ export function isSameSiteNews(article: {
     if (item?.url) {
       const d = getDomainName(item.url);
       if (d) domains.add(d);
+    }
+  }
+
+  // Parse references (restructured developer API format)
+  if (Array.isArray(article.references)) {
+    for (const item of article.references) {
+      if (item?.url) {
+        const d = getDomainName(item.url);
+        if (d) domains.add(d);
+      }
     }
   }
 
