@@ -16,6 +16,7 @@ import {
   ExternalLink,
   Link2,
 } from "lucide-react";
+import moment from "moment";
 
 interface Reference {
   title?: string;
@@ -175,6 +176,7 @@ function StreamNodeCard({
           {mounted && article.publishDate && (
             <span className="flex items-center gap-1 text-[11.5px] text-slate-400 font-light ml-auto">
               <Calendar className="w-3.5 h-3.5" />
+              {moment(article.publishDate).fromNow()} |{" "}
               {new Date(article.publishDate).toLocaleString(undefined, {
                 timeZoneName: "short",
                 hour12: true,
