@@ -14,6 +14,7 @@ import {
   Lock,
   Globe,
   ExternalLink,
+  Link2,
 } from "lucide-react";
 
 interface Reference {
@@ -241,15 +242,55 @@ function StreamNodeCard({
                 <Streamdown
                   isAnimating={false}
                   className="font-sans"
+                  // components={{
+                  //   a: ({ children, href }) => (
+                  //     <Link
+                  //       href={href || ""}
+                  //       target="_blank"
+                  //       rel="noopener noreferrer"
+                  //       className="text-indigo-650 hover:underline inline-flex items-center gap-0.5"
+                  //     >
+                  //       {children} <ExternalLink className="w-3 h-3 inline" />
+                  //     </Link>
+                  //   ),
+                  // }}
+
                   components={{
+                    h1: ({ children }) => <h1 className="">{children}</h1>,
+                    h2: ({ children }) => (
+                      <h2 className=" text-2xl">{children}</h2>
+                    ),
+                    h3: ({ children }) => (
+                      <h3 className=" text-xl">{children}</h3>
+                    ),
+                    h4: ({ children }) => (
+                      <h4 className=" text-lg">{children}</h4>
+                    ),
+                    h5: ({ children }) => (
+                      <h5 className=" text-md">{children}</h5>
+                    ),
+                    h6: ({ children }) => (
+                      <h6 className=" text-sm">{children}</h6>
+                    ),
+                    ul: ({ children }) => (
+                      <ul className="ml-5 list-disc list-outside">
+                        {children}
+                      </ul>
+                    ),
+                    ol: ({ children }) => (
+                      <ol className="ml-5 list-decimal list-outside">
+                        {children}
+                      </ol>
+                    ),
                     a: ({ children, href }) => (
                       <Link
                         href={href || ""}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-indigo-650 hover:underline inline-flex items-center gap-0.5"
+                        className="text-primary flex gap-2 hover:underline"
                       >
-                        {children} <ExternalLink className="w-3 h-3 inline" />
+                        {children}
+                        <Link2 className="w-4 h-4" />
                       </Link>
                     ),
                   }}

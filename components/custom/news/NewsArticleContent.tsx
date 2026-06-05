@@ -39,6 +39,7 @@ import {
   PopoverTitle,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 export interface EnrichedSource {
   title?: string;
   url: string;
@@ -921,6 +922,14 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   h6: ({ children }) => (
                     <h6 className=" text-sm">{children}</h6>
                   ),
+                  ul: ({ children }) => (
+                    <ul className="ml-5 list-disc list-outside">{children}</ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="ml-5 list-decimal list-outside">
+                      {children}
+                    </ol>
+                  ),
                   a: ({ children, href }) => (
                     <Link
                       href={href || ""}
@@ -1052,9 +1061,9 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   structuredDataSearchResults={rawStructuredData}
                   enrichedSources={aiEnrichedData}
                   customTrigger={
-                    <button className="py-2.5 px-6 bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-750 text-white rounded-full font-medium text-sm transition-all duration-300 outline-none cursor-pointer">
+                    <Button className="py-3 px-4 cursor-pointer">
                       View All Sources
-                    </button>
+                    </Button>
                   }
                 />
               </div>

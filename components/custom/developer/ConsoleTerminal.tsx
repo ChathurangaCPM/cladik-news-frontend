@@ -41,6 +41,12 @@ export default function ConsoleTerminal({
   searchQuery,
   limit,
 }: ConsoleTerminalProps) {
+  const baseApiUrl = process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL || "http://localhost:5005/api";
+  let hostDisplay = "http://localhost:5005";
+  try {
+    const parsed = new URL(baseApiUrl);
+    hostDisplay = `${parsed.protocol}//${parsed.host}`;
+  } catch (_) {}
   const [activeTerminalTab, setActiveTerminalTab] = useState<
     "payload" | "headers" | "curl"
   >("payload");
@@ -114,14 +120,12 @@ export default function ConsoleTerminal({
   const getCodeSnippet = (lang: string) => {
     const rawKeyVal =
       latestRawKey || activeKeyObj?.key || "np_free_your_raw_api_key_here";
-    const realEndpointUrl = endpoint.replace(
-      "/api",
-      "http://localhost:5005/api",
-    );
+    const cleanBaseApiUrl = baseApiUrl.endsWith("/") ? baseApiUrl.slice(0, -1) : baseApiUrl;
+    const relativePath = endpoint.startsWith("/api") ? endpoint.slice(4) : endpoint;
     const queryParams = endpoint.endsWith("/search")
       ? `?q=${encodeURIComponent(searchQuery)}&limit=${limit}`
       : `?limit=${limit}`;
-    const fullRealUrl = `${realEndpointUrl}${queryParams}`;
+    const fullRealUrl = `${cleanBaseApiUrl}${relativePath}${queryParams}`;
 
     switch (lang) {
       case "javascript":
@@ -689,7 +693,7 @@ public class Main {
                   <span className="text-[9px] text-slate-500 block font-light leading-snug">
                     Queries the live news pipeline directly at{" "}
                     <code className="text-indigo-400  ">
-                      http://localhost:5005
+                      {hostDisplay}
                     </code>{" "}
                     using your secure token.
                   </span>

@@ -47,15 +47,17 @@ export function AppSidebar({
   // Deduce active tab ID from current pathname path
   const activeTab = pathname.includes("playground")
     ? "playground"
-    : pathname.includes("webhooks")
-      ? "webhooks"
-      : pathname.includes("ingestion")
-        ? "ingestion"
-        : pathname.includes("billing")
-          ? "billing"
-          : pathname.includes("keys")
-            ? "keys"
-            : "overview";
+    : pathname.includes("news")
+      ? "feed"
+      : pathname.includes("webhooks")
+        ? "webhooks"
+        : pathname.includes("ingestion")
+          ? "ingestion"
+          : pathname.includes("billing")
+            ? "billing"
+            : pathname.includes("keys")
+              ? "keys"
+              : "overview";
 
   const menuItems = [
     {
@@ -82,7 +84,7 @@ export function AppSidebar({
     },
     {
       id: "feed" as const,
-      title: "Live Feed",
+      title: "News Feed",
       icon: <Book className="size-4 text-black" />,
       locked: false,
       // badge: "LIVE",

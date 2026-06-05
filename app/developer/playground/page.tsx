@@ -210,7 +210,7 @@ export default function DeveloperPlayground() {
         </div>
 
         <Link
-          href="/developer/dashboard"
+          href="/developer/keys"
           className="flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-750 bg-indigo-50/50 hover:bg-indigo-50 border border-indigo-100 px-4 py-2 rounded-xl transition self-start md:self-auto shrink-0 cursor-pointer"
         >
           <Key className="w-4 h-4" /> Manage Credentials
