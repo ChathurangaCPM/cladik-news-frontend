@@ -1,20 +1,16 @@
 import React from "react";
 import { notFound, redirect } from "next/navigation";
 import { Metadata } from "next";
-import { isSameSiteNews } from "@/lib/utils";
 import NewsArticleContent from "@/components/custom/news/NewsArticleContent";
 import { RelatedNews } from "@/components/custom/news/RelatedNews";
 import { searchNewsAction, fetchNews } from "../actions";
 import { NewsFeed } from "@/components/custom/news/NewsFeed";
 import NewsSearchBar from "@/components/custom/news/NewsSearchBar";
 import Link from "next/link";
-import Image from "next/image";
 import { getDeveloperSession } from "@/app/actions/auth";
+import { getNewsAggregatorUrl } from "@/lib/utils";
 
-const NEWS_API_URL =
-  process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL ||
-  process.env.NEWS_AGGREGATOR_URL ||
-  "http://localhost:5005/api";
+const NEWS_API_URL = getNewsAggregatorUrl();
 
 // Curated Category specific layouts & details for premium look and high-quality SEO metadata
 export interface CategoryMetaDetails {
@@ -265,34 +261,6 @@ const NewsArticlePage = async ({
   const decodedSlug = decodeURIComponent(slug).replace(/-/g, " ");
 
   const article = await getArticle(slug);
-
-  if (article) {
-    // Enforce plan-based filters on the article data to prevent free plan bypass
-    if (plan !== "business" && plan !== "advanced" && plan !== "internal") {
-      // Free plan restrictions
-      article.sinhalaTitle = '[LOCKED - Upgrade to Business Plan to read Sinhala translations]';
-      article.sinhalaSummary = '[LOCKED - Upgrade to Business Plan to read Sinhala summaries]';
-      article.summary = '[LOCKED - Upgrade to Business Plan to unlock synthesized summaries]';
-      article.content = '[LOCKED - Upgrade to Business Plan to unlock full news details]';
-      article.sinhalaContent = '[LOCKED - Upgrade to Business Plan to read Sinhala translations]';
-      article.aiEnrichedContent = null;
-      article.dynamicOgImage = null;
-    } else if (plan === "business") {
-      // Business plan limits (locks vectors)
-      if (article.aiEnrichedContent) {
-        try {
-          const parsed = JSON.parse(article.aiEnrichedContent);
-          if (Array.isArray(parsed)) {
-            article.aiEnrichedContent = JSON.stringify(parsed.map(item => ({
-              concept: item.concept,
-              relevance: item.relevance,
-              vectors: '[LOCKED - Upgrade to Advanced Plan to retrieve vector coordinates]',
-            })));
-          }
-        } catch (_) {}
-      }
-    }
-  }
 
   if (!article) {
     const KNOWN_CATEGORIES = [

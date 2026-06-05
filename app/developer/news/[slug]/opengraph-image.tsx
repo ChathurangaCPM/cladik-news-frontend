@@ -13,10 +13,9 @@ export const size = {
 
 export const contentType = "image/png";
 
-const NEWS_API_URL =
-  process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL ||
-  process.env.NEWS_AGGREGATOR_URL ||
-  "http://localhost:5005/api";
+import { getNewsAggregatorUrl } from "@/lib/utils";
+
+const NEWS_API_URL = getNewsAggregatorUrl();
 
 // Helper to render mixed English and Sinhala text properly in Satori
 function renderMixedText(text: string, isSinhala: boolean) {

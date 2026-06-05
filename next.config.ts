@@ -1,5 +1,19 @@
 import type { NextConfig } from "next";
 
+// Robustly normalize backend API URL environment variables at startup
+if (process.env.NEWS_AGGREGATOR_URL) {
+  let url = process.env.NEWS_AGGREGATOR_URL;
+  if (!url.endsWith("/api") && !url.endsWith("/api/")) {
+    process.env.NEWS_AGGREGATOR_URL = url.endsWith("/") ? `${url}api` : `${url}/api`;
+  }
+}
+if (process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL) {
+  let url = process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL;
+  if (!url.endsWith("/api") && !url.endsWith("/api/")) {
+    process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL = url.endsWith("/") ? `${url}api` : `${url}/api`;
+  }
+}
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [

@@ -1,11 +1,8 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { getNewsAggregatorUrl } from "@/lib/utils";
 
-const NEWS_API_URL =
-  process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL ||
-  process.env.NEWS_AGGREGATOR_URL ||
-  "http://localhost:5005/api";
+const NEWS_API_URL = getNewsAggregatorUrl();
 
 async function getBlacklistedDomains(): Promise<string[]> {
   try {
@@ -26,14 +23,20 @@ async function getBlacklistedDomains(): Promise<string[]> {
   }
 }
 
-function scrubBlacklistedImages(articles: any[], blacklist: string[]) {
+interface ArticleData {
+  ogImage?: string | null;
+  dynamicOgImage?: string | null;
+  [key: string]: unknown;
+}
+
+function scrubBlacklistedImages(articles: ArticleData[], blacklist: string[]) {
   if (!Array.isArray(articles) || articles.length === 0 || blacklist.length === 0) {
     return articles;
   }
   return articles.map((article) => {
     const scrubbed = { ...article };
 
-    const isImageBlacklisted = (urlStr: string | undefined): boolean => {
+    const isImageBlacklisted = (urlStr: string | null | undefined): boolean => {
       if (!urlStr) return false;
       try {
         const hostname = new URL(urlStr).hostname.toLowerCase();
@@ -41,7 +44,7 @@ function scrubBlacklistedImages(articles: any[], blacklist: string[]) {
           const cleanDomain = domain.toLowerCase().trim();
           return hostname === cleanDomain || hostname.endsWith("." + cleanDomain);
         });
-      } catch (e) {
+      } catch {
         return false;
       }
     };
@@ -62,20 +65,14 @@ export async function fetchNews(
   category?: string,
 ) {
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("accessToken")?.value;
-    if (!token) {
-      console.warn("fetchNews: No developer session token found in cookies.");
-      return [];
-    }
-
     let url = `${NEWS_API_URL}/v1/access/news?limit=${limit}&skip=${skip}`;
     if (category && category !== "All") {
       url += `&category=${encodeURIComponent(category)}`;
     }
     const res = await fetch(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        "x-service-api-key": process.env.SERVICE_API_KEY || "",
+        "Content-Type": "application/json",
       },
       cache: "no-store",
     });
@@ -95,17 +92,11 @@ export async function fetchNews(
 
 export async function searchNewsAction(query: string, limit: number = 20) {
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("accessToken")?.value;
-    if (!token) {
-      console.warn("searchNewsAction: No developer session token found in cookies.");
-      return [];
-    }
-
     const url = `${NEWS_API_URL}/v1/access/news/search?q=${encodeURIComponent(query)}&limit=${limit}`;
     const res = await fetch(url, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        "x-service-api-key": process.env.SERVICE_API_KEY || "",
+        "Content-Type": "application/json",
       },
       cache: "no-store",
     });

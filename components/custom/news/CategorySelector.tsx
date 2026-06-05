@@ -35,7 +35,7 @@ import {
 
 export interface CategoryItem {
   name: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string }>;
   image: string;
   path: string;
 }
@@ -46,133 +46,133 @@ export const CATEGORIES: CategoryItem[] = [
     icon: LayoutGrid,
     image:
       "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=300&q=80",
-    path: "/news",
+    path: "/developer/news",
   },
   {
     name: "Sri Lanka",
     icon: MapPin,
     image:
       "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=300&q=80",
-    path: "/news/sri-lanka",
+    path: "/developer/news/sri-lanka",
   },
   {
     name: "Technology",
     icon: Cpu,
     image:
       "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=300&q=80",
-    path: "/news/technology",
+    path: "/developer/news/technology",
   },
   {
     name: "AI & Future",
     icon: Bot,
     image:
       "https://plus.unsplash.com/premium_photo-1683121718643-fb18d2668d53?q=80&w=300&auto=format&fit=crop",
-    path: "/news/ai-technology",
+    path: "/developer/news/ai-technology",
   },
   {
     name: "Crypto",
     icon: Coins,
     image:
       "https://images.unsplash.com/photo-1516245834210-c4c142787335?auto=format&fit=crop&w=300&q=80",
-    path: "/news/crypto",
+    path: "/developer/news/crypto",
   },
   {
     name: "Business",
     icon: Briefcase,
     image:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=300&q=80",
-    path: "/news/business",
+    path: "/developer/news/business",
   },
   {
     name: "Politics",
     icon: Landmark,
     image:
       "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=300&q=80",
-    path: "/news/politics",
+    path: "/developer/news/politics",
   },
   {
     name: "Sports",
     icon: Trophy,
     image:
       "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=300&q=80",
-    path: "/news/sports",
+    path: "/developer/news/sports",
   },
   {
     name: "Entertainment",
     icon: Clapperboard,
     image:
       "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=300&q=80",
-    path: "/news/entertainment",
+    path: "/developer/news/entertainment",
   },
   {
     name: "Health",
     icon: HeartPulse,
     image:
       "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=300&q=80",
-    path: "/news/health",
+    path: "/developer/news/health",
   },
   {
     name: "Science",
     icon: FlaskConical,
     image:
       "https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=300&q=80",
-    path: "/news/science",
+    path: "/developer/news/science",
   },
   {
     name: "World News",
     icon: Globe,
     image:
       "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=300&q=80",
-    path: "/news/world-news",
+    path: "/developer/news/world-news",
   },
   {
     name: "Climate",
     icon: Leaf,
     image:
       "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=300&q=80",
-    path: "/news/climate",
+    path: "/developer/news/climate",
   },
   {
     name: "Investigations",
     icon: ShieldAlert,
     image:
       "https://images.unsplash.com/photo-1453847668080-482ed755ff9f?auto=format&fit=crop&w=300&q=80",
-    path: "/news/investigations",
+    path: "/developer/news/investigations",
   },
   {
     name: "Opinion",
     icon: MessageSquare,
     image:
       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80",
-    path: "/news/opinion",
+    path: "/developer/news/opinion",
   },
   {
     name: "Fact Check",
     icon: CheckCircle2,
     image:
       "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?auto=format&fit=crop&w=300&q=80",
-    path: "/news/fact-check",
+    path: "/developer/news/fact-check",
   },
   {
     name: "Lifestyle",
     icon: Palmtree,
     image:
       "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?auto=format&fit=crop&w=300&q=80",
-    path: "/news/lifestyle",
+    path: "/developer/news/lifestyle",
   },
   {
     name: "Travel",
     icon: Plane,
     image:
       "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=300&q=80",
-    path: "/news/travel",
+    path: "/developer/news/travel",
   },
   {
     name: "Food",
     icon: Utensils,
     image:
       "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=300&q=80",
-    path: "/news/food",
+    path: "/developer/news/food",
   },
 ];
 

@@ -1,14 +1,15 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { getNewsAggregatorUrl } from "@/lib/utils";
 
 const AUTH_SERVICE_URL = process.env.NEXT_PUBLIC_AUTH_SERVICE_URL || "http://localhost:5002";
-const NEWS_AGGREGATOR_URL = process.env.NEWS_AGGREGATOR_URL || "http://localhost:5005/api";
+const NEWS_AGGREGATOR_URL = getNewsAggregatorUrl();
 
 /**
  * Handle developer login action
  */
-export async function loginAction(credentials: any) {
+export async function loginAction(credentials: Record<string, unknown>) {
   try {
     const res = await fetch(`${AUTH_SERVICE_URL}/api/auth/login`, {
       method: "POST",
@@ -51,8 +52,9 @@ export async function loginAction(credentials: any) {
       success: true,
       user: data.user,
     };
-  } catch (err: any) {
-    console.error("Login Server Action Error:", err.message);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Login Server Action Error:", message);
     return {
       success: false,
       error: "Authentication service is currently offline. Please try again later.",
@@ -63,7 +65,7 @@ export async function loginAction(credentials: any) {
 /**
  * Handle developer registration/signup action
  */
-export async function signupAction(details: any) {
+export async function signupAction(details: Record<string, unknown>) {
   try {
     const res = await fetch(`${AUTH_SERVICE_URL}/api/auth/register`, {
       method: "POST",
@@ -126,8 +128,9 @@ export async function signupAction(details: any) {
       success: true,
       user: data.user,
     };
-  } catch (err: any) {
-    console.error("Signup Server Action Error:", err.message);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("Signup Server Action Error:", message);
     return {
       success: false,
       error: "Authentication service is currently offline. Please try again later.",
@@ -184,7 +187,7 @@ async function rotateTokens(refreshToken: string) {
     });
 
     return data.accessToken;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
@@ -224,7 +227,7 @@ export async function getDeveloperSession() {
     }
 
     return data.user;
-  } catch (err) {
+  } catch {
     return null;
   }
 }
@@ -263,8 +266,9 @@ export async function updateSubscriptionPlanAction(planType: "none" | "pending" 
     }
 
     return { success: true, user: data.user };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return { success: false, error: message };
   }
 }
 
@@ -331,8 +335,9 @@ export async function createDeveloperKeyAction(name: string) {
     }
 
     return { success: true, data };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return { success: false, error: message };
   }
 }
 
@@ -365,8 +370,9 @@ export async function revokeDeveloperKeyAction(id: string) {
     }
 
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return { success: false, error: message };
   }
 }
 
@@ -508,9 +514,10 @@ export async function runDeveloperPlaygroundAction(
     }
     const data = await res.json();
     return { success: true, data };
-  } catch (err: any) {
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
     console.error("runDeveloperPlaygroundAction error:", err);
-    return { success: false, error: err.message || "Failed to establish sandbox pipeline link." };
+    return { success: false, error: message || "Failed to establish sandbox pipeline link." };
   }
 }
 
@@ -577,8 +584,9 @@ export async function createDeveloperWebhookAction(url: string, events: string[]
     }
 
     return { success: true, data };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return { success: false, error: message };
   }
 }
 
@@ -612,8 +620,9 @@ export async function toggleDeveloperWebhookStatusAction(id: string) {
 
     const data = await res.json();
     return { success: true, data };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return { success: false, error: message };
   }
 }
 
@@ -646,8 +655,9 @@ export async function deleteDeveloperWebhookAction(id: string) {
     }
 
     return { success: true };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return { success: false, error: message };
   }
 }
 
@@ -747,8 +757,9 @@ export async function testDeveloperWebhookAction(url: string, event: string) {
     }
 
     return { success: true, data };
-  } catch (err: any) {
-    return { success: false, error: err.message };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    return { success: false, error: message };
   }
 }
 
@@ -772,8 +783,9 @@ export async function joinWaitlistAction(email: string, planId: string) {
     }
 
     return { success: true, message: data.message };
-  } catch (err: any) {
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
     console.error("joinWaitlistAction error:", err);
-    return { success: false, error: err.message || "Failed to submit waitlist registration." };
+    return { success: false, error: message || "Failed to submit waitlist registration." };
   }
 }

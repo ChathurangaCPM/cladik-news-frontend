@@ -6,7 +6,18 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signupAction } from "@/app/actions/auth";
-import { Key, Mail, User, Phone, Lock, Eye, EyeOff, Loader2, Sparkles, ShieldCheck } from "lucide-react";
+import {
+  Key,
+  Mail,
+  User,
+  Phone,
+  Lock,
+  Eye,
+  EyeOff,
+  Loader2,
+  Sparkles,
+  ShieldCheck,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -57,11 +68,13 @@ export function SignupForm({
           if (plan) {
             router.push(`/checkout?plan=${plan}&billing=${billing}`);
           } else {
-            router.push("/developer/dashboard");
+            router.push("/developer");
           }
         }
       } else {
-        setError(result.error || "Failed to create account. Please check your inputs.");
+        setError(
+          result.error || "Failed to create account. Please check your inputs.",
+        );
       }
     } catch (err: any) {
       setError("An unexpected error occurred. Please try again.");
@@ -73,17 +86,21 @@ export function SignupForm({
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <div className="bg-white/80 backdrop-blur-3xl border border-slate-200/60 shadow-[0_8px_30px_rgb(0,0,0,0.02),0_30px_60px_rgba(0,0,0,0.03)] p-8 rounded-[2rem] w-full text-center relative overflow-hidden group transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.03),0_30px_60px_rgba(0,0,0,0.05)] hover:border-slate-200">
-        
         {/* Soft ambient glows */}
         <div className="absolute -top-12 -left-12 w-24 h-24 bg-indigo-100/50 rounded-full blur-2xl group-hover:scale-150 transition duration-700 pointer-events-none" />
         <div className="absolute -bottom-12 -right-12 w-24 h-24 bg-blue-100/50 rounded-full blur-2xl group-hover:scale-150 transition duration-700 pointer-events-none" />
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          
           {/* Header branding info */}
           <div className="flex flex-col items-center gap-2">
             <Link href="/" className="flex items-center gap-2 mb-2">
-              <Image src="/main-logo.png" width={36} height={36} className="w-9 h-9 object-contain" alt="NeuralPress" />
+              <Image
+                src="/main-logo.png"
+                width={36}
+                height={36}
+                className="w-9 h-9 object-contain"
+                alt="NeuralPress"
+              />
               <span className="text-xl tracking-tight text-slate-900 font-bold">
                 Neural<span className="text-[#2b86ff]">Press</span>
               </span>
@@ -93,7 +110,8 @@ export function SignupForm({
               <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
             </h1>
             <p className="text-xs text-slate-500 font-light max-w-xs mx-auto">
-              Get immediate access to conceptual news streams, Sinhala translation matrices, and webhooks.
+              Get immediate access to conceptual news streams, Sinhala
+              translation matrices, and webhooks.
             </p>
           </div>
 
@@ -106,11 +124,15 @@ export function SignupForm({
 
           {/* Form Fields grid layout */}
           <div className="space-y-4">
-            
             {/* First & Last Name double column */}
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1.5 text-left">
-                <label htmlFor="firstName" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">First Name *</label>
+                <label
+                  htmlFor="firstName"
+                  className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5"
+                >
+                  First Name *
+                </label>
                 <div className="relative group">
                   <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
                   <Input
@@ -126,7 +148,12 @@ export function SignupForm({
               </div>
 
               <div className="space-y-1.5 text-left">
-                <label htmlFor="lastName" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">Last Name</label>
+                <label
+                  htmlFor="lastName"
+                  className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5"
+                >
+                  Last Name
+                </label>
                 <div className="relative group">
                   <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
                   <Input
@@ -143,7 +170,12 @@ export function SignupForm({
 
             {/* Email Field */}
             <div className="space-y-1.5 text-left">
-              <label htmlFor="email" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">Email Address *</label>
+              <label
+                htmlFor="email"
+                className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5"
+              >
+                Email Address *
+              </label>
               <div className="relative group">
                 <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
                 <Input
@@ -160,7 +192,12 @@ export function SignupForm({
 
             {/* Contact Number Field */}
             <div className="space-y-1.5 text-left">
-              <label htmlFor="contactNumber" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">Contact Phone</label>
+              <label
+                htmlFor="contactNumber"
+                className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5"
+              >
+                Contact Phone
+              </label>
               <div className="relative group">
                 <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
                 <Input
@@ -176,7 +213,12 @@ export function SignupForm({
 
             {/* Password Field */}
             <div className="space-y-1.5 text-left">
-              <label htmlFor="password" className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5">Password * (Min 8 chars)</label>
+              <label
+                htmlFor="password"
+                className="text-[10px] uppercase tracking-wider text-slate-400 block ml-0.5"
+              >
+                Password * (Min 8 chars)
+              </label>
               <div className="relative group">
                 <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]" />
                 <Input
@@ -201,7 +243,6 @@ export function SignupForm({
                 </button>
               </div>
             </div>
-
           </div>
 
           {/* Submit Action */}
@@ -212,7 +253,8 @@ export function SignupForm({
           >
             {loading ? (
               <span className="flex items-center gap-1.5 justify-center">
-                <Loader2 className="w-4 h-4 animate-spin" /> Provisioning Node...
+                <Loader2 className="w-4 h-4 animate-spin" /> Provisioning
+                Node...
               </span>
             ) : (
               "Initialize Developer Suite"
@@ -222,20 +264,19 @@ export function SignupForm({
           {/* Switch to login option */}
           <div className="text-center text-xs text-slate-500 mt-4 font-light">
             Already have an account?{" "}
-            <Link 
-              href={`/login${searchParams.toString() ? `?${searchParams.toString()}` : ""}`} 
+            <Link
+              href={`/login${searchParams.toString() ? `?${searchParams.toString()}` : ""}`}
               className="text-[#2b86ff] hover:text-[#1e76ed] hover:underline font-bold font-sans transition"
             >
               Sign In
             </Link>
           </div>
-
         </form>
 
         <p className="text-[10px] text-slate-400 leading-relaxed max-w-xs mx-auto mt-6 flex items-center justify-center gap-1.5 border-t border-slate-100 pt-4">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> Secure production connection encrypted via TLS.
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> Secure
+          production connection encrypted via TLS.
         </p>
-
       </div>
     </div>
   );

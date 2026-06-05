@@ -1,9 +1,4 @@
 import { Meteors } from "@/components/custom/news/Meteors";
-import { ThemeToggle } from "@/components/custom/news/ThemeToggle";
-import { LangToggle } from "@/components/custom/news/LangToggle";
-import { FloatingBusiness } from "@/components/custom/news/FloatingBusiness";
-import Link from "next/link";
-import Image from "next/image";
 
 export default function NewsLayout({
   children,

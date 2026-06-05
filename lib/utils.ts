@@ -21,10 +21,10 @@ export function getDomainName(urlStr: string): string {
 
 export function isSameSiteNews(article: {
   url?: string;
-  aiEnrichedContent?: string | any[];
-  structuredData?: { searchResults?: any[] };
-  structuredDataSearchResults?: any[];
-  references?: any[];
+  aiEnrichedContent?: string | any[] | null;
+  structuredData?: { searchResults?: any[] | null } | null;
+  structuredDataSearchResults?: any[] | null;
+  references?: any[] | null;
 }): boolean {
   if (!article) return true;
   
@@ -76,4 +76,15 @@ export function isSameSiteNews(article: {
   }
 
   return domains.size <= 1;
+}
+
+export function getNewsAggregatorUrl(): string {
+  let url =
+    process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL ||
+    process.env.NEWS_AGGREGATOR_URL ||
+    "http://localhost:5005/api";
+  if (url && !url.endsWith("/api") && !url.endsWith("/api/")) {
+    url = url.endsWith("/") ? `${url}api` : `${url}/api`;
+  }
+  return url;
 }

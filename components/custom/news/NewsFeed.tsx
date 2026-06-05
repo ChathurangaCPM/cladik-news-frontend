@@ -3,9 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NewsCard } from "./NewsCard";
 import { fetchNews } from "@/app/developer/news/actions";
-import { cn, isSameSiteNews } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import moment from "moment";
-import Link from "next/link";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { CategorySelector } from "./CategorySelector";
 
@@ -67,12 +66,51 @@ const NewsCardSkeleton = ({
   );
 };
 
+interface EnrichedSource {
+  title?: string;
+  url: string;
+  content?: string;
+  engine?: string;
+}
+
+interface ProcessedNewsArticle {
+  _id?: string;
+  id?: string;
+  title?: string;
+  sinhalaTitle?: string;
+  summary?: string;
+  sinhalaSummary?: string;
+  content?: string;
+  sinhalaContent?: string;
+  ogImage?: string | null;
+  dynamicOgImage?: string | null;
+  imageUrl?: string;
+  pubDate?: string;
+  createdAt?: string;
+  publishDate?: string;
+  categories?: string[];
+  source?: string;
+  url?: string;
+  dynamicSourceUrl?: string;
+  references?: EnrichedSource[] | null;
+  aiEnrichedContent?: string | null;
+  structuredData?: {
+    searchResults?: EnrichedSource[];
+  };
+  slug?: string;
+}
+
+interface InfiniteQueryData {
+  pages: ProcessedNewsArticle[][];
+  pageParams: unknown[];
+}
+
 export function NewsFeed({
   initialNews,
   searchQuery,
   initialCategory,
 }: {
-  initialNews: any[];
+  initialNews: ProcessedNewsArticle[];
   searchQuery?: string;
   initialCategory?: string;
 }) {
@@ -82,11 +120,11 @@ export function NewsFeed({
   const observerTarget = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (initialCategory) {
-      setSelectedCategory(initialCategory);
-    }
-  }, [initialCategory]);
+  const [prevInitialCategory, setPrevInitialCategory] = useState(initialCategory);
+  if (initialCategory !== prevInitialCategory) {
+    setPrevInitialCategory(initialCategory);
+    setSelectedCategory(initialCategory || "All");
+  }
 
   const {
     data,
@@ -146,14 +184,11 @@ export function NewsFeed({
 
   // Setup Server-Sent Events for Real-Time UI Updates mapped into TanStack cache
   useEffect(() => {
-    const NEWS_API_URL =
-      process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL ||
-      "http://localhost:5005/api";
     const eventSource = new EventSource(`/api/news/stream?t=${Date.now()}`);
 
     eventSource.onmessage = (event) => {
       try {
-        const rawNewItem = JSON.parse(event.data);
+        const rawNewItem = JSON.parse(event.data) as ProcessedNewsArticle;
         if (rawNewItem && rawNewItem._id) {
           // Verify SSE matches current category or search filter
           if (searchQuery) {
@@ -180,14 +215,14 @@ export function NewsFeed({
           // Immutably inject the live streamed article into the TanStack cache!
           queryClient.setQueryData(
             ["news", "feed", selectedCategory, searchQuery || ""],
-            (oldData: any) => {
+            (oldData: InfiniteQueryData | undefined) => {
               if (!oldData || !oldData.pages || oldData.pages.length === 0)
                 return oldData;
 
               // Deduplication via ID
               const alreadyExists = oldData.pages
                 .flat()
-                .some((item: any) => item._id === rawNewItem._id);
+                .some((item: ProcessedNewsArticle) => item._id === rawNewItem._id);
               if (alreadyExists) return oldData;
 
               const newFirstPage = [rawNewItem, ...oldData.pages[0]];
@@ -210,7 +245,7 @@ export function NewsFeed({
     return () => {
       eventSource.close();
     };
-  }, [selectedCategory, queryClient]);
+  }, [selectedCategory, queryClient, searchQuery]);
 
   // Infinite Scroll Trigger Observer
   useEffect(() => {
@@ -248,7 +283,7 @@ export function NewsFeed({
     return `${localDate} at ${date.format("h:mm A")}`;
   };
 
-  const mapItem = (raw: any, index: number) => {
+  const mapItem = (raw: ProcessedNewsArticle, index: number) => {
     const isDevApi = "publishDate" in raw || "imageUrl" in raw;
 
     const id = raw.id || raw._id;
@@ -258,7 +293,7 @@ export function NewsFeed({
     const sinhalaSummary = raw.sinhalaSummary;
 
     // Get image URL (developer API uses restructured raw.imageUrl)
-    let imageUrl = raw.imageUrl;
+    let imageUrl: string | undefined = raw.imageUrl || undefined;
     if (!isDevApi) {
       const sourceLower = (raw.source || "").toLowerCase();
       const showImage = [
@@ -269,13 +304,13 @@ export function NewsFeed({
         "wired.com",
         "aljazeera.com",
       ].some((s) => sourceLower.includes(s));
-      imageUrl = showImage ? raw.ogImage : undefined;
+      imageUrl = (showImage && raw.ogImage) ? raw.ogImage : undefined;
     }
 
-    const publishedAt = formatPubDate(raw.publishDate || raw.createdAt || raw.pubDate);
+    const publishedAt = formatPubDate(raw.publishDate || raw.createdAt || raw.pubDate || "");
 
     // References / Enriched sources
-    let enrichedData: any[] = [];
+    let enrichedData: EnrichedSource[] = [];
     if (Array.isArray(raw.references)) {
       enrichedData = raw.references;
     } else {
@@ -288,18 +323,20 @@ export function NewsFeed({
             enrichedData = parsed.searchResults;
           }
         }
-      } catch (e) {}
+      } catch {
+        // Safe catch
+      }
     }
 
     const sourcesCount = enrichedData.length || 0;
-    const referenceUrls = enrichedData.map((d: any) => d.url).filter(Boolean);
+    const referenceUrls = enrichedData.map((d) => d.url).filter(Boolean);
     const favicons = enrichedData
       .slice(0, 3)
-      .map((d: any) => {
+      .map((d) => {
         try {
           const url = new URL(d.url);
           return `https://www.google.com/s2/favicons?domain=${url.hostname}&sz=64`;
-        } catch (e) {
+        } catch {
           return null;
         }
       })
@@ -328,7 +365,7 @@ export function NewsFeed({
           : raw.source || "General",
       originalSource: raw.source,
       url: raw.url,
-      dynamicOgImage: raw.dynamicOgImage || (isDevApi ? raw.imageUrl : undefined),
+      dynamicOgImage: (raw.dynamicOgImage || (isDevApi ? raw.imageUrl : undefined)) || undefined,
       dynamicSourceUrl: raw.dynamicSourceUrl || raw.url,
       referenceUrls,
       enrichedSources: enrichedData,
@@ -362,7 +399,7 @@ export function NewsFeed({
             </div>
           </>
         ) : (
-          items.map((raw: any, idx: number) => {
+          items.map((raw: ProcessedNewsArticle, idx: number) => {
             const mapped = mapItem(raw, idx);
             const isFullWidth =
               mapped.variant === "featured" || mapped.variant === "horizontal";

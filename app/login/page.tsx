@@ -2,18 +2,15 @@
 
 import React, { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginAction } from "@/app/actions/auth";
 import {
-  Key,
   Mail,
   Lock,
   Eye,
   EyeOff,
   Loader2,
-  Sparkles,
   ShieldCheck,
 } from "lucide-react";
 import Link from "next/link";
@@ -59,7 +56,7 @@ function LoginContent() {
           if (plan) {
             router.push(`/checkout?plan=${plan}&billing=${billing}`);
           } else {
-            router.push("/developer/dashboard");
+            router.push("/developer");
           }
         }
       } else {
@@ -68,7 +65,7 @@ function LoginContent() {
             "Invalid credentials. Please verify your email and password.",
         );
       }
-    } catch (err: any) {
+    } catch {
       setError("An unexpected error occurred. Please try again later.");
     } finally {
       setLoading(false);
@@ -201,7 +198,7 @@ function LoginContent() {
 
             {/* Signup option */}
             <div className="text-center text-xs text-slate-500 mt-4 font-light">
-              Don't have a developer account?{" "}
+              Don&apos;t have a developer account?{" "}
               <Link
                 href={`/signup${searchParams.toString() ? `?${searchParams.toString()}` : ""}`}
                 className="text-[#2b86ff] hover:text-[#1e76ed] hover:underline font-bold font-sans transition"

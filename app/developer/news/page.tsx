@@ -3,7 +3,6 @@ import { fetchNews, searchNewsAction } from "./actions";
 import { NewsFeed } from "@/components/custom/news/NewsFeed";
 import NewsSearchBar from "@/components/custom/news/NewsSearchBar";
 import Link from "next/link";
-import Image from "next/image";
 import { getDeveloperSession } from "@/app/actions/auth";
 import { redirect } from "next/navigation";
 
@@ -80,7 +79,7 @@ export default async function NewsMainPage(props: {
             <h2 className="text-xl font-bold text-white mb-2">
               No Matching Signals
             </h2>
-            <p>We couldn't conceptualize any reports matching "{q}".</p>
+            <p>We couldn&apos;t conceptualize any reports matching &ldquo;{q}&rdquo;.</p>
           </div>
         ) : (
           <NewsFeed
