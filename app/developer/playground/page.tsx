@@ -8,7 +8,6 @@ import Link from "next/link";
 
 // Custom modular playground sub-components
 import RequestConfiguration from "@/components/custom/developer/RequestConfiguration";
-import VectorMapProjection from "@/components/custom/developer/VectorMapProjection";
 import ConsoleTerminal from "@/components/custom/developer/ConsoleTerminal";
 import StreamVisualizer from "@/components/custom/developer/StreamVisualizer";
 
