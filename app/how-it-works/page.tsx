@@ -181,7 +181,7 @@ export default function HowItWorksPage() {
 
           <nav className="hidden md:flex items-center gap-8 text-sm text-slate-600 dark:text-neutral-300">
             <Link
-              href="/news"
+              href="/developer/news"
               className="hover:text-indigo-600 dark:hover:text-white transition"
             >
               Discovery Feed
@@ -213,14 +213,20 @@ export default function HowItWorksPage() {
 
       {/* Hero Headline content */}
       <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 text-center">
-        <span className="text-xs uppercase text-indigo-600 dark:text-indigo-400 tracking-wider font-bold">
+        <span className="text-xs uppercase text-indigo-600 dark:text-indigo-400 tracking-wider">
           Technical Architecture
         </span>
-        <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mt-3">
-          Behind the News Pipeline
+        <h1 className="text-3xl md:text-5xl tracking-[-3px] mt-3 text-slate-900 leading-tight">
+          Behind the{" "}
+          <span className="font-light font-heading italic text-[#2b86ff]">
+            News Pipeline
+          </span>
         </h1>
         <p className="text-slate-500 dark:text-neutral-400 text-base max-w-2xl mx-auto mt-6 font-light leading-relaxed">
-          NeuralPress indexes global news worldwide using our own proprietary search engine, automating the ingestion, AI enrichment, semantic indexing, and deduplication to deliver high-precision structured data for LLM and agent applications.
+          NeuralPress indexes global news worldwide using our own proprietary
+          search engine, automating the ingestion, AI enrichment, semantic
+          indexing, and deduplication to deliver high-precision structured data
+          for LLM and agent applications.
         </p>
       </section>
 
@@ -232,7 +238,7 @@ export default function HowItWorksPage() {
             <button
               key={step.id}
               onClick={() => setActiveTab(step.id)}
-              className={`pb-4 text-xs md:text-sm font-semibold transition-all relative shrink-0 flex items-center gap-2 ${
+              className={`pb-4 text-xs md:text-sm font-semibold transition-all relative shrink-0 flex items-center gap-2 cursor-pointer ${
                 activeTab === step.id
                   ? "text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400"
                   : "text-slate-400 dark:text-zinc-500 hover:text-slate-600 dark:hover:text-neutral-300"
@@ -261,7 +267,7 @@ export default function HowItWorksPage() {
                   <span className="text-xs font-mono uppercase text-slate-400 dark:text-zinc-500">
                     {pipelineSteps[activeTab].tagline}
                   </span>
-                  <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white">
+                  <h3 className="text-xl md:text-3xl tracking-tight mt-3 text-slate-900 leading-tight">
                     {pipelineSteps[activeTab].title}
                   </h3>
                   <p className="text-slate-500 dark:text-neutral-400 text-sm leading-relaxed font-light">
@@ -316,14 +322,15 @@ export default function HowItWorksPage() {
       {/* Grid of System Capabilities & Integrity */}
       <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-36">
         <div className="text-center mb-16">
-          <span className="text-xs uppercase text-indigo-600 dark:text-indigo-400 tracking-wider font-bold">
+          <span className="text-xs uppercase text-indigo-600 dark:text-indigo-400 tracking-wider">
             Data Engineering
           </span>
-          <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+          <h2 className="text-xl md:text-3xl tracking-tight mt-3 text-slate-900 leading-tight">
             Standardizing unstructured news
           </h2>
           <p className="text-slate-500 dark:text-neutral-400 text-sm max-w-lg mx-auto mt-3 font-light">
-            We handle the complexities of scraping, parsing, translating, and deduplicating so you get clean structured feeds.
+            We handle the complexities of scraping, parsing, translating, and
+            deduplicating so you get clean structured feeds.
           </p>
         </div>
 
@@ -332,11 +339,13 @@ export default function HowItWorksPage() {
             <div className="w-10 h-10 rounded-2xl bg-blue-50 dark:bg-blue-500/5 flex items-center justify-center text-blue-600 dark:text-blue-400 mb-6">
               <Layers className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold mb-2 text-slate-900 dark:text-white">
+            <h3 className="text-xl md:text-2xl tracking-tight mt-3 text-slate-900 leading-tight mb-2 text-slate-900 dark:text-white">
               Pruning boilerplate
             </h3>
             <p className="text-slate-500 dark:text-neutral-400 text-xs leading-relaxed font-light">
-              Powered by our own proprietary search engine, we filter cookie banners, popups, script blocks, and navigation grids to store only the authentic content body, saving tokens for LLM generation.
+              Powered by our own proprietary search engine, we filter cookie
+              banners, popups, script blocks, and navigation grids to store only
+              the authentic content body, saving tokens for LLM generation.
             </p>
           </div>
 
@@ -344,11 +353,14 @@ export default function HowItWorksPage() {
             <div className="w-10 h-10 rounded-2xl bg-purple-50 dark:bg-purple-500/5 flex items-center justify-center text-purple-600 dark:text-purple-400 mb-6">
               <Brain className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold mb-2 text-slate-900 dark:text-white">
+            <h3 className="text-xl md:text-2xl tracking-tight mt-3 text-slate-900 leading-tight mb-2 text-slate-900 dark:text-white">
               Bilingual alignment
             </h3>
             <p className="text-slate-500 dark:text-neutral-400 text-xs leading-relaxed font-light">
-              Our proprietary search engine pipelines feeds into Gemini to automatically synthesize Sinhala translations, tags, and categories alongside English feeds, enabling cross-language querying.
+              Our proprietary search engine pipelines feeds into Gemini to
+              automatically synthesize Sinhala translations, tags, and
+              categories alongside English feeds, enabling cross-language
+              querying.
             </p>
           </div>
 
@@ -356,11 +368,13 @@ export default function HowItWorksPage() {
             <div className="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-500/5 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-6">
               <Network className="w-5 h-5" />
             </div>
-            <h3 className="text-lg font-bold mb-2 text-slate-900 dark:text-white">
+            <h3 className="text-xl md:text-2xl tracking-tight mt-3 text-slate-900 leading-tight mb-2 text-slate-900 dark:text-white">
               Smart AI mappings
             </h3>
             <p className="text-slate-500 dark:text-neutral-400 text-xs leading-relaxed font-light">
-              Our proprietary search engine maps articles into a conceptual search index, supporting smart matches even if the exact keywords do not match.
+              Our proprietary search engine maps articles into a conceptual
+              search index, supporting smart matches even if the exact keywords
+              do not match.
             </p>
           </div>
         </div>
@@ -370,11 +384,13 @@ export default function HowItWorksPage() {
       <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-36 text-center">
         <div className="bg-gradient-to-r from-indigo-600 to-[#2b86ff] rounded-[3rem] p-10 md:p-16 shadow-xl relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition duration-700" />
-          <h4 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+          <h4 className="text-3xl md:text-3xl font-light text-white leading-tight">
             Ready to integrate global news conceptual feeds?
           </h4>
           <p className="text-white/80 max-w-xl mx-auto mt-4 text-xs md:text-sm font-light leading-relaxed">
-            Get your instant API token in under 2 minutes. Start querying news indexed worldwide by our own proprietary search engine conceptually for free, then scale up as your user base expands.
+            Get your instant API token in under 2 minutes. Start querying news
+            indexed worldwide by our own proprietary search engine conceptually
+            for free, then scale up as your user base expands.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Link

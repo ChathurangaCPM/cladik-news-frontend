@@ -313,6 +313,10 @@ export function NewsFeed({
     let enrichedData: EnrichedSource[] = [];
     if (Array.isArray(raw.references)) {
       enrichedData = raw.references;
+    } else if (raw.references && typeof raw.references === "object") {
+      const primary = Array.isArray((raw.references as any).primary) ? (raw.references as any).primary : [];
+      const others = Array.isArray((raw.references as any).others) ? (raw.references as any).others : [];
+      enrichedData = [...primary, ...others];
     } else {
       try {
         if (raw.aiEnrichedContent) {

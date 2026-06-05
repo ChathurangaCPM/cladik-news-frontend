@@ -95,12 +95,24 @@ export function SourcesPanel({
   }
 
   // 2. Filter top coverage and related coverage, keeping only the ones deemed related by Fuse.js
-  const filteredStructuredResults = structuredDataSearchResults.filter((s) =>
+  let filteredStructuredResults = structuredDataSearchResults.filter((s) =>
     sourceScores.has(s.url),
   );
-  const filteredEnrichedSources = enrichedSources.filter((s) =>
+  let filteredEnrichedSources = enrichedSources.filter((s) =>
     sourceScores.has(s.url),
   );
+
+  if (
+    filteredStructuredResults.length === 0 &&
+    filteredEnrichedSources.length === 0 &&
+    uniqueAllSources.length > 0
+  ) {
+    filteredStructuredResults = structuredDataSearchResults;
+    filteredEnrichedSources = enrichedSources;
+    uniqueAllSources.forEach((s) => {
+      sourceScores.set(s.url, 0.5);
+    });
+  }
 
   // 3. Deduplicate lists based on URL
   const topCoverageUrls = new Set(filteredStructuredResults.map((s) => s.url));

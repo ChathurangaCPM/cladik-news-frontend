@@ -64,6 +64,16 @@ export function isSameSiteNews(article: {
         if (d) domains.add(d);
       }
     }
+  } else if (article.references && typeof article.references === "object") {
+    const primary = Array.isArray((article.references as any).primary) ? (article.references as any).primary : [];
+    const others = Array.isArray((article.references as any).others) ? (article.references as any).others : [];
+    const combined = [...primary, ...others];
+    for (const item of combined) {
+      if (item?.url) {
+        const d = getDomainName(item.url);
+        if (d) domains.add(d);
+      }
+    }
   }
 
   // Parse structuredData searchResults

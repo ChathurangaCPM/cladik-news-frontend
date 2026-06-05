@@ -18,6 +18,7 @@ import {
   getDeveloperMetricsAction,
   getDeveloperLogsAction,
   getDeveloperChartDataAction,
+  getDeveloperTokenAction,
 } from "@/app/actions/auth";
 
 interface DeveloperContextType {
@@ -93,13 +94,6 @@ export default function DeveloperLayout({
   // Telemetry loading logic
   const refreshTelemetry = async () => {
     try {
-      const session = await getDeveloperSession();
-      if (!session) {
-        await logoutAction();
-        router.push("/login");
-        return;
-      }
-
       const keys = await getDeveloperKeysAction();
       setApiKeys(keys);
 
@@ -185,6 +179,82 @@ export default function DeveloperLayout({
     }
     loadData();
   }, [router]);
+
+  // Real-time developer telemetry updates using SSE (Server-Sent Events)
+  useEffect(() => {
+    let eventSource: EventSource | null = null;
+    let active = true;
+
+    async function setupSSE() {
+      try {
+        const token = await getDeveloperTokenAction();
+        if (!token || !active) return;
+
+        // Fetch initial telemetry data when establishing the connection
+        await refreshTelemetry();
+
+        const aggregatorUrl = process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL || "http://localhost:5005";
+        // Clean trailing slash
+        const cleanUrl = aggregatorUrl.endsWith("/") ? aggregatorUrl.slice(0, -1) : aggregatorUrl;
+        const sseUrl = `${cleanUrl}/developer/realtime-telemetry?token=${encodeURIComponent(token)}`;
+
+        console.log("Establishing real-time telemetry SSE connection to:", cleanUrl);
+        eventSource = new EventSource(sseUrl);
+
+        eventSource.onmessage = (event) => {
+          try {
+            const parsed = JSON.parse(event.data);
+            if (!parsed || !parsed.type) return;
+
+            console.log("Received SSE telemetry event:", parsed.type);
+
+            if (parsed.type === "metrics") {
+              setMetrics(parsed.data);
+            } else if (parsed.type === "log") {
+              // Prepend new activity log
+              setActivityLogs((prev) => {
+                const updated = [parsed.data, ...prev];
+                // Keep history capped to last 50 entries
+                return updated.slice(0, 50);
+              });
+              // Trigger a background reload of the chart data
+              getDeveloperChartDataAction().then((liveCharts) => {
+                if (liveCharts && active) {
+                  setRealChartData(liveCharts.daily || []);
+                  setHourlyChartData(liveCharts.hourly || []);
+                  setEndpointChartData(liveCharts.endpoints || []);
+                }
+              });
+            }
+          } catch (err) {
+            console.error("Error parsing real-time SSE telemetry:", err);
+          }
+        };
+
+        eventSource.onerror = (err) => {
+          console.warn("Real-time SSE telemetry connection error, retrying...", err);
+          if (eventSource) {
+            eventSource.close();
+          }
+        };
+      } catch (err) {
+        console.error("Failed to set up real-time SSE telemetry connection:", err);
+      }
+    }
+
+    // Only set up SSE if user email/session is present and loaded
+    if (developerEmail && !loadingTelemetry) {
+      setupSSE();
+    }
+
+    return () => {
+      active = false;
+      if (eventSource) {
+        console.log("Closing real-time telemetry SSE connection...");
+        eventSource.close();
+      }
+    };
+  }, [developerEmail, loadingTelemetry]);
 
   // Billing tier switch proxy
   const handleSimulatedPlanSwitch = async (

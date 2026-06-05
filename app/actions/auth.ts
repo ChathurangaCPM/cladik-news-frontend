@@ -789,3 +789,17 @@ export async function joinWaitlistAction(email: string, planId: string) {
     return { success: false, error: message || "Failed to submit waitlist registration." };
   }
 }
+
+/**
+ * Retrieve the active accessToken for SSE/realtime connections
+ */
+export async function getDeveloperTokenAction() {
+  const cookieStore = await cookies();
+  let token = cookieStore.get("accessToken")?.value;
+  const refresh = cookieStore.get("refreshToken")?.value;
+
+  if (!token && refresh) {
+    token = (await rotateTokens(refresh)) || undefined;
+  }
+  return token || null;
+}

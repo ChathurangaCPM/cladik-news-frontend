@@ -21,14 +21,20 @@ export default function Header() {
         </span>
       </Link>
 
-      <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-white/90">
+      <nav className="hidden md:flex items-center gap-8 text-sm font-light text-white/90">
         <Link href="/news" className="hover:text-white transition duration-200">
           Discovery Feed
         </Link>
-        <Link href="/how-it-works" className="hover:text-white transition duration-200">
+        <Link
+          href="/how-it-works"
+          className="hover:text-white transition duration-200"
+        >
           How It Works
         </Link>
-        <Link href="/pricing" className="hover:text-white transition duration-200">
+        <Link
+          href="/pricing"
+          className="hover:text-white transition duration-200"
+        >
           API Pricing
         </Link>
       </nav>

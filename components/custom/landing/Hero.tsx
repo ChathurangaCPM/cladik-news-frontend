@@ -176,22 +176,24 @@ export default function Hero() {
             With Vector Search & Citations.
           </span>
         </h1>
-        <p className="mt-8 text-base text-white/85 font-light max-w-2xl mx-auto leading-relaxed">
-          Access global news feeds indexed worldwide by our own proprietary search engine, enriched with vector embeddings, semantic categories, and AI summaries.
-          Query conceptually with natural language, retrieve detailed citation graphs, and stream updates in real-time.
+        <p className="mt-8 text-white/85 font-light max-w-2xl mx-auto leading-relaxed">
+          Access global news feeds indexed worldwide by our own proprietary
+          search engine, enriched with vector embeddings, semantic categories,
+          and AI summaries. Query conceptually with natural language, retrieve
+          detailed citation graphs, and stream updates in real-time.
         </p>
 
         {/* Action buttons */}
         <div className="mt-10 flex justify-center gap-4">
           <Link
             href="/pricing"
-            className="px-8 py-4 bg-lime-400 text-slate-900 hover:bg-lime-300 text-sm font-semibold rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2"
+            className="px-8 py-4 bg-lime-400 text-slate-900 hover:bg-lime-300 text-sm rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2"
           >
             View API Pricing <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/how-it-works"
-            className="px-8 py-4 bg-white/10 text-white hover:bg-white/20 border border-white/25 text-sm font-semibold rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2"
+            className="px-8 py-4 bg-white/10 text-white hover:bg-white/20 border border-white/25 text-sm rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2"
           >
             How It Works
           </Link>

@@ -27,6 +27,7 @@ import {
   LayoutDashboard,
   Book,
 } from "lucide-react";
+import { LangToggle } from "./custom/news/LangToggle";
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   developerName?: string;
@@ -136,8 +137,10 @@ export function AppSidebar({
                   alt="NeuralPress"
                 />
                 <div className="grid flex-1 text-left text-sm leading-tight text-slate-800">
-                  <span className="truncate tracking-tight">NeuralPress</span>
-                  <span className="truncate text-[10px] text-slate-400 font-medium">
+                  <span className="truncate tracking-tight text-lg">
+                    NeuralPress
+                  </span>
+                  <span className="truncate text-xs text-slate-400 font-medium">
                     Developer Hub
                   </span>
                 </div>
@@ -190,6 +193,7 @@ export function AppSidebar({
       </SidebarContent>
 
       <SidebarFooter className="border-t border-slate-100 p-3 space-y-2 bg-white">
+        {pathname === "/developer/news" && <LangToggle />}
         {/* User Card */}
         <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100 space-y-1">
           <div className="flex justify-between items-center">

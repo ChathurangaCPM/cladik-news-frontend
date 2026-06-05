@@ -88,17 +88,27 @@ export async function RelatedNews({
             const imageUrl = (showImage && raw.ogImage) ? raw.ogImage : undefined;
 
             let enrichedData: EnrichedSource[] = [];
-            try {
-              if (raw.aiEnrichedContent) {
-                const parsed = typeof raw.aiEnrichedContent === "string"
-                  ? JSON.parse(raw.aiEnrichedContent)
-                  : raw.aiEnrichedContent;
-                if (Array.isArray(parsed)) {
-                  enrichedData = parsed;
+            if (Array.isArray(raw.references)) {
+              enrichedData = raw.references;
+            } else if (raw.references && typeof raw.references === "object") {
+              const primary = Array.isArray((raw.references as any).primary) ? (raw.references as any).primary : [];
+              const others = Array.isArray((raw.references as any).others) ? (raw.references as any).others : [];
+              enrichedData = [...primary, ...others];
+            } else {
+              try {
+                if (raw.aiEnrichedContent) {
+                  const parsed = typeof raw.aiEnrichedContent === "string"
+                    ? JSON.parse(raw.aiEnrichedContent)
+                    : raw.aiEnrichedContent;
+                  if (Array.isArray(parsed)) {
+                    enrichedData = parsed;
+                  } else if (parsed && Array.isArray(parsed.searchResults)) {
+                    enrichedData = parsed.searchResults;
+                  }
                 }
+              } catch {
+                // Safe catch
               }
-            } catch {
-              // Safe catch
             }
 
             const favicons = enrichedData

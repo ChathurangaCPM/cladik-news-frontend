@@ -92,7 +92,7 @@ export default function PricingPage() {
 
           <nav className="hidden md:flex items-center gap-8 text-sm  text-slate-600 dark:text-neutral-300">
             <Link
-              href="/news"
+              href="/developer/news"
               className="hover:text-indigo-600 dark:hover:text-white transition"
             >
               Discovery Feed
@@ -140,12 +140,13 @@ export default function PricingPage() {
           <span className="text-xs uppercase text-indigo-600 dark:text-indigo-400  tracking-wider font-bold">
             Technical Specification
           </span>
-          <h3 className="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+          <h3 className="text-3xl font-light tracking-tight text-slate-900 dark:text-white mt-1">
             Compare developer capabilities
           </h3>
           <p className="text-slate-500 dark:text-neutral-400 text-sm max-w-lg mx-auto mt-3 font-light">
             Choose the right level of database access, translations, and custom
-            parameters for your app to search global news crawled by our own proprietary search engine.
+            parameters for your app to search global news crawled by our own
+            proprietary search engine.
           </p>
         </div>
 
@@ -431,7 +432,7 @@ export default function PricingPage() {
       <section className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-32">
         <div className="text-center mb-12">
           <HelpCircle className="w-8 h-8 text-indigo-600 dark:text-indigo-400 mx-auto mb-3" />
-          <h3 className="text-3xl font-extrabold text-slate-900 dark:text-white">
+          <h3 className="text-3xl font-light tracking-tight text-slate-900 dark:text-white">
             Frequently Asked Questions
           </h3>
           <p className="text-slate-500 dark:text-neutral-400 text-sm mt-2">
@@ -465,12 +466,13 @@ export default function PricingPage() {
       <section className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-32 text-center">
         <div className="bg-gradient-to-r from-indigo-600 to-[#2b86ff] rounded-[3rem] p-10 md:p-16 shadow-xl relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-80 h-80 bg-white/5 rounded-full blur-3xl pointer-events-none group-hover:scale-150 transition duration-700" />
-          <h4 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+          <h4 className="text-3xl md:text-4xl font-light tracking-tight text-white leading-tight">
             Ready to integrate global news conceptual feeds?
           </h4>
           <p className="text-white/80 max-w-xl mx-auto mt-4 text-xs md:text-sm font-light leading-relaxed">
-            Get your instant API token in under 2 minutes. Start querying news indexed worldwide by our own proprietary search engine conceptually for free, then scale up as your user base
-            expands.
+            Get your instant API token in under 2 minutes. Start querying news
+            indexed worldwide by our own proprietary search engine conceptually
+            for free, then scale up as your user base expands.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Link

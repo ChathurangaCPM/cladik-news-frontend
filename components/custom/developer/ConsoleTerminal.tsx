@@ -41,7 +41,8 @@ export default function ConsoleTerminal({
   searchQuery,
   limit,
 }: ConsoleTerminalProps) {
-  const baseApiUrl = process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL || "http://localhost:5005/api";
+  const baseApiUrl =
+    process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL || "http://localhost:5005/api";
   let hostDisplay = "http://localhost:5005";
   try {
     const parsed = new URL(baseApiUrl);
@@ -120,8 +121,12 @@ export default function ConsoleTerminal({
   const getCodeSnippet = (lang: string) => {
     const rawKeyVal =
       latestRawKey || activeKeyObj?.key || "np_free_your_raw_api_key_here";
-    const cleanBaseApiUrl = baseApiUrl.endsWith("/") ? baseApiUrl.slice(0, -1) : baseApiUrl;
-    const relativePath = endpoint.startsWith("/api") ? endpoint.slice(4) : endpoint;
+    const cleanBaseApiUrl = baseApiUrl.endsWith("/")
+      ? baseApiUrl.slice(0, -1)
+      : baseApiUrl;
+    const relativePath = endpoint.startsWith("/api")
+      ? endpoint.slice(4)
+      : endpoint;
     const queryParams = endpoint.endsWith("/search")
       ? `?q=${encodeURIComponent(searchQuery)}&limit=${limit}`
       : `?limit=${limit}`;
@@ -448,7 +453,7 @@ public class Main {
             </div>
 
             {/* Paywalled plan limitations warning pill */}
-            {activePlan !== "advanced" && activeTerminalTab === "payload" && (
+            {/* {activePlan !== "advanced" && activeTerminalTab === "payload" && (
               <div className="p-3.5 bg-amber-500/5 border border-amber-500/10 rounded-2xl flex items-start gap-3 text-[10px] leading-relaxed font-sans">
                 <Lock className="w-4 h-4 shrink-0 text-amber-500 mt-0.5 animate-pulse" />
                 <div className="space-y-1">
@@ -462,7 +467,7 @@ public class Main {
                   </p>
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* TAB PANEL 1: JSON PAYLOAD VIEW */}
             {activeTerminalTab === "payload" && (
@@ -692,9 +697,7 @@ public class Main {
 
                   <span className="text-[9px] text-slate-500 block font-light leading-snug">
                     Queries the live news pipeline directly at{" "}
-                    <code className="text-indigo-400  ">
-                      {hostDisplay}
-                    </code>{" "}
+                    <code className="text-indigo-400  ">{hostDisplay}</code>{" "}
                     using your secure token.
                   </span>
                 </div>

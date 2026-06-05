@@ -107,7 +107,6 @@ export function SignupForm({
             </Link>
             <h1 className="text-xl tracking-tight text-slate-900 flex items-center gap-1.5 justify-center">
               Developer Account
-              <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
             </h1>
             <p className="text-xs text-slate-500 font-light max-w-xs mx-auto">
               Get immediate access to conceptual news streams, Sinhala
@@ -249,7 +248,7 @@ export function SignupForm({
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#2b86ff] hover:bg-[#1e76ed] disabled:opacity-50 text-white text-xs font-bold uppercase tracking-wider rounded-xl h-11 shadow-lg shadow-blue-500/15 hover:shadow-blue-500/20 active:scale-[0.99] transition duration-200"
+            className="w-full disabled:opacity-50 text-white text-xs font-bold uppercase tracking-wider rounded-xl h-11 shadow-lg  active:scale-[0.99] transition duration-200"
           >
             {loading ? (
               <span className="flex items-center gap-1.5 justify-center">

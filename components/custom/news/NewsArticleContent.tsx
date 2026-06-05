@@ -265,14 +265,22 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
   };
 
   let aiEnrichedData: EnrichedSource[] = [];
-  try {
-    if (typeof article.aiEnrichedContent === "string") {
-      aiEnrichedData = JSON.parse(article.aiEnrichedContent);
-    } else if (Array.isArray(article.aiEnrichedContent)) {
-      aiEnrichedData = article.aiEnrichedContent;
+  if (Array.isArray((article as any).references)) {
+    aiEnrichedData = (article as any).references;
+  } else if ((article as any).references && typeof (article as any).references === "object") {
+    const primary = Array.isArray(((article as any).references as any).primary) ? ((article as any).references as any).primary : [];
+    const others = Array.isArray(((article as any).references as any).others) ? ((article as any).references as any).others : [];
+    aiEnrichedData = [...primary, ...others];
+  } else {
+    try {
+      if (typeof article.aiEnrichedContent === "string") {
+        aiEnrichedData = JSON.parse(article.aiEnrichedContent);
+      } else if (Array.isArray(article.aiEnrichedContent)) {
+        aiEnrichedData = article.aiEnrichedContent;
+      }
+    } catch (e) {
+      console.warn("Failed to parse aiEnrichedContent", e);
     }
-  } catch (e) {
-    console.warn("Failed to parse aiEnrichedContent", e);
   }
 
   const rawStructuredData =
@@ -533,7 +541,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                       originalSource={article.originalSource}
                       structuredDataSearchResults={rawStructuredData}
                       enrichedSources={aiEnrichedData}
-                      sourcesCount={uniqueTopSources.length}
+                      sourcesCount={uniqueTopSources.length + aiEnrichedData.length}
                       favicons={displaySources.slice(0, 3).map((s) => {
                         let d = s.engine || "News";
                         try {
@@ -617,7 +625,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                         originalSource={article.originalSource}
                         structuredDataSearchResults={rawStructuredData}
                         enrichedSources={aiEnrichedData}
-                        sourcesCount={uniqueTopSources.length}
+                        sourcesCount={uniqueTopSources.length + aiEnrichedData.length}
                         favicons={displaySources.slice(0, 3).map((s) => {
                           let d = s.engine || "News";
                           try {

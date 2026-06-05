@@ -14,6 +14,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 export default function PricingSection() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annual">(
@@ -91,7 +92,7 @@ export default function PricingSection() {
       ],
       cta: "Coming Soon",
       color:
-        "bg-white border-slate-200 text-slate-900 dark:bg-white/[0.02] dark:border-white/[0.05] opacity-75",
+        "bg-white border-slate-200 text-slate-900 dark:bg-white/[0.02] dark:border-white/[0.05]",
       btnColor:
         "bg-slate-100 text-slate-400 dark:bg-white/5 dark:text-neutral-500 cursor-not-allowed",
       badgeColor:
@@ -117,7 +118,7 @@ export default function PricingSection() {
       ],
       cta: "Coming Soon",
       color:
-        "bg-white border-slate-200 text-slate-900 dark:bg-white/[0.02] dark:border-white/[0.05] opacity-75",
+        "bg-white border-slate-200 text-slate-900 dark:bg-white/[0.02] dark:border-white/[0.05]",
       btnColor:
         "bg-slate-100 text-slate-400 dark:bg-white/5 dark:text-neutral-500 cursor-not-allowed",
       badgeColor:
@@ -247,16 +248,17 @@ export default function PricingSection() {
                   {plan.cta}
                 </Link>
               ) : (
-                <button
+                <Button
                   onClick={() => {
                     setSelectedPlanId(plan.id);
                     setSelectedPlanName(plan.name);
                     setIsOpen(true);
                   }}
+                  size="lg"
                   className="w-full py-3 mt-8 rounded-full text-xs font-bold text-center bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 shadow-md transition"
                 >
                   Notify Me
-                </button>
+                </Button>
               )}
             </div>
           );
