@@ -46,6 +46,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "NeuralPress",
+    images: [
+      {
+        url: "/ogImage.webp",
+        width: 1200,
+        height: 630,
+        alt: "NeuralPress",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",

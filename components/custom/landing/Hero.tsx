@@ -177,14 +177,17 @@ export default function Hero() {
           </span>
         </h1>
         <p className="mt-8 text-white/85 font-light max-w-2xl mx-auto leading-relaxed">
-          Access global news feeds crawled by our own proprietary search engine, enriched with vector embeddings, semantic categories, and AI summaries. Query conceptually with 100 free requests per day, retrieve detailed citation graphs, and stream updates in real-time.
+          Access global news feeds crawled by our own proprietary search engine,
+          enriched with vector embeddings, semantic categories, and AI
+          summaries. Query conceptually with 100 free requests per day, retrieve
+          detailed citation graphs, and stream updates in real-time.
         </p>
 
         {/* Action buttons */}
         <div className="mt-10 flex md:flex-row flex-col flex-wrap items-center justify-center gap-4">
           <Link
             href="/pricing"
-            className="px-8 py-4 bg-lime-400 text-slate-900 hover:bg-lime-300 text-sm rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 max-w-max"
+            className="px-8 py-4 bg-white text-slate-900 hover:bg-slate-200 text-sm rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 max-w-max"
           >
             View API Pricing <ArrowRight className="w-4 h-4" />
           </Link>
