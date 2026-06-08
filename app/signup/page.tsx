@@ -1,5 +1,11 @@
 import { Suspense } from "react";
 import { SignupForm } from "@/components/signup-form";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Get Free API Key - AI News API | NeuralPress",
+  description: "Create a developer account to get your free API key. Query real-time news data conceptually with vector search and SSE streams in minutes.",
+};
 
 export default function SignupPage() {
   return (

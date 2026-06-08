@@ -1,0 +1,56 @@
+# NeuralPress AI News API
+
+Structured real-time news search and aggregation API tailored specifically for developers, Large Language Models (LLMs), and AI agents.
+
+## Key Features
+
+- **Conceptual Semantic Search**: Query global news using natural language vector search instead of strict keywords.
+- **AI Content Enrichment**: Summarized translations (English/Sinhala), entity extraction (actors, locations, companies), sentiment tags, and automatic classification.
+- **Reference & Citation Graph**: Grouping of secondary reports to their primary source with direct URLs and confidence scores.
+- **Real-Time Streaming**: Stream updates instantly via low-latency Server-Sent Events (SSE) or webhook delivery rules.
+- **Free Developer Access**: Includes 100 free API queries per day on the starter plan with no credit card required.
+
+## Core API Endpoints
+
+- `GET /api/news`: Fetch or query paginated lists of news signals.
+- `GET /api/news/stream`: Connect to low-latency Server-Sent Events (SSE) channel for real-time news notifications.
+- `POST /api/news/search`: Search conceptually with semantic vector queries.
+- `GET /api/news/slug/:slug`: Fetch a single news article detailed payload by its unique URL slug.
+
+## Payload Schemas
+
+### News Article (JSON)
+```json
+{
+  "_id": "string",
+  "title": "string",
+  "slug": "string",
+  "pubDate": "ISO-8601 string",
+  "url": "string",
+  "source": "string",
+  "summary": "string",
+  "categories": ["string"],
+  "seo": {
+    "metaTitle": "string",
+    "metaDescription": "string"
+  },
+  "ai": {
+    "whatHappened": {
+      "en": "string",
+      "si": "string"
+    },
+    "whyItMatters": {
+      "en": "string",
+      "si": "string"
+    },
+    "sentiment": "positive | negative | neutral",
+    "importance": 0-100,
+    "isBreakingNews": boolean
+  }
+}
+```
+
+## Useful Links
+- Homepage: https://neuralpress.com
+- Technical Pipeline & Architecture: https://neuralpress.com/how-it-works
+- API Pricing Plans: https://neuralpress.com/pricing

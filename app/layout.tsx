@@ -23,18 +23,35 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "NeuralPress - Real-time AI News Search API for Developers",
+    default: "AI News API for Developers | NeuralPress",
     template: "%s | NeuralPress",
   },
   description:
-    "Structured news API built for AI applications. Powered by our own proprietary search engine to crawl and index global news worldwide. Query conceptually using vector embeddings, retrieve source citations, and stream updates.",
+    "The ultimate real-time AI News API for developers. Query global news conceptually using semantic vector search with 100 free daily requests, structured JSON payloads, inline citation graphs, and live SSE streams.",
+  keywords: [
+    "AI News API",
+    "News API for Developers",
+    "Structured News Data API",
+    "Semantic News Search API",
+    "Vector Search News API",
+    "Real-time News Stream API",
+    "JSON News Feed for AI",
+    "News Citation Graph",
+    "NeuralPress API"
+  ],
   openGraph: {
+    title: "AI News API for Developers | NeuralPress",
+    description:
+      "Query global news conceptually using semantic vector search with 100 free daily requests, structured JSON payloads, inline citation graphs, and live SSE streams.",
     type: "website",
     locale: "en_US",
     siteName: "NeuralPress",
   },
   twitter: {
     card: "summary_large_image",
+    title: "AI News API for Developers | NeuralPress",
+    description:
+      "Query global news conceptually using semantic vector search with 100 free daily requests, structured JSON payloads, inline citation graphs, and live SSE streams.",
   },
 };
 
@@ -71,6 +88,27 @@ export default async function RootLayout({
   // Load default dictionary (en) on server side for instant hydration
   const initialDictionary = await getDictionary("en");
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebAPI",
+    "name": "NeuralPress AI News API",
+    "description": "The ultimate real-time AI News API for developers. Query global news conceptually using semantic vector search with 100 free daily requests, retrieve structured JSON payloads, inline citation graphs, and live SSE streams for LLMs and AI agents.",
+    "url": baseUrl,
+    "documentation": `${baseUrl}/how-it-works`,
+    "provider": {
+      "@type": "Organization",
+      "name": "NeuralPress",
+      "url": baseUrl,
+      "logo": `${baseUrl}/main-logo.png`
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0.00",
+      "priceCurrency": "USD",
+      "category": "Developer API"
+    }
+  };
+
   return (
     <html
       lang="en"
@@ -81,6 +119,10 @@ export default async function RootLayout({
         className={`${inter.variable} ${customSinhalaFont.variable} ${customFont.variable} ${playfair.variable} ${geistMono.variable} subpixel-antialiased`}
         suppressHydrationWarning
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <NextTopLoader color="#000" height={3} crawl={true} crawlSpeed={200} />
         <TooltipProvider>
           <Providers>
