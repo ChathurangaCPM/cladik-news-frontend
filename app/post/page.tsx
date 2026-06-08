@@ -28,11 +28,11 @@ function PostImageCreator() {
   useEffect(() => {
     if (!id) return;
     
-    async function fetchNews() {
+    async function fetchNews(newsId: string) {
       try {
         setLoading(true);
         setStatus("Fetching news details...");
-        const data = await getNewsById(id);
+        const data = await getNewsById(newsId);
         setNews(data);
         setStatus(null);
       } catch (err: any) {
@@ -43,7 +43,7 @@ function PostImageCreator() {
       }
     }
 
-    fetchNews();
+    fetchNews(id);
   }, [id]);
 
   const handleDownload = async () => {
