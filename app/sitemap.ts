@@ -11,7 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/how-it-works",
     "/pricing",
-    "/changelog",
+    // "/changelog",
     "/login",
     "/signup",
   ];
