@@ -205,7 +205,7 @@ export default function HowItWorksClient() {
               href="/developer"
               className="px-5 py-2.5 rounded-full text-xs bg-indigo-600 text-white hover:bg-indigo-500 shadow-md shadow-indigo-600/10 hover:scale-[1.02] transition-all"
             >
-              Developer Dashboard
+              Get Access
             </Link>
           </div>
         </header>
@@ -392,7 +392,7 @@ export default function HowItWorksClient() {
             indexed worldwide by our own proprietary search engine conceptually
             for free, then scale up as your user base expands.
           </p>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-8 flex justify-center md:flex-row flex-col flex-wrap items-center gap-4">
             <Link
               href="/checkout?plan=free"
               className="px-8 py-4 bg-white text-indigo-600 hover:bg-slate-50 text-xs md:text-sm font-bold rounded-full shadow-lg transition"

@@ -170,30 +170,27 @@ export default function Hero() {
       {/* Hero Headline content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-16 md:mt-24 relative z-10 md:pt-[40px]">
         <h1 className="text-5xl md:text-5xl tracking-[-2px] leading-[1.05] max-w-5xl mx-auto text-white">
-          Structured News API built for AI applications
+          AI News API for Developers & AI Agents
           <br />
           <span className="font-heading italic font-extralight">
-            With Vector Search & Citations.
+            With Vector Search & Citation Mappings.
           </span>
         </h1>
         <p className="mt-8 text-white/85 font-light max-w-2xl mx-auto leading-relaxed">
-          Access global news feeds indexed worldwide by our own proprietary
-          search engine, enriched with vector embeddings, semantic categories,
-          and AI summaries. Query conceptually with natural language, retrieve
-          detailed citation graphs, and stream updates in real-time.
+          Access global news feeds crawled by our own proprietary search engine, enriched with vector embeddings, semantic categories, and AI summaries. Query conceptually with 100 free requests per day, retrieve detailed citation graphs, and stream updates in real-time.
         </p>
 
         {/* Action buttons */}
-        <div className="mt-10 flex justify-center gap-4">
+        <div className="mt-10 flex md:flex-row flex-col flex-wrap items-center justify-center gap-4">
           <Link
             href="/pricing"
-            className="px-8 py-4 bg-lime-400 text-slate-900 hover:bg-lime-300 text-sm rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2"
+            className="px-8 py-4 bg-lime-400 text-slate-900 hover:bg-lime-300 text-sm rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 max-w-max"
           >
             View API Pricing <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/how-it-works"
-            className="px-8 py-4 bg-white/10 text-white hover:bg-white/20 border border-white/25 text-sm rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2"
+            className="px-8 py-4 bg-white/10 text-white hover:bg-white/20 border border-white/25 text-sm rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 max-w-max"
           >
             How It Works
           </Link>

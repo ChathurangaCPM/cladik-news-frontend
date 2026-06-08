@@ -19,7 +19,7 @@ export default function CTASection() {
           </span>
         </h2>
         <p className="mt-4 text-white/85 text-sm md:text-base font-light max-w-xl mx-auto">
-          Get your free developer API key now and experience vector search, structured summaries, and real-time streams powered by our own proprietary search engine indexing news worldwide.
+          Get your free developer API key now with 100 free daily requests, and experience vector search, structured JSON payloads, and real-time news streams powered by our own proprietary search engine indexing news worldwide.
         </p>
         <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 relative z-10">
           <Link

@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     "Real-time News Stream API",
     "JSON News Feed for AI",
     "News Citation Graph",
-    "NeuralPress API"
+    "NeuralPress API",
   ],
   openGraph: {
     title: "AI News API for Developers | NeuralPress",
@@ -91,22 +91,23 @@ export default async function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebAPI",
-    "name": "NeuralPress AI News API",
-    "description": "The ultimate real-time AI News API for developers. Query global news conceptually using semantic vector search with 100 free daily requests, retrieve structured JSON payloads, inline citation graphs, and live SSE streams for LLMs and AI agents.",
-    "url": baseUrl,
-    "documentation": `${baseUrl}/how-it-works`,
-    "provider": {
+    name: "NeuralPress AI News API",
+    description:
+      "The ultimate real-time AI News API for developers. Query global news conceptually using semantic vector search with 100 free daily requests, retrieve structured JSON payloads, inline citation graphs, and live SSE streams for LLMs and AI agents.",
+    url: baseUrl,
+    documentation: `${baseUrl}/how-it-works`,
+    provider: {
       "@type": "Organization",
-      "name": "NeuralPress",
-      "url": baseUrl,
-      "logo": `${baseUrl}/main-logo.png`
+      name: "NeuralPress",
+      url: baseUrl,
+      logo: `${baseUrl}/main-logo.png`,
     },
-    "offers": {
+    offers: {
       "@type": "Offer",
-      "price": "0.00",
-      "priceCurrency": "USD",
-      "category": "Developer API"
-    }
+      price: "0.00",
+      priceCurrency: "USD",
+      category: "Developer API",
+    },
   };
 
   return (
@@ -135,12 +136,12 @@ export default async function RootLayout({
             <Toaster />
           </Providers>
         </TooltipProvider>
-        {/* <ThirdPartyAnalytics
+        <ThirdPartyAnalytics
           GA_MEASUREMENT_ID=""
           GA_TRACKING_ID={""}
           FB_PIXEL_ID=""
           CLARITY_ID={"wyb9qfv76w"}
-        /> */}
+        />
       </body>
     </html>
   );

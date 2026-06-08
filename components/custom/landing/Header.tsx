@@ -44,7 +44,7 @@ export default function Header() {
           href="/developer"
           className="px-6 py-3 rounded-full text-sm bg-white text-[#2b86ff] hover:bg-slate-50 shadow-lg shadow-black/10 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
         >
-          Developer Dashboard
+          Get Access
         </Link>
       </div>
     </header>
