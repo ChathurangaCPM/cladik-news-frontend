@@ -182,7 +182,7 @@ interface CategorySelectorProps {
 
 export function CategorySelector({ selectedCategory }: CategorySelectorProps) {
   return (
-    <div className="w-full py-4 mb-10 sticky top-0 border-b border-neutral-250/20 dark:border-white/[0.04] backdrop-blur-2xl bg-white/60 dark:bg-[#07090e]/60 z-10 transition-colors duration-300">
+    <div className="w-full py-4 mb-10 sticky top-0 border-b border-neutral-250/20 backdrop-blur-2xl bg-white z-10 transition-colors duration-300">
       <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <Carousel
           opts={{
@@ -213,8 +213,8 @@ export function CategorySelector({ selectedCategory }: CategorySelectorProps) {
                     className={cn(
                       "group/btn relative flex flex-col justify-end w-36 h-20 sm:w-44 sm:h-24 rounded-2xl overflow-hidden border transition-all duration-500 ease-out shadow-sm hover:shadow-md cursor-pointer",
                       isActive
-                        ? "border-indigo-500 dark:border-indigo-400 ring-2 ring-indigo-500/30 scale-[1.03] z-10"
-                        : "border-slate-200/60 dark:border-zinc-800/80 hover:border-slate-350 dark:hover:border-zinc-700",
+                        ? "border-indigo-500  ring-2 ring-indigo-500/30 scale-[1.03] z-10"
+                        : "border-slate-200/60 hover:border-slate-350",
                     )}
                   >
                     {/* Visual Category Background Image */}
@@ -253,9 +253,7 @@ export function CategorySelector({ selectedCategory }: CategorySelectorProps) {
                       </div>
 
                       {/* Category Title */}
-                      <span className="text-xs font-semibold tracking-tight text-white font-inter">
-                        {cat.name}
-                      </span>
+                      <span className="text-white">{cat.name}</span>
                     </div>
                   </Link>
                 </CarouselItem>

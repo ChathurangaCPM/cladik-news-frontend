@@ -15,6 +15,11 @@ if (process.env.NEXT_PUBLIC_NEWS_AGGREGATOR_URL) {
 }
 
 const nextConfig: NextConfig = {
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "50mb",
+    },
+  },
   images: {
     remotePatterns: [
       {

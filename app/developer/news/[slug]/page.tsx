@@ -330,8 +330,8 @@ const NewsArticlePage = async ({
             {/* Floating Top Header (Home navigation & Branding) */}
             <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-20">
               <Link
-                href="/news"
-                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 dark:bg-black/30 backdrop-blur-md border border-white/20 text-white text-xs font-inter font-medium tracking-tight hover:bg-white/20 transition-all cursor-pointer shadow-sm"
+                href="/developer/news"
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white backdrop-blur-md border border-white/20 text-white text-xs font-inter font-medium tracking-tight transition-all cursor-pointer shadow-sm"
               >
                 ← Back to News
               </Link>
@@ -351,10 +351,10 @@ const NewsArticlePage = async ({
               <div className="space-y-3 max-w-2xl">
                 {/* Visual Category Badge Tag */}
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 backdrop-blur-md border border-indigo-400/30 text-[10px] sm:text-xs font-semibold tracking-wider text-indigo-300 uppercase font-geist-mono">
-                  ✨ NeuralPress Insight
+                  NeuralPress Insight
                 </div>
                 {/* Dynamic Title with accent gradient */}
-                <h1 className="text-3xl sm:text-5xl md:text-6xl">
+                <h1 className="text-3xl sm:text-5xl md:text-6xl text-white">
                   <span className="font-heading text-white tracking-tight leading-tight capitalize">
                     {capitalizedTopic.replace(/\bnews\b/i, "").trim()}{" "}
                   </span>
