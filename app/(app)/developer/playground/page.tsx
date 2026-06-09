@@ -231,7 +231,7 @@ export default function DeveloperPlayground() {
             </p>
           </div>
           <Link
-            href="/developer/dashboard"
+            href="/developer/keys"
             className="inline-flex items-center gap-2 text-xs font-extrabold uppercase bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-2xl shadow-lg shadow-indigo-600/25 transition hover:scale-[1.02] cursor-pointer"
           >
             Create API Key <ArrowRight className="w-4 h-4" />

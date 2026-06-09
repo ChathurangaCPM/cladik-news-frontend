@@ -267,9 +267,16 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
   let aiEnrichedData: EnrichedSource[] = [];
   if (Array.isArray((article as any).references)) {
     aiEnrichedData = (article as any).references;
-  } else if ((article as any).references && typeof (article as any).references === "object") {
-    const primary = Array.isArray(((article as any).references as any).primary) ? ((article as any).references as any).primary : [];
-    const others = Array.isArray(((article as any).references as any).others) ? ((article as any).references as any).others : [];
+  } else if (
+    (article as any).references &&
+    typeof (article as any).references === "object"
+  ) {
+    const primary = Array.isArray(((article as any).references as any).primary)
+      ? ((article as any).references as any).primary
+      : [];
+    const others = Array.isArray(((article as any).references as any).others)
+      ? ((article as any).references as any).others
+      : [];
     aiEnrichedData = [...primary, ...others];
   } else {
     try {
@@ -541,7 +548,9 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                       originalSource={article.originalSource}
                       structuredDataSearchResults={rawStructuredData}
                       enrichedSources={aiEnrichedData}
-                      sourcesCount={uniqueTopSources.length + aiEnrichedData.length}
+                      sourcesCount={
+                        uniqueTopSources.length + aiEnrichedData.length
+                      }
                       favicons={displaySources.slice(0, 3).map((s) => {
                         let d = s.engine || "News";
                         try {
@@ -625,7 +634,9 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                         originalSource={article.originalSource}
                         structuredDataSearchResults={rawStructuredData}
                         enrichedSources={aiEnrichedData}
-                        sourcesCount={uniqueTopSources.length + aiEnrichedData.length}
+                        sourcesCount={
+                          uniqueTopSources.length + aiEnrichedData.length
+                        }
                         favicons={displaySources.slice(0, 3).map((s) => {
                           let d = s.engine || "News";
                           try {
@@ -890,7 +901,7 @@ const NewsArticleContent: React.FC<NewsArticleProps> = ({ article }) => {
                   <div className="flex flex-wrap gap-2">
                     {article.peopleInvolved.map((actor, idx) => (
                       <Link
-                        href={`/news?q=${encodeURIComponent(actor)}`}
+                        href={`/developer/news?q=${encodeURIComponent(actor)}`}
                         key={idx}
                         className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-zinc-800/80 border border-slate-100 dark:border-zinc-850 text-xs font-medium text-slate-700 dark:text-zinc-300"
                       >
