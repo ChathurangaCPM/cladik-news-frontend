@@ -6,6 +6,7 @@ import Hero from "@/components/custom/landing/Hero";
 import StatsSection from "@/components/custom/landing/StatsSection";
 import SystemPipeline from "@/components/custom/landing/SystemPipeline";
 import CapabilitiesSection from "@/components/custom/landing/CapabilitiesSection";
+import AIReadySection from "@/components/custom/landing/AIReadySection";
 import PricingSection from "@/components/custom/landing/PricingSection";
 import TestimonialsSection from "@/components/custom/landing/TestimonialsSection";
 import InsightsSection from "@/components/custom/landing/InsightsSection";
@@ -29,6 +30,9 @@ export default function Home() {
 
       {/* Visual capability blocks */}
       <CapabilitiesSection />
+
+      {/* why this is AI ready section */}
+      <AIReadySection />
 
       {/* Flexible membership plans */}
       <PricingSection />

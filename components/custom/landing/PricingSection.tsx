@@ -83,7 +83,7 @@ export default function PricingSection() {
       ),
       features: [
         "100,000 API requests/month (300 RPM limit)",
-        "Real-time news streaming via SSE",
+        "Real-time news streaming via Webhook",
         "Full bilingual English-Sinhala synthesis",
         "AI Key Metrics (What Happened, Why It Matters)",
         "Advanced filters (sentiment, breaking status, topics)",

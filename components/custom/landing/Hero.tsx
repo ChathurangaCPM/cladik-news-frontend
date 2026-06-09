@@ -168,8 +168,8 @@ export default function Hero() {
       <Header />
 
       {/* Hero Headline content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-16 md:mt-24 relative z-10 md:pt-[40px]">
-        <h1 className="text-5xl md:text-5xl tracking-[-2px] leading-[1.05] max-w-5xl mx-auto text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mt-[100px] md:mt-24 relative z-10 md:pt-[40px]">
+        <h1 className="text-[30px] md:text-5xl tracking-[-2px] leading-[1.05] max-w-5xl mx-auto text-white">
           AI News API for Developers & AI Agents
           <br />
           <span className="font-heading italic font-extralight">
