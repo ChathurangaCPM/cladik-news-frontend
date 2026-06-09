@@ -177,10 +177,11 @@ export default function Hero() {
           </span>
         </h1>
         <p className="mt-8 text-white/85 font-light max-w-2xl mx-auto leading-relaxed">
-          Access global news feeds crawled by our own proprietary search engine,
-          enriched with vector embeddings, semantic categories, and AI
-          summaries. Query conceptually with 100 free requests per day, retrieve
-          detailed citation graphs, and stream updates in real-time.
+          Access global news feeds discovered by our own custom search engine,
+          cross-referenced with trusted sources, and enriched with vector
+          embeddings and AI-generated summaries. Query conceptually with 100
+          free requests per day, retrieve detailed citation graphs, and stream
+          updates in real-time.
         </p>
 
         {/* Action buttons */}

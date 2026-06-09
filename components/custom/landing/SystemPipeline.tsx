@@ -19,21 +19,21 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 // Premium non-technical simulated log updates
 const SIMULATED_LOGS = [
   {
-    text: "Crawling global news worldwide using our proprietary search engine...",
+    text: "Searching global news worldwide using our own custom search engine...",
   },
-  { text: "Parsing article bodies and cleaning layout boilerplate noise..." },
+  { text: "Detecting breaking events and cross-checking trusted sources..." },
   {
-    text: "Generating 384-dimensional vector embeddings for semantic search...",
-  },
-  {
-    text: "Deduplicating incoming feeds and grouping under unique event IDs...",
+    text: "Verifying and validating event authenticity across publications...",
   },
   {
-    text: "Extracting semantic concept keywords and multi-domain references...",
+    text: "Gathering necessary facts and details from multiple verified sources...",
   },
-  { text: "Synthesizing AI summaries and bilingual translations..." },
-  { text: "Indexing articles into the elastic developer news database..." },
-  { text: "Serving live updates to connected webhooks and SSE channels." },
+  {
+    text: "Generating a trust-focused article highlighting the primary points...",
+  },
+  { text: "Translating and creating bilingual English/Sinhala summaries..." },
+  { text: "Saving to our database with high-dimensional vector embeddings..." },
+  { text: "Readying semantic index mappings for developer search requests..." },
 ];
 
 export default function SystemPipeline() {
@@ -143,66 +143,66 @@ export default function SystemPipeline() {
       icon: <Search className="w-4 h-4" />,
       tagEn: "Stage 1",
       tagSi: "පියවර 1",
-      titleEn: "Continuous Crawling",
-      titleSi: "නිරන්තර ගවේෂණය",
+      titleEn: "Automated News Discovery",
+      titleSi: "ප්‍රවෘත්ති සෙවීම",
       descEn:
-        "Our own proprietary search engine crawls and ingests fresh updates from 150+ global publications continuously to capture news events worldwide.",
+        "Our own custom search engine continuously scans global publications and official feeds around the clock to find breaking stories.",
       descSi:
-        "ගෝලීය ප්‍රකාශන 150+ කට වඩා වැඩි ප්‍රමාණයකින් නිරන්තරයෙන් පුවත් උකහා ගනිමින් නැවුම් තොරතුරු ගබඩා කරයි.",
-      badgeEn: "Raw Ingestion",
-      badgeSi: "අමු දත්ත",
+        "අපගේම සෙවුම් යන්ත්‍රය මඟින් අන්තර්ජාලය පුරා ඇති නවතම පුවත් සහ සිදුවීම් නිරන්තරයෙන් සොයා ගනු ලබයි.",
+      badgeEn: "News Search",
+      badgeSi: "පුවත් සෙවීම",
     },
     {
       icon: <Brain className="w-4 h-4" />,
       tagEn: "Stage 2",
       tagSi: "පියවර 2",
-      titleEn: "Vector Embeddings",
-      titleSi: "දෛශික දත්තකරණය",
+      titleEn: "Source Verification",
+      titleSi: "මූලාශ්‍ර සත්‍යාපනය",
       descEn:
-        "Generate 384-dimensional semantic embeddings for all news articles to support conceptual query logic.",
+        "When an event is discovered, our system checks trusted sources for the same news to validate its authenticity and confirm it is valid.",
       descSi:
-        "ස්වාභාවික භාෂා සෙවුම් සඳහා ලිපි 384-dimensional දෛශික ඛණ්ඩාංක සහිතව සුචිගත කරයි.",
-      badgeEn: "Vector Mappings",
-      badgeSi: "දෛශික සිතියම්",
+        "පුවතක් සොයාගත් පසු, එහි විශ්වසනීයත්වය තහවුරු කිරීම සඳහා අපගේ පද්ධතිය පිළිගත් මූලාශ්‍ර සමඟ සංසන්දනය කරයි.",
+      badgeEn: "Validation",
+      badgeSi: "සත්‍යාපනය",
     },
     {
       icon: <Globe2 className="w-4 h-4" />,
       tagEn: "Stage 3",
       tagSi: "පියවර 3",
-      titleEn: "Citation Clustering",
-      titleSi: "මූලාශ්‍ර පොකුරුගත කිරීම",
+      titleEn: "Information Synthesis",
+      titleSi: "තොරතුරු සංස්ලේෂණය",
       descEn:
-        "Deduplicate overlapping news articles and compile multiple domain sources into single citation graphs.",
+        "Gather all necessary information, facts, and context from multiple verified publications to build a complete record of the event.",
       descSi:
-        "එකම පුවත වාර්තා කළ විවිධ ප්‍රභවයන් සංසන්දනය කර අනුපිටපත් ඉවත් කර මූලාශ්‍ර සිතියම් සාදයි.",
-      badgeEn: "Citation Engine",
-      badgeSi: "මූලාශ්‍ර එන්ජිම",
+        "සම්පූර්ණ පුවත් විස්තරයක් ගොඩනැගීම සඳහා විවිධ විශ්වාසවන්ත මූලාශ්‍රවලින් අවශ්‍ය සියලුම තොරතුරු රැස් කරයි.",
+      badgeEn: "Synthesis",
+      badgeSi: "සංස්ලේෂණය",
     },
     {
       icon: <Languages className="w-4 h-4" />,
       tagEn: "Stage 4",
       tagSi: "පියවර 4",
-      titleEn: "AI Enhancement",
-      titleSi: "AI සාරාංශකරණය",
+      titleEn: "Primary Point Generation",
+      titleSi: "ප්‍රධාන කරුණු ජනනය",
       descEn:
-        "Synthesize objective summaries, extract core semantic concepts, and produce bilingual translations using LLMs.",
+        "Generate a trust-focused article highlighting only the primary points of the news, removing clutter and opinionated bias.",
       descSi:
-        "AI මඟින් ලිපි සාරාංශ ලබා ගනිමින් උසස් සිංහල පරිවර්තන සහ සන්දර්භීය සංකල්ප සකස් කරයි.",
-      badgeEn: "AI Enrichment",
-      badgeSi: "AI සාරාංශ",
+        "අනවශ්‍ය තොරතුරු ඉවත් කර පුවතේ ප්‍රධාන කරුණු පමණක් ඉස්මතු කරමින් විශ්වාසදායක වාර්තාවක් සකස් කරයි.",
+      badgeEn: "Generation",
+      badgeSi: "කරුණු ජනනය",
     },
     {
       icon: <Flame className="w-4 h-4" />,
       tagEn: "Stage 5",
       tagSi: "පියවර 5",
-      titleEn: "REST API & SSE",
-      titleSi: "සංවර්ධන මෙවලම්",
+      titleEn: "Vector DB Storage",
+      titleSi: "දෛශික ගබඩාකරණය",
       descEn:
-        "Expose clean JSON REST endpoints, real-time webhooks, and Server-Sent Event (SSE) channels for developer applications.",
+        "Save the finalized article into our database along with high-dimensional vector embeddings for future concept-based search.",
       descSi:
-        "සංවර්ධකයින් සඳහා REST API, වෙබ් කොක්ක (webhooks) සහ SSE සජීවී විකාශන මාර්ග සපයයි.",
-      badgeEn: "Developer Delivery",
-      badgeSi: "සජීවී බෙදාහැරීම",
+        "මතු ප්‍රයෝජනය සඳහා ලිපිය අපගේ දත්ත ගබඩාවට එක් කරමින් දෛශික දත්තකරණය සිදු කරයි.",
+      badgeEn: "Vector Storage",
+      badgeSi: "දත්ත ගබඩා කිරීම",
     },
   ];
 
@@ -222,7 +222,7 @@ export default function SystemPipeline() {
         processes feeds
       </h2>
       <p className="text-slate-500 max-w-xl mx-auto mt-4 text-sm font-light">
-        Monitor how raw feeds are crawled, vectorized, clustered with citations,
+        Monitor how news events are discovered, verified, synthesized with citations,
         and served in real-time.
       </p>
 
@@ -573,7 +573,7 @@ export default function SystemPipeline() {
 
           {/* Mockup footer progress bar indicating pipeline cycle */}
           <div className="border-t border-slate-100 pt-4 flex items-center justify-between text-[10px] text-slate-400 font-mono select-none">
-            <span>Pipeline Cycle: Real-Time AI Ingestion</span>
+            <span>Pipeline Cycle: News Discovery & Validation</span>
             <div className="w-32 bg-slate-100 h-1 rounded-full overflow-hidden">
               <motion.div
                 className="bg-[#2b86ff] h-full rounded-full"

@@ -28,32 +28,32 @@ const faqs = [
   {
     question: "What is a conceptual news search?",
     answer:
-      "Unlike traditional keyword searches, conceptual searches on global news crawled by our own proprietary search engine use semantic embeddings and LLMs to understand the contextual meaning of your query. For instance, searching 'clean energy transitions' will find articles matching solar subsidies, wind farm projects, grid electrification, or coal phase-outs, even if the exact words 'clean energy transitions' do not appear in the text. It also maps source citations to track the evolution of the news cycle.",
+      "Unlike traditional keyword searches, conceptual searches on global news discovered by our own custom search engine use semantic embeddings and LLMs to understand the contextual meaning of your query. For instance, searching 'clean energy transitions' will find articles matching solar subsidies, wind farm projects, grid electrification, or coal phase-outs, even if the exact words 'clean energy transitions' do not appear in the text. It also maps source citations to track the evolution of the news cycle.",
   },
   {
     question: "How are bilingual articles and translations managed?",
     answer:
-      "Our pipeline, powered by our own proprietary search engine, ingests news from multiple global and bilingual publications (including English and Sinhala) worldwide. For Business and Advanced tiers, the platform automatically synthesizes translated summaries and matched concepts using Gemini, making all ingested event reports accessible in both languages seamlessly with cross-lingual citations.",
+      "Our pipeline, powered by our own search engine, processes news from multiple global and bilingual publications (including English and Sinhala) worldwide. For Business and Advanced tiers, the platform automatically synthesizes translated summaries and matched concepts using Gemini, making all synthesized event reports accessible in both languages seamlessly with cross-lingual citations.",
   },
   {
     question: "Is there a rate limit on the Free Plan?",
     answer:
-      "Yes, the Free Plan is limited to 100 requests per day and has a rate limit constraint of 5 requests per minute to query news indexed worldwide by our own proprietary search engine. This is designed for testing and learning the API structure before scaling to production.",
+      "Yes, the Free Plan is limited to 100 requests per day and has a rate limit constraint of 5 requests per minute to query news indexed by our own search engine. This is designed for testing and learning the API structure before scaling to production.",
   },
   {
     question: "What format are the citation graphs delivered in?",
     answer:
-      "Every query returned from our search API contains a structured references list with direct URLs, timestamps from our own proprietary search engine, and confidence scores. Advanced tier users also receive raw semantic AI embeddings to link articles into their own custom search databases.",
+      "Every query returned from our search API contains a structured references list with direct URLs, source validation timestamps, and confidence scores. Advanced tier users also receive raw semantic AI embeddings to link articles into their own custom search databases.",
   },
   {
     question: "Can I customize the topic tracking filters?",
     answer:
-      "Yes, on the Advanced plan, developers can define custom rules and categories for news crawled worldwide by our own proprietary search engine. The AI engine will dynamically tag ingested articles matching your domain scope and push real-time alerts to your webhooks.",
+      "Yes, on the Advanced plan, developers can define custom rules and categories for news indexed by our own search engine. The AI engine will dynamically tag synthesized articles matching your domain scope and push real-time alerts to your webhooks.",
   },
   {
     question: "How do webhook deliveries work?",
     answer:
-      "On the Business and Advanced tiers, you can configure webhook endpoints. Whenever our own proprietary search engine processes, deduplicates, and validates a new news event, a JSON payload is immediately POSTed to your server. Business delivers under 60s; Advanced delivers under 5s.",
+      "On the Business and Advanced tiers, you can configure webhook endpoints. Whenever our own search engine processes, validates, and synthesizes a new news event, a JSON payload is immediately POSTed to your server. Business delivers under 60s; Advanced delivers under 5s.",
   },
 ];
 
@@ -144,8 +144,8 @@ export default function PricingClient() {
           </h3>
           <p className="text-slate-500 dark:text-neutral-400 text-sm max-w-lg mx-auto mt-3 font-light">
             Choose the right level of database access, translations, and custom
-            parameters for your app to search global news crawled by our own
-            proprietary search engine.
+            parameters for your app to search global news indexed by our own
+            search engine.
           </p>
         </div>
 
@@ -470,8 +470,8 @@ export default function PricingClient() {
           </h4>
           <p className="text-white/80 max-w-xl mx-auto mt-4 text-xs md:text-sm font-light leading-relaxed">
             Get your instant API token in under 2 minutes. Start querying news
-            indexed worldwide by our own proprietary search engine conceptually
-            for free, then scale up as your user base expands.
+            indexed by our own search engine conceptually for free, then scale
+            up as your user base expands.
           </p>
           <div className="mt-8 flex md:flex-row flex-col flex-wrap items-center justify-center gap-4">
             <Link

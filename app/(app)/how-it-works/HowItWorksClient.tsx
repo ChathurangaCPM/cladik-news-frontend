@@ -25,46 +25,94 @@ export default function HowItWorksClient() {
   const pipelineSteps = [
     {
       id: 0,
-      title: "1. Real-Time Ingestion",
-      shortTitle: "Ingestion",
+      title: "1. Automated News Discovery",
+      shortTitle: "News Search",
       icon: <Database className="w-5 h-5 text-blue-500" />,
-      tagline: "Loading clean article text at the source",
+      tagline: "Continuously searching for news events",
       description:
-        "Our own proprietary search engine continuously crawls and monitors over 150 global publications and official feeds. We load the article contents and automatically filter out cookie banners, ads, sidebars, and navigation noise, keeping only the main news content.",
+        "Our own custom search engine continuously scans global publications and official feeds around the clock. Rather than relying on simple feeds or general aggregators, we search directly for breaking events and new stories the moment they publish.",
       details: [
-        "Automated web loaders managed by our proprietary search engine",
-        "Pure content extraction to isolate the main story text",
-        "Support for diverse global news sites and digital publications",
-        "Automatic language detection and metadata tagging during crawling",
+        "Proprietary search engine constantly scanning online sources",
+        "Immediate detection of news headlines and breaking alerts",
+        "Broad, automated discovery across digital news publications",
+        "Noise reduction filters focusing only on relevant stories",
       ],
-      codeSnippet: `// Ingestion Output
+      codeSnippet: `// Discovery Scan Status
 {
-  "source": "Global Tech News",
-  "url": "https://example.com/energy-milestone",
-  "status": "success",
-  "cleanTextCharacters": 14200,
-  "language": "en"
+  "discoveryEngine": "NeuralPress Search Engine",
+  "status": "scanning",
+  "discoveredHeadlinesToday": 412,
+  "activeSourcesSearched": 150
 }`,
     },
     {
       id: 1,
-      title: "2. AI Content Enrichment",
-      shortTitle: "Enrichment",
+      title: "2. Source Verification & Validation",
+      shortTitle: "Validation",
       icon: <Brain className="w-5 h-5 text-purple-500" />,
-      tagline: "AI-powered article enrichment",
+      tagline: "Verifying facts across trusted publications",
       description:
-        "Once the clean text is retrieved, we pass it through our AI enrichment pipeline using advanced language models like Gemini. The engine automatically extracts key actors, locations, organizations, and sentiment, generating high-quality summaries in multiple languages.",
+        "Whenever a news event is found, we check trusted, authoritative sources for that same news. By cross-checking multiple verified publications, our system determines if the news is valid, accurate, and confirmed, filtering out rumors or unverified reports.",
       details: [
-        "Categorizing topics and setting search priorities automatically",
-        "Dual-language summaries and translations (English and Sinhala)",
-        "Identifying key entities (people, companies, and organizations)",
-        "Tagging high-importance breaking news based on contextual signals",
+        "Instant validation across a database of authoritative sources",
+        "Strict verification check to verify if the event is valid",
+        "Filtering out low-confidence, unconfirmed, or rumor-based sources",
+        "Factual alignment verification between multiple reports",
       ],
-      codeSnippet: `// AI Enrichment Output
+      codeSnippet: `// Source Verification & Validation
 {
-  "sentiment": "positive",
-  "importanceScore": 88,
-  "isBreakingNews": true,
+  "eventHeadline": "Grid Storage Integration Standards",
+  "trustedMatchesFound": [
+    "TechAuthority",
+    "GlobalChronicle",
+    "ScienceDaily"
+  ],
+  "isValidated": true,
+  "confidenceScore": 0.98
+}`,
+    },
+    {
+      id: 2,
+      title: "3. Information Synthesis",
+      shortTitle: "Synthesis",
+      icon: <Network className="w-5 h-5 text-emerald-500" />,
+      tagline: "Gathering information from trusted sources",
+      description:
+        "Once verified, we gather all the necessary facts, details, and context from multiple trusted sources. This consolidates different perspectives and ensures that we have a complete and balanced record of the news event.",
+      details: [
+        "Collecting necessary information from multiple verified articles",
+        "Consolidating varying details to build a complete picture",
+        "Extracting core statements, figures, and verified timelines",
+        "Structuring multi-source insights into a unified data profile",
+      ],
+      codeSnippet: `// Information Synthesis
+{
+  "event": "Grid Storage Integration Standards",
+  "verifiedSourcesCount": 3,
+  "extractedFactsCount": 12,
+  "locations": ["Texas", "California"]
+}`,
+    },
+    {
+      id: 3,
+      title: "4. Primary Point Generation",
+      shortTitle: "Generation",
+      icon: <Share2 className="w-5 h-5 text-amber-500" />,
+      tagline: "Synthesizing trusted news focusing on key takeaways",
+      description:
+        "Using our advanced language models, we generate a final, trust-focused news summary. This process synthesizes all gathered facts and presents the primary point of the news clearly and concisely, removing repetitive details and opinionated bias.",
+      details: [
+        "Synthesizing gathered details into a clean, factual report",
+        "Focusing strictly on primary takeaways and key news points",
+        "Bilingual generation (English and Sinhala summaries)",
+        "Zero boilerplate, promotional links, or editorial bias",
+      ],
+      codeSnippet: `// Primary Point Extraction
+{
+  "primaryPoints": [
+    "Grid networks integrated record levels of solar capacity.",
+    "New battery storage standards went into effect."
+  ],
   "summary": {
     "en": "Major grid networks integrated record levels of solar capacity...",
     "si": "ප්‍රධාන බලශක්ති ජාලයන් වාර්තාගත සූර්ය බලශක්ති ප්‍රමාණයක් ඒකාබද්ධ කර ඇත..."
@@ -72,77 +120,26 @@ export default function HowItWorksClient() {
 }`,
     },
     {
-      id: 2,
-      title: "3. Semantic Connections",
-      shortTitle: "Smart Mapping",
-      icon: <Network className="w-5 h-5 text-emerald-500" />,
-      tagline: "Mapping related themes conceptually",
-      description:
-        "To enable smart searches that go beyond simple keywords, our pipeline converts text into semantic mathematical representations. This lets our search index determine how stories relate to each other, so you can find relevant articles by concept even if they use different words.",
-      details: [
-        "AI-powered theme mapping for conceptual matching",
-        "Low-latency index matching for instant results",
-        "Concept linking (e.g., a search for 'energy shortage' matches 'power grid blackouts')",
-        "Smart grouping to keep related stories organized together",
-      ],
-      codeSnippet: `// Semantic AI Mapping
-{
-  "searchConcept": "clean energy transitions",
-  "relatedThemes": [
-    "solar capacity",
-    "grid storage standards",
-    "battery expansion"
-  ],
-  "matchConfidence": "94.5%"
-}`,
-    },
-    {
-      id: 3,
-      title: "4. Citation & Deduplication",
-      shortTitle: "Citation",
-      icon: <Share2 className="w-5 h-5 text-amber-500" />,
-      tagline: "Grouping reports into a single news event",
-      description:
-        "Different publications crawled by our own proprietary search engine write about the same events. Our system calculates cross-article similarities, clustering duplicates. We build a citation graph mapping secondary reporting back to primary coverage, with direct links and confidence scores.",
-      details: [
-        "Grouping similar stories automatically",
-        "Deduplicating feeds to keep articles unique",
-        "Mapping secondary sources back to primary coverage",
-        "Clean reference lists with source URLs and crawler timestamps",
-      ],
-      codeSnippet: `// Citation Grouping
-{
-  "primarySource": {
-    "title": "Grid Storage Integration Standards",
-    "url": "https://example.com/grid-standards"
-  },
-  "additionalSourcesCount": 3,
-  "citationUrls": [
-    "https://example.com/battery-expansion",
-    "https://example.com/solar-integration"
-  ]
-}`,
-    },
-    {
       id: 4,
-      title: "5. Real-Time Streaming",
-      shortTitle: "Streaming",
+      title: "5. Vector Storage & Indexing",
+      shortTitle: "Vector Indexing",
       icon: <Cpu className="w-5 h-5 text-indigo-500" />,
-      tagline: "Server-Sent Events & Webhooks",
+      tagline: "Storing verified news with semantic vector embeddings",
       description:
-        "The finalized structured JSON indexed by our own proprietary search engine is dispatched instantly. Developers can subscribe to our low-latency Server-Sent Events (SSE) stream for real-time reads, or configure custom webhooks to receive payloads automatically when specific topic filters trigger.",
+        "Finally, the generated, verified news article is saved directly to our secure database. Along with the text, we generate and store vector data for the story, allowing for concept-based semantic search and future discovery.",
       details: [
-        "Live data stream for instant feed updates",
-        "Custom webhook configurations for immediate notifications",
-        "Interactive developer sandbox for testing API responses",
-        "Secure API key access and rate-limiting options",
+        "Storing clean, verified news data in our database",
+        "Generating high-dimensional vector embeddings for each document",
+        "Enabling semantic search based on meaning rather than simple keywords",
+        "Readying data for downstream AI search and developer queries",
       ],
-      codeSnippet: `// Real-Time Event Payload
+      codeSnippet: `// Database & Vector Storage
 {
-  "eventId": "news_event_8f4b23a9d71c",
-  "title": "Grid Decarbonization Milestones",
-  "publishDate": "2026-06-03T17:15:00Z",
-  "type": "technology"
+  "documentId": "news_8f4b23a9d71c",
+  "status": "saved",
+  "vectorDimensions": 1536,
+  "searchIndexing": "completed",
+  "semanticCategory": "clean_energy"
 }`,
     },
   ];
@@ -229,10 +226,10 @@ export default function HowItWorksClient() {
           </span>
         </h1>
         <p className="text-slate-500 dark:text-neutral-400 text-base max-w-2xl mx-auto mt-6 font-light leading-relaxed">
-          NeuralPress indexes global news worldwide using our own proprietary
-          search engine, automating the ingestion, AI enrichment, semantic
-          indexing, and deduplication to deliver high-precision structured data
-          for LLM and agent applications.
+          NeuralPress indexes global news worldwide using our own search
+          engine, automating news search, verification, facts synthesis, primary
+          point generation, and database vector storage to deliver high-precision
+          and trustworthy structured data.
         </p>
       </section>
 
@@ -335,8 +332,8 @@ export default function HowItWorksClient() {
             Standardizing unstructured news
           </h2>
           <p className="text-slate-500 dark:text-neutral-400 text-sm max-w-lg mx-auto mt-3 font-light">
-            We handle the complexities of scraping, parsing, translating, and
-            deduplicating so you get clean structured feeds.
+            We handle the complexities of searching, validating, synthesizing,
+            and vector indexing so you get clean, trustworthy structured feeds.
           </p>
         </div>
 
@@ -346,12 +343,11 @@ export default function HowItWorksClient() {
               <Layers className="w-5 h-5" />
             </div>
             <h3 className="text-xl md:text-2xl tracking-tight mt-3 text-slate-900 leading-tight mb-2 text-slate-900 dark:text-white">
-              Pruning boilerplate
+              Continuous Search
             </h3>
             <p className="text-slate-500 dark:text-neutral-400 text-xs leading-relaxed font-light">
-              Powered by our own proprietary search engine, we filter cookie
-              banners, popups, script blocks, and navigation grids to store only
-              the authentic content body, saving tokens for LLM generation.
+              Our own search engine continuously searches the news, discovering
+              breaking updates and events the moment they are published online.
             </p>
           </div>
 
@@ -360,13 +356,12 @@ export default function HowItWorksClient() {
               <Brain className="w-5 h-5" />
             </div>
             <h3 className="text-xl md:text-2xl tracking-tight mt-3 text-slate-900 leading-tight mb-2 text-slate-900 dark:text-white">
-              Bilingual alignment
+              Trust Validation
             </h3>
             <p className="text-slate-500 dark:text-neutral-400 text-xs leading-relaxed font-light">
-              Our proprietary search engine pipelines feeds into Gemini to
-              automatically synthesize Sinhala translations, tags, and
-              categories alongside English feeds, enabling cross-language
-              querying.
+              Whenever news is discovered, our system immediately checks and
+              cross-references multiple trusted sources to validate authenticity
+              before saving.
             </p>
           </div>
 
@@ -375,12 +370,11 @@ export default function HowItWorksClient() {
               <Network className="w-5 h-5" />
             </div>
             <h3 className="text-xl md:text-2xl tracking-tight mt-3 text-slate-900 leading-tight mb-2 text-slate-900 dark:text-white">
-              Smart AI mappings
+              Vector Mappings
             </h3>
             <p className="text-slate-500 dark:text-neutral-400 text-xs leading-relaxed font-light">
-              Our proprietary search engine maps articles into a conceptual
-              search index, supporting smart matches even if the exact keywords
-              do not match.
+              Synthesized news is stored alongside its high-dimensional vector
+              embeddings, enabling conceptual searching for future retrieval.
             </p>
           </div>
         </div>
@@ -395,8 +389,8 @@ export default function HowItWorksClient() {
           </h4>
           <p className="text-white/80 max-w-xl mx-auto mt-4 text-xs md:text-sm font-light leading-relaxed">
             Get your instant API token in under 2 minutes. Start querying news
-            indexed worldwide by our own proprietary search engine conceptually
-            for free, then scale up as your user base expands.
+            indexed by our own search engine conceptually for free, then scale
+            up as your user base expands.
           </p>
           <div className="mt-8 flex justify-center md:flex-row flex-col flex-wrap items-center gap-4">
             <Link

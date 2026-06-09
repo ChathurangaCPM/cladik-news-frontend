@@ -31,8 +31,8 @@ export default function CapabilitiesSection() {
             </h3>
             <p className="text-slate-500 text-xs leading-relaxed">
               Expose comprehensive citation lists linking multiple news sources
-              crawled worldwide by our own proprietary search engine to a single
-              event record.
+              discovered by our own custom search engine to a single event
+              record.
             </p>
           </div>
           <div className="w-[180px] h-[130px] rounded-2xl border border-slate-200/80 bg-slate-50/50 p-4 flex flex-col justify-between shadow-inner shrink-0">
