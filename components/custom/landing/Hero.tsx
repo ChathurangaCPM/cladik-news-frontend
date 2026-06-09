@@ -12,7 +12,7 @@ import {
   Compass,
   ShieldCheck,
 } from "lucide-react";
-import { fetchNews } from "@/app/developer/news/actions";
+import { fetchNews } from "@/app/(app)/developer/news/actions";
 import Header from "./Header";
 
 // Helper to detect Sinhala unicode characters to apply the custom font

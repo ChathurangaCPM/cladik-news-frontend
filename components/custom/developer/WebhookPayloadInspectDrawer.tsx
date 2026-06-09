@@ -2,7 +2,7 @@
 
 import React from "react";
 import { AlertTriangle } from "lucide-react";
-import { WebhookDeliveryLog } from "@/app/developer/webhooks/page";
+import { WebhookDeliveryLog } from "@/app/(app)/developer/webhooks/page";
 import {
   Sheet,
   SheetContent,

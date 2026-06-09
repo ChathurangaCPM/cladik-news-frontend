@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Database, RefreshCw } from "lucide-react";
-import { WebhookDeliveryLog } from "@/app/developer/webhooks/page";
+import { WebhookDeliveryLog } from "@/app/(app)/developer/webhooks/page";
 
 interface WebhookTelemetryLogsProps {
   deliveryLogs: WebhookDeliveryLog[];

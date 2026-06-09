@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Globe, Play, Trash2, Loader2, AlertCircle } from "lucide-react";
-import { WebhookEndpoint } from "@/app/developer/webhooks/page";
+import { WebhookEndpoint } from "@/app/(app)/developer/webhooks/page";
 import {
   AlertDialog,
   AlertDialogAction,

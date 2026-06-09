@@ -19,7 +19,7 @@ import {
   ArrowLeft,
   Plus,
 } from "lucide-react";
-import { incrementViewCountAction } from "@/app/developer/news/actions";
+import { incrementViewCountAction } from "@/app/(app)/developer/news/actions";
 import { ReportButton } from "./ReportButton";
 import moment from "moment";
 import { DynamicNewsChart } from "@/components/news/DynamicNewsChart";

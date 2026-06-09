@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useDeveloper } from "@/app/developer/layout";
+import { useDeveloper } from "@/app/(app)/developer/layout";
 import { Activity, Database, Sparkles } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 

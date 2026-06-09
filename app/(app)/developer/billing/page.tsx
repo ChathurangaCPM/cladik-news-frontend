@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useDeveloper } from "@/app/developer/layout";
+import { useDeveloper } from "@/app/(app)/developer/layout";
 import {
   CreditCard,
   Check,

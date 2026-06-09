@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { NewsCard } from "./NewsCard";
-import { fetchNews } from "@/app/developer/news/actions";
+import { fetchNews } from "@/app/(app)/developer/news/actions";
 import { cn } from "@/lib/utils";
 import moment from "moment";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";

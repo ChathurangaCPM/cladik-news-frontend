@@ -196,7 +196,13 @@ export default function HowItWorksClient() {
               href="/pricing"
               className="hover:text-indigo-600 dark:hover:text-white transition"
             >
-              API Pricing
+              Free API
+            </Link>
+             <Link
+              href="/blog"
+              className="hover:text-white transition duration-200"
+            >
+              Blog
             </Link>
           </nav>
 

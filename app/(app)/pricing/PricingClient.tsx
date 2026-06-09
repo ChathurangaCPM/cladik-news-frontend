@@ -107,7 +107,13 @@ export default function PricingClient() {
               href="/pricing"
               className="text-indigo-600 dark:text-white transition font-bold"
             >
-              API Pricing
+              Free API
+            </Link>
+             <Link
+              href="/blog"
+              className="hover:text-white transition duration-200"
+            >
+              Blog
             </Link>
           </nav>
 

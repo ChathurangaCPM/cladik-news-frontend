@@ -3,7 +3,7 @@
 import { Search, X, Loader2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback, useTransition, useEffect, useRef } from "react";
-import { searchNewsAction } from "@/app/developer/news/actions";
+import { searchNewsAction } from "@/app/(app)/developer/news/actions";
 import moment from "moment";
 
 export default function NewsSearchBar() {

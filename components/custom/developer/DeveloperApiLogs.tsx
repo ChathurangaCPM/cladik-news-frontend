@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useDeveloper } from "@/app/developer/layout";
+import { useDeveloper } from "@/app/(app)/developer/layout";
 import { getDeveloperLogsAction } from "@/app/actions/auth";
 import { Activity, Copy, Check } from "lucide-react";
 import {

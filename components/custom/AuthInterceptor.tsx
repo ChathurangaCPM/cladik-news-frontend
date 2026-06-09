@@ -28,7 +28,7 @@ export function AuthInterceptor() {
           router.push("/login");
         } else if (pathname.startsWith("/dashboard")) {
           try {
-            const { logoutAction: adminLogout } = await import("@/app/dashboard/login/actions");
+            const { logoutAction: adminLogout } = await import("@/app/(app)/dashboard/login/actions");
             await adminLogout();
           } catch (err) {
             console.error("AuthInterceptor: Failed to perform admin logout", err);

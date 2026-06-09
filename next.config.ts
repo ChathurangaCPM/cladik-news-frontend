@@ -1,3 +1,4 @@
+import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
 
 // Robustly normalize backend API URL environment variables at startup
@@ -67,4 +68,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useDeveloper } from "@/app/developer/layout";
+import { useDeveloper } from "@/app/(app)/developer/layout";
 
 // Modular webhook components
 import WebhooksPaywall from "@/components/custom/developer/WebhooksPaywall";

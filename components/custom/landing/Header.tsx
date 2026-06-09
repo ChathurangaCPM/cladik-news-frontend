@@ -22,7 +22,7 @@ export default function Header() {
       </Link>
 
       <nav className="hidden md:flex items-center gap-8 text-sm font-light text-white/90">
-        <Link href="/news" className="hover:text-white transition duration-200">
+        <Link href="/developer/news" className="hover:text-white transition duration-200">
           Discovery Feed
         </Link>
         <Link
@@ -35,7 +35,13 @@ export default function Header() {
           href="/pricing"
           className="hover:text-white transition duration-200"
         >
-          API Pricing
+          Free API
+        </Link>
+        <Link
+          href="/blog"
+          className="hover:text-white transition duration-200"
+        >
+          Blog
         </Link>
       </nav>
 

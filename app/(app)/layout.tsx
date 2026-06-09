@@ -3,9 +3,9 @@ import { Inter, Playfair_Display, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import Providers from "@/providers/providers";
 import { UserLangProvider } from "@/providers/langProvider";
-import { getDictionary } from "./i18n/get-dictionary";
+import { getDictionary } from "../i18n/get-dictionary";
 
-import "./globals.css";
+import "../globals.css";
 import { cn } from "@/lib/utils";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NextTopLoader from "@kfarwell/nextjs-toploader";
@@ -69,12 +69,12 @@ const inter = Inter({
 });
 
 const customFont = localFont({
-  src: "../public/fonts/FMBindumathi-x.ttf",
+  src: "../../public/fonts/FMBindumathi-x.ttf",
   variable: "--font-custom",
 });
 
 const customSinhalaFont = localFont({
-  src: "../public/fonts/bindu_sinhala_only.ttf",
+  src: "../../public/fonts/bindu_sinhala_only.ttf",
   variable: "--font-sinhala-custom",
 });
 
@@ -144,12 +144,12 @@ export default async function RootLayout({
             <Toaster />
           </Providers>
         </TooltipProvider>
-        <ThirdPartyAnalytics
+        {/* <ThirdPartyAnalytics
           GA_MEASUREMENT_ID="G-1QEJRQ99LK"
           GA_TRACKING_ID={"G-1QEJRQ99LK"}
           FB_PIXEL_ID=""
           CLARITY_ID={"wyb9qfv76w"}
-        />
+        /> */}
       </body>
     </html>
   );
