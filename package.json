@@ -11,7 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@kfarwell/nextjs-toploader": "^1.4.6",
-    "@payloadcms/db-postgres": "^3.85.0",
+    "@payloadcms/db-mongodb": "^3.85.0",
     "@payloadcms/next": "^3.85.0",
     "@payloadcms/richtext-lexical": "^3.85.0",
     "@streamdown/mermaid": "^1.0.2",

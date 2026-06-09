@@ -1,4 +1,4 @@
-import { postgresAdapter } from '@payloadcms/db-postgres'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor, BlocksFeature, CodeBlock } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import path from 'path'
@@ -28,6 +28,12 @@ export default buildConfig({
       admin: {
         useAsTitle: 'title',
         defaultColumns: ['title', 'slug', 'publishedDate'],
+      },
+      access: {
+        read: () => true,
+        create: ({ req }) => !!req.user,
+        update: ({ req }) => !!req.user,
+        delete: ({ req }) => !!req.user,
       },
       hooks: {
         beforeValidate: [
@@ -86,6 +92,12 @@ export default buildConfig({
     },
     {
       slug: 'media',
+      access: {
+        read: () => true,
+        create: ({ req }) => !!req.user,
+        update: ({ req }) => !!req.user,
+        delete: ({ req }) => !!req.user,
+      },
       upload: {
         staticDir: path.resolve(dirname, 'public/media'),
         mimeTypes: ['image/*'],
@@ -120,10 +132,8 @@ export default buildConfig({
       ],
     },
   ],
-  db: postgresAdapter({
-    pool: {
-      connectionString: process.env.DATABASE_URI || '',
-    },
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI || '',
   }),
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
