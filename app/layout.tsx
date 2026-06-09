@@ -146,7 +146,7 @@ export default async function RootLayout({
         </TooltipProvider>
         <ThirdPartyAnalytics
           GA_MEASUREMENT_ID="G-1QEJRQ99LK"
-          GA_TRACKING_ID={""}
+          GA_TRACKING_ID={"G-1QEJRQ99LK"}
           FB_PIXEL_ID=""
           CLARITY_ID={"wyb9qfv76w"}
         />
