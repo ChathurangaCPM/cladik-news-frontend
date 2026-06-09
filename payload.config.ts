@@ -88,7 +88,6 @@ export default buildConfig({
       slug: 'media',
       upload: {
         staticDir: path.resolve(dirname, 'public/media'),
-        staticURL: '/media',
         mimeTypes: ['image/*'],
         imageSizes: [
           {
@@ -106,7 +105,7 @@ export default buildConfig({
           {
             name: 'tablet',
             width: 1024,
-            height: null,
+            height: undefined,
             position: 'centre',
           },
         ],
@@ -158,7 +157,7 @@ export default buildConfig({
         payload.logger.info('Default admin user created: admin@neuralpress.site / NeuralPressAdmin2026!')
       }
     } catch (err) {
-      payload.logger.error('Error seeding default admin user:', err)
+      payload.logger.error('Error seeding default admin user: ' + (err instanceof Error ? err.message : String(err)))
     }
   },
 })

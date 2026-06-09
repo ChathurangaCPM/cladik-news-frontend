@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { toPng } from "html-to-image";
-import { getNewsById, uploadImageToR2 } from "../actions/news";
+import { getNewsById, uploadImageToR2 } from "../../actions/news";
 
 interface NewsItem {
   id: string;

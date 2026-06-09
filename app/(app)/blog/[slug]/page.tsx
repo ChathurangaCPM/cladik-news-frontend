@@ -151,7 +151,7 @@ function serializeLexical(nodes: LexicalNode[]): React.ReactNode[] {
           h3: 'text-xl md:text-2xl font-semibold tracking-tight text-slate-900 dark:text-white mt-8 mb-3 leading-tight',
           h4: 'text-lg md:text-xl font-semibold tracking-tight text-slate-900 dark:text-white mt-6 mb-2 leading-tight',
         }
-        const HeadingTag = tag as keyof JSX.IntrinsicElements
+        const HeadingTag = tag as 'h1' | 'h2' | 'h3' | 'h4'
         return (
           <HeadingTag key={i} className={headingClasses[tag] || headingClasses.h2}>
             {children}
