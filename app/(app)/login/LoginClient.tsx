@@ -9,14 +9,7 @@ import { loginSchema, LoginInput } from "@/lib/validations/auth";
 import { cn } from "@/lib/utils";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  Loader2,
-  ShieldCheck,
-} from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, Loader2, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -46,20 +39,11 @@ function LoginContent() {
       const result = await loginAction(data);
 
       if (result.success) {
-        const from = searchParams.get("from");
-        if (from) {
-          router.push(from);
-        } else {
-          const plan = searchParams.get("plan");
-          const billing = searchParams.get("billing") || "monthly";
-          if (plan) {
-            router.push(`/checkout?plan=${plan}&billing=${billing}`);
-          } else {
-            router.push("/developer");
-          }
-        }
+        router.push("/developer");
       } else {
-        let topError = result.error || "Invalid credentials. Please verify your email and password.";
+        let topError =
+          result.error ||
+          "Invalid credentials. Please verify your email and password.";
 
         if (result.errors && Array.isArray(result.errors)) {
           result.errors.forEach((err: any) => {
@@ -147,10 +131,13 @@ function LoginContent() {
                   Email Address
                 </label>
                 <div className="relative group">
-                  <Mail className={cn(
-                    "absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]",
-                    fieldErrors.email && "text-rose-400 group-focus-within:text-rose-500"
-                  )} />
+                  <Mail
+                    className={cn(
+                      "absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]",
+                      fieldErrors.email &&
+                        "text-rose-400 group-focus-within:text-rose-500",
+                    )}
+                  />
                   <Input
                     {...register("email")}
                     id="email"
@@ -158,12 +145,15 @@ function LoginContent() {
                     placeholder="name@company.com"
                     className={cn(
                       "bg-slate-50/50 border-slate-200/80 focus:border-[#2b86ff]/80 focus:bg-white focus:ring-4 focus:ring-blue-500/10 rounded-xl pl-10 text-sm text-slate-900 placeholder-slate-400 focus:outline-none w-full h-11 transition-all duration-200",
-                      fieldErrors.email && "border-rose-300 focus:border-rose-500 focus:ring-rose-500/10 bg-rose-50/10"
+                      fieldErrors.email &&
+                        "border-rose-300 focus:border-rose-500 focus:ring-rose-500/10 bg-rose-50/10",
                     )}
                   />
                 </div>
                 {fieldErrors.email && (
-                  <p className="text-[10px] text-rose-500 mt-1 ml-0.5 font-medium animate-fade-in">{fieldErrors.email.message}</p>
+                  <p className="text-[10px] text-rose-500 mt-1 ml-0.5 font-medium animate-fade-in">
+                    {fieldErrors.email.message}
+                  </p>
                 )}
               </div>
 
@@ -184,10 +174,13 @@ function LoginContent() {
                   </Link>
                 </div>
                 <div className="relative group">
-                  <Lock className={cn(
-                    "absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]",
-                    fieldErrors.password && "text-rose-400 group-focus-within:text-rose-500"
-                  )} />
+                  <Lock
+                    className={cn(
+                      "absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 transition-colors group-focus-within:text-[#2b86ff]",
+                      fieldErrors.password &&
+                        "text-rose-400 group-focus-within:text-rose-500",
+                    )}
+                  />
                   <Input
                     {...register("password")}
                     id="password"
@@ -195,7 +188,8 @@ function LoginContent() {
                     placeholder="••••••••"
                     className={cn(
                       "bg-slate-50/50 border-slate-200/80 focus:border-[#2b86ff]/80 focus:bg-white focus:ring-4 focus:ring-blue-500/10 rounded-xl pl-10 pr-10 text-sm text-slate-900 placeholder-slate-400 focus:outline-none w-full h-11 transition-all duration-200",
-                      fieldErrors.password && "border-rose-300 focus:border-rose-500 focus:ring-rose-500/10 bg-rose-50/10"
+                      fieldErrors.password &&
+                        "border-rose-300 focus:border-rose-500 focus:ring-rose-500/10 bg-rose-50/10",
                     )}
                   />
                   <button
@@ -211,7 +205,9 @@ function LoginContent() {
                   </button>
                 </div>
                 {fieldErrors.password && (
-                  <p className="text-[10px] text-rose-500 mt-1 ml-0.5 font-medium animate-fade-in">{fieldErrors.password.message}</p>
+                  <p className="text-[10px] text-rose-500 mt-1 ml-0.5 font-medium animate-fade-in">
+                    {fieldErrors.password.message}
+                  </p>
                 )}
               </div>
             </div>
