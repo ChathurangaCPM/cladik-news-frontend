@@ -238,11 +238,7 @@ export default function PricingSection() {
               </div>
               {plan.id === "free" ? (
                 <Link
-                  href={
-                    isLoggedIn
-                      ? `/checkout?plan=${plan.id}&billing=${billingPeriod}`
-                      : `/login?plan=${plan.id}&billing=${billingPeriod}`
-                  }
+                  href={`/login?plan=${plan.id}&billing=${billingPeriod}`}
                   className={`w-full py-3 mt-8 rounded-full text-xs font-bold text-center transition ${plan.btnColor}`}
                 >
                   {plan.cta}
