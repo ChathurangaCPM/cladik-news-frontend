@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import { getNewsAggregatorUrl } from "@/lib/utils";
+import { loginSchema, signupSchema } from "@/lib/validations/auth";
 
 const AUTH_SERVICE_URL = process.env.NEXT_PUBLIC_AUTH_SERVICE_URL || "http://localhost:5002";
 const NEWS_AGGREGATOR_URL = getNewsAggregatorUrl();
@@ -10,22 +11,41 @@ const NEWS_AGGREGATOR_URL = getNewsAggregatorUrl();
  * Handle developer login action
  */
 export async function loginAction(credentials: Record<string, unknown>) {
+  const validation = loginSchema.safeParse(credentials);
+  if (!validation.success) {
+    return {
+      success: false,
+      error: validation.error.issues[0]?.message || "Invalid credentials format.",
+    };
+  }
+
   try {
     const res = await fetch(`${AUTH_SERVICE_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify(validation.data),
       cache: "no-store",
     });
 
     const data = await res.json();
 
     if (!res.ok || !data.success) {
+      let errorMsg = data.error || data.message;
+      const errorsList = data.details || data.errors;
+      if ((!errorMsg || errorMsg === "Validation failed") && Array.isArray(errorsList) && errorsList.length > 0) {
+        const descriptiveError = errorsList.find((e: any) => {
+          const msg = typeof e === "string" ? e : (e.message || e.msg || e.error);
+          return msg && msg !== "Invalid value";
+        });
+        const firstError = descriptiveError || errorsList[0];
+        errorMsg = typeof firstError === "string" ? firstError : (firstError.message || firstError.msg || firstError.error);
+      }
       return {
         success: false,
-        error: data.error || data.message || "Invalid credentials",
+        error: errorMsg || "Invalid credentials",
+        errors: errorsList,
       };
     }
 
@@ -66,15 +86,24 @@ export async function loginAction(credentials: Record<string, unknown>) {
  * Handle developer registration/signup action
  */
 export async function signupAction(details: Record<string, unknown>) {
+  const validation = signupSchema.safeParse(details);
+  if (!validation.success) {
+    return {
+      success: false,
+      error: validation.error.issues[0]?.message || "Invalid registration format.",
+    };
+  }
+
   try {
     const res = await fetch(`${AUTH_SERVICE_URL}/api/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "User-Platform": "cladik-news",
       },
       body: JSON.stringify({
-        ...details,
-        platform: "cladik-web",
+        ...validation.data,
+        platform: "cladik-news",
       }),
       cache: "no-store",
     });
@@ -82,9 +111,20 @@ export async function signupAction(details: Record<string, unknown>) {
     const data = await res.json();
 
     if (!res.ok || !data.success) {
+      let errorMsg = data.error || data.message;
+      const errorsList = data.details || data.errors;
+      if ((!errorMsg || errorMsg === "Validation failed") && Array.isArray(errorsList) && errorsList.length > 0) {
+        const descriptiveError = errorsList.find((e: any) => {
+          const msg = typeof e === "string" ? e : (e.message || e.msg || e.error);
+          return msg && msg !== "Invalid value";
+        });
+        const firstError = descriptiveError || errorsList[0];
+        errorMsg = typeof firstError === "string" ? firstError : (firstError.message || firstError.msg || firstError.error);
+      }
       return {
         success: false,
-        error: data.error || data.message || "Registration failed",
+        error: errorMsg || "Registration failed",
+        errors: errorsList,
       };
     }
 
