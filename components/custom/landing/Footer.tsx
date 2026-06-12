@@ -37,6 +37,20 @@ export default function Footer() {
                 AI News Search API
               </span>
             </div>
+
+            <a
+              href="https://www.producthunt.com/products/neuralpress?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-neuralpress"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="md:ml-12"
+            >
+              <img
+                alt="NeuralPress - AI News API for Developers | Product Hunt"
+                width="150"
+                height="54"
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1168216&amp;theme=light&amp;t=1781282938705"
+              />
+            </a>
           </div>
 
           {/* Minimal Navigation Links */}
