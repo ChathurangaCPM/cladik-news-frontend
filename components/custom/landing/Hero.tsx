@@ -190,7 +190,7 @@ export default function Hero() {
             href="/pricing"
             className="px-8 py-4 bg-white text-slate-900 hover:bg-slate-200 text-sm rounded-full shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center gap-2 max-w-max"
           >
-            View API Pricing <ArrowRight className="w-4 h-4" />
+            Start for Free <ArrowRight className="w-4 h-4" />
           </Link>
           <Link
             href="/how-it-works"
