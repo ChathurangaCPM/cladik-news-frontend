@@ -218,6 +218,12 @@ export default function SettingsDashboard() {
             >
               Settings
             </Link>
+            <Link
+              href="/dashboard/gemini"
+              className="px-4 py-1.5 rounded-lg text-xs font-medium transition text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+            >
+              Gemini Keys
+            </Link>
           </div>
 
           <div className="flex items-center gap-3">

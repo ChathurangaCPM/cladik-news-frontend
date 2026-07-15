@@ -60,7 +60,7 @@ export default function PricingSection() {
         "Delayed Ingestion Feed (5h old news, no real-time stream)",
         "Semantic search with basic citations",
         "1 Active API Key",
-        "Interactive playground & sandbox access",
+        "Interactive playground (Trending news locked)",
       ],
       cta: "Start Free",
       color:
@@ -84,6 +84,7 @@ export default function PricingSection() {
       features: [
         "100,000 API requests/month (300 RPM limit)",
         "Real-time news streaming via Webhook",
+        "Algorithmic Trending News Engine access",
         "Full bilingual English-Sinhala synthesis",
         "AI Key Metrics (What Happened, Why It Matters)",
         "Advanced filters (sentiment, breaking status, topics)",
@@ -110,6 +111,7 @@ export default function PricingSection() {
       features: [
         "1,000,000+ API requests/month",
         "Real-time SSE + raw socket streams",
+        "Algorithmic Trending News Engine access",
         "Under 5s pipeline webhook delivery",
         "AI Key Metrics, Historical Context & Key Actors",
         "Raw AI Semantic Embeddings",

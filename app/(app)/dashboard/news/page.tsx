@@ -10,6 +10,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Edit2,
+  Trash2,
   Layers,
   CheckCircle,
   XCircle,
@@ -46,6 +47,7 @@ export default function NewsManagerDashboard() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [blacklist, setBlacklist] = useState<string[]>([]);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/news/settings")
@@ -103,6 +105,30 @@ export default function NewsManagerDashboard() {
 
     loadNewsList();
   }, [currentPage, pageSize, statusFilter, search]);
+
+  const handleDeleteNews = async (id: string) => {
+    if (!window.confirm("Are you sure you want to permanently delete this news article? This action cannot be undone.")) {
+      return;
+    }
+
+    setDeletingId(id);
+    try {
+      const res = await fetch(`/api/news/admin/${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        setItems(prev => prev.filter(item => item.id !== id));
+        setTotal(prev => prev - 1);
+      } else {
+        const text = await res.text();
+        alert(`Deletion failed: ${text || "Unknown error"}`);
+      }
+    } catch (err: any) {
+      alert(`Deletion error: ${err.message}`);
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   const totalPages = Math.ceil(total / pageSize) || 1;
 
@@ -190,6 +216,12 @@ export default function NewsManagerDashboard() {
               className="px-4 py-1.5 rounded-lg text-xs font-medium transition text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
             >
               Settings
+            </Link>
+            <Link
+              href="/dashboard/gemini"
+              className="px-4 py-1.5 rounded-lg text-xs font-medium transition text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+            >
+              Gemini Keys
             </Link>
           </div>
 
@@ -393,6 +425,14 @@ export default function NewsManagerDashboard() {
                               <Edit2 className="w-3.5 h-3.5" />
                               Edit
                             </Link>
+                            <button
+                              onClick={() => handleDeleteNews(item.id)}
+                              disabled={deletingId === item.id}
+                              className="flex items-center gap-1 text-xs font-medium text-rose-600 dark:text-rose-400 bg-rose-500/10 border border-rose-500/20 hover:bg-rose-500/20 px-3 py-2 rounded-xl transition cursor-pointer disabled:opacity-50"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                              Delete
+                            </button>
                           </div>
                         </td>
                       </tr>

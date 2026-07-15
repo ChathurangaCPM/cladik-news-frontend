@@ -49,6 +49,10 @@ export async function POST(req: NextRequest) {
       // Update domain blacklist
       targetEndpoint = "/news/settings/blacklist";
       requestBody = { domains: body.domains };
+    } else if ("keys" in body) {
+      // Update Gemini API keys
+      targetEndpoint = "/news/settings/gemini-keys";
+      requestBody = { keys: body.keys };
     } else {
       return new NextResponse("Invalid action body", { status: 400 });
     }

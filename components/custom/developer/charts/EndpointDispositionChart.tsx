@@ -50,6 +50,7 @@ export default function EndpointDispositionChart() {
       : [
           { name: "/api/v1/access/news", value: 1 },
           { name: "/api/v1/access/news/search", value: 0 },
+          { name: "/api/v1/access/news/trending", value: 0 },
         ];
 
   return (

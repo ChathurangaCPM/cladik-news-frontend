@@ -129,7 +129,9 @@ export default function ConsoleTerminal({
       : endpoint;
     const queryParams = endpoint.endsWith("/search")
       ? `?q=${encodeURIComponent(searchQuery)}&limit=${limit}`
-      : `?limit=${limit}`;
+      : endpoint.endsWith("/trending")
+        ? ""
+        : `?limit=${limit}`;
     const fullRealUrl = `${cleanBaseApiUrl}${relativePath}${queryParams}`;
 
     switch (lang) {

@@ -313,6 +313,12 @@ export default function ProcessDashboard() {
             >
               Settings
             </Link>
+            <Link
+              href="/dashboard/gemini"
+              className="px-4 py-1.5 rounded-lg text-xs font-medium transition text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+            >
+              Gemini Keys
+            </Link>
           </div>
 
           {/* SSE Connection Health Status & ThemeToggle */}

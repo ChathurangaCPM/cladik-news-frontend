@@ -109,6 +109,9 @@ export default function RequestConfiguration({
                   <SelectItem value="/api/v1/access/news/search">
                     /api/v1/access/news/search (Semantic Match Engine)
                   </SelectItem>
+                  <SelectItem value="/api/v1/access/news/trending">
+                    /api/v1/access/news/trending (Trending News Engine)
+                  </SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
